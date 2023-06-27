@@ -432,23 +432,23 @@ Here are the pieces of functionality that should be built out for the backend:
     - [x] Export the connected database client
   - [x] Commit all work to `git`
   - [x] A database client is now ready to be used!
-- [ ] **Server**
-  - [ ] Build out a bare-bones Express server with a health check route and an adequate middleware pipeline.
-  - [ ] Create a `utils` directory
-    - [ ] In the `utils` directory, create an `errors.js` file.
-    - [ ] Create error classes inside the file that will be used throughout the app.
+- [x] **Server**
+  - [x] Build out a bare-bones Express server with a health check route and an adequate middleware pipeline.
+  - [x] Create a `utils` directory
+    - [x] In the `utils` directory, create an `errors.js` file.
+    - [x] Create error classes inside the file that will be used throughout the app.
   - [ ] In the `app.test.js` file, write tests that:
     - [ ] Ensure that the Express application responds to `GET` requests to the `/` route with a JSON object of `{ "ping": "pong" }`
     - [ ] Check that middleware like `morgan` and `cors` exist, along with the JSON `body-parser` middleware from `express`
     - [ ] Include an `afterAll` hook that calls `await db.end()` so that any open database connections close when all the tests are finished.
-  - [ ] Add code to the `app.js` and `server.js` file to get a simple server running along with responding to `GET` requests to the `/` route
-  - [ ] Create error classes inside the `utils/errors.js` file.
-  - [ ] Add `404` and generic error handler middleware to the `app.js` file.
-  - [ ] In the `server.js` file:
-    - [ ] Import the Express app and the `config.js` file
-    - [ ] Have the `app` listen on the port specified by `config.PORT`.
-  - [ ] Commit all work to `git`
-  - [ ] Test out the fancy new Express server by starting it up in a new terminal window!
+  - [x] Add code to the `app.js` and `server.js` file to get a simple server running along with responding to `GET` requests to the `/` route
+  - [x] Create error classes inside the `utils/errors.js` file.
+  - [x] Add `404` and generic error handler middleware to the `app.js` file.
+  - [x] In the `server.js` file:
+    - [x] Import the Express app and the `config.js` file
+    - [x] Have the `app` listen on the port specified by `config.PORT`.
+  - [x] Commit all work to `git`
+  - [x] Test out the fancy new Express server by starting it up in a new terminal window!
 - [ ] **Common Test Configuration**
   - [ ] It would probably be helpful to create some common test functions that can be used throughout the application's testing suite.
   - [ ] Create a new directory called `tests`
