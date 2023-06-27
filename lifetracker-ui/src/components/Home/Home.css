@@ -4,3 +4,57 @@
   width: 100%;
   gap: 20px;
 }
+/* @media screen and (min-width: 80em)
+<style> */
+.css-16ecvb5 {
+    max-width: 1200px;
+}
+.css-1561uet {
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+}
+
+.css-gg4vpm {
+  display: flex;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+}
+.css-dvxtzn {
+  display: flex;
+  flex-direction: column;
+  -webkit-box-align: center;
+  align-items: center;
+}
+.css-70qvj9 {
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+}
+.css-1jijfcn {
+  font-size: var(--chakra-fontSizes-3xl);
+}
+.css-17xejub {
+  flex: 1 1 0%;
+  place-self: stretch;
+}
+:where(img, svg, video, canvas, audio, iframe, embed, object) {
+  display: block;
+}
+:where(*) {
+  border-width: 0px;
+  border-style: solid;
+  box-sizing: border-box;
+  overflow-wrap: break-word;
+}
+.Tile {
+  border-radius: 10px;
+  background: white;
+  width: calc(50% - 10px);
+  padding: 16px;
+  min-width: 80px;
+  min-width: 250px;
+  min-height: 250px;
+  margin-bottom: 16px;
+  transition: all .25s ease-in-out;
+  box-shadow: #09064a26 0 2px 34px;
+}
