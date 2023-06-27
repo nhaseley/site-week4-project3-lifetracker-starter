@@ -6,7 +6,7 @@ export default function Navbar(){
         <div className="Navbar css-15bu2in">
             <div className="css-70qvj9">
                 <a className="chakra-link css-14rj303" href="/">
-                    <img src="/assets/codepath-f1b3e41a.svg" alt="logo"></img>
+                    <img src="https://lifetracker.up.railway.app/assets/codepath-f1b3e41a.svg" alt="logo"></img>
                 </a>
                 <a className="chakra-link css-74uit1" href="/activity">Activity</a>
                 <a className="chakra-link css-74uit1" href="/exercise">Exercise</a>

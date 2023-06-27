@@ -1,9 +1,8 @@
 
 require("dotenv").config()
 const PORT = process.env.PORT ? Number(process.env.PORT) : 3001
-// const IS_TESTING = process.env.NODE_ENV === "test"
+const IS_TESTING = process.env.NODE_ENV === "test"
 
-// console.log("PORT IS: ", PORT)
 // Use dev database, testing database, or via env var, production database
 function getDatabaseUri() {
     const dbBcryptWorkFactor = parseInt(process.env.BCRYPTWORKFACTOR) || 13;
@@ -18,8 +17,12 @@ function getDatabaseUri() {
     return process.env.DATABASE_URL || `postgresql://${dbUser}:${dbPass}@${dbHost}:${dbPort}/${dbName}`
   }
 
-  module.exports = {
+  const BCRYPT_WORK_FACTOR = IS_TESTING ? 1 : 13
+
+  module.exports ={
+
     PORT,
     IS_TESTING,
-  BCRYPT_WORK_FACTOR,
-  getDatabaseUri}
+    BCRYPT_WORK_FACTOR,
+    getDatabaseUri
+  }

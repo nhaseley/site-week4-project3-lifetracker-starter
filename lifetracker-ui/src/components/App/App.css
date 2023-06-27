@@ -5,4 +5,14 @@
   max-width: 100vw;
   min-height: 100vh;
   background: #f7fafc;
+  position: relative;
+  min-height: 100%;
+  margin: 0px;
+  font-feature-settings: "kern";
+}
+:where(*) {
+  border-width: 0px;
+  border-style: solid;
+  box-sizing: border-box;
+  overflow-wrap: break-word;
 }
