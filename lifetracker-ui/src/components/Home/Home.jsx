@@ -1,29 +1,16 @@
 import * as React from "react";
-import ".Home/css";
+import "./Home.css";
+import Hero from "../Hero/Hero"
+
 
 export default function Home() {
   return (
     <div className="css-16ecvb5">
-      <div className="css-1561uet">
-        <div className="chakra-stack css-18rb735">
-          <h1 className="chakra-heading css-bgad6s">LifeTracker</h1>
-          <h2 className="chakra-heading css-1la3ewl">
-            Helping you take back control of your world.
-          </h2>
-          <a href="/signup">
-            <button type="button" className="chakra-button css-uybm84">
-              Create your account now
-            </button>
-          </a>
-        </div>
-        <div className="css-jocq0n">
-          <img
-            src="/assets/tracker-2a96bfd0.jpg"
-            className="chakra-image css-incex5"
-          ></img>
-        </div>
-      </div>
-      <div className="tiles css-gg4vpm">
+      <Hero></Hero>
+    </div>
+  )}
+
+      {/* <div className="tiles css-gg4vpm">
         <div spacing="10px" className="css-dvxtzn">
           <div className="css-70qvj9">
             <p className="chakra-text css-1jijfcn">Fitness</p>
@@ -150,7 +137,4 @@ export default function Home() {
             style='background-image: url("/assets/calendar-debf6f3b.jpg"); background-size: cover; background-repeat: no-repeat;'
           ></div>
         </div>
-      </div>
-    </div>
-  );
-}
+    </div> */}

@@ -6,9 +6,18 @@
 }
 /* @media screen and (min-width: 80em)
 <style> */
-.css-16ecvb5 {
+/* .css-16ecvb5 {
     max-width: 1200px;
+} */
+.css-16ecvb5 {
+  
+  display: flex;
+  flex-direction: column;
+  -webkit-box-align: center;
+  align-items: center;
+  margin: 0px auto;
 }
+
 .css-1561uet {
   -webkit-box-pack: justify;
   justify-content: space-between;
@@ -40,6 +49,7 @@
 :where(img, svg, video, canvas, audio, iframe, embed, object) {
   display: block;
 }
+
 :where(*) {
   border-width: 0px;
   border-style: solid;
