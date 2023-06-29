@@ -5,7 +5,7 @@ import Hero from "../Hero/Hero"
 
 export default function Landing() {
   return (
-    <div className="css-16ecvb5">
+    <div className="landing-page">
       <Hero></Hero>
     </div>
   )}

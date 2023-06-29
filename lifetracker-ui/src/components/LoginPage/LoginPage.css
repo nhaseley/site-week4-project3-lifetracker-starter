@@ -1,4 +1,4 @@
-.css-9cjjy5 {
+.login-page {
     display: flex;
     flex-direction: column;
     min-height: 80vh;
@@ -7,7 +7,7 @@
     -webkit-box-align: center;
     align-items: center;
 }
-.css-13ra036 {
+.login-form {
     display: flex;
     -webkit-box-align: center;
     align-items: center;
@@ -72,7 +72,7 @@
     background-color: rgba(255, 255, 255, 0.92);
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
-.css-1kxonj9 {
+.form-input {
     width: 100%;
     position: relative;
 }
@@ -193,7 +193,7 @@
     color: #01193f;
     height: 1.75rem;
 }
-.css-4lvvxn {
+.submit-login {
     display: inline-flex;
     appearance: none;
     -webkit-box-align: center;
@@ -220,7 +220,7 @@
     border-radius: 0px;
     width: 100%;
 }
-.register-button {
+.login-page .register-button {
     transition-property: background-color,border-color,color,fill,stroke,opacity,box-shadow,transform;
     transition-duration: 150ms;
     transition-timing-function: cubic-bezier(0, 0, 0.2, 1);

@@ -1,15 +1,12 @@
 html {
   display: block
 }
-.Navbar {
-  padding-top: 20px;
-}
 
-.css-15bu2in {
+.navbar {
   display: flex;
   margin: 0px auto;
   max-width: 1310px;
-  padding-top: 50px;
+  padding-top: 20px;
   padding-inline: 20px;
   height: 70px;
   -webkit-box-align: center;
@@ -22,7 +19,7 @@ html {
   -webkit-box-align: center;
   align-items: center;
 }
-.css-14rj303 {
+.logo {
   transition-property: background-color,border-color,color,fill,stroke,opacity,box-shadow,transform;
   transition-duration: 150ms;
   transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
@@ -46,16 +43,7 @@ html {
   color: #405ce8;
   font-weight: 600;
 }
-.css-spn4bz {
-  transition-property: background-color,border-color,color,fill,stroke,opacity,box-shadow,transform;
-  transition-duration: 150ms;
-  transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
-  cursor: pointer;
-  text-decoration: none;
-  outline: transparent solid 2px;
-  outline-offset: 2px;
-  color: inherit;
-}
+
 .css-1t9i4zo {
   display: inline-flex;
   appearance: none;

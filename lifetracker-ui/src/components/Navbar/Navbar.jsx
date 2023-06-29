@@ -6,44 +6,40 @@ import {Outlet, Link} from "react-router-dom"
 export default function Navbar() {
   return (
     <>
-      <div className="Navbar css-15bu2in">
+      <div className="navbar">
         <div className="css-70qvj9">
-          <a className="chakra-link css-14rj303" href="/">
+          <Link className="logo" to={"/"}>
             <img
               src="https://lifetracker.up.railway.app/assets/codepath-f1b3e41a.svg"
               alt="logo"
             ></img>
-          </a>
-          <a className="chakra-link css-74uit1" href="/activity">
+          </Link>
+          <Link className="chakra-link css-74uit1" to={"/activity"}>
             Activity
-          </a>
-          <a className="chakra-link css-74uit1" href="/exercise">
+          </Link>
+          <Link className="chakra-link css-74uit1" to={"/exercise"}>
             Exercise
-          </a>
-          <a className="chakra-link css-74uit1" href="/nutrition">
+          </Link>
+          <Link className="chakra-link css-74uit1" to={"/nutrition"}>
             Nutrition
-          </a>
-          <a className="chakra-link css-74uit1" href="/sleep">
+          </Link>
+          <Link className="chakra-link css-74uit1" to={"/sleep"}>
             Sleep
-          </a>
+          </Link>
         </div>
         <div className="css-70qvj9">
-          <a className="chakra-link css-spn4bz" href="/login">
             <button type="button" className="chakra-button css-1t9i4zo">
             <Link to={"/login"} className="login-button">
                 Sign In
             </Link>
              
             </button>
-          </a>
-          <a className="chakra-link css-spn4bz" href="/register">
             <button type="button" className="chakra-button css-td8gbm">
             <Link to={"/register"} className="register-button">
                 Register
             </Link>
 
             </button>
-          </a>
         </div>
       </div>
       <Outlet />
