@@ -1,41 +1,57 @@
 import * as React from "react";
-import "./LoginPage.css"
-import {Link} from "react-router-dom"
+import "./LoginPage.css";
+import { Link } from "react-router-dom";
 import axios from "axios";
 
-export default function LoginPage({emailInput, setEmailInput, handleEmailInput, passwordInput, handlePasswordInput}) {
-  console.log(emailInput)
-  console.log(passwordInput)
+export default function LoginPage({
+  emailInput,
+  handleEmailInput,
+  passwordInput,
+  handlePasswordInput,
+}) {
 
   async function loginUser(event) {
-    event.preventDefault()
-    let result = await axios.post('http://localhost:3001/login', {emailInput, passwordInput})
+    event.preventDefault();
+    let result = await axios.post("http://localhost:3001/login", {
+      emailInput,
+      passwordInput,
+    });
     console.log(result);
 
-    if (result.data){
-      console.log("successful log in")
+    if (result.data) {
+      console.log("successful log in");
     }
   }
-  
+
   return (
     <div className="login-page">
       <div className="login-form">
         <span className="chakra-avatar css-3fy9wq">
-          <img src="https://www.transparentpng.com/download/user/gray-user-profile-icon-png-fP8Q1P.png" className = "user-profile-img"></img>
+          <img
+            src="https://www.transparentpng.com/download/user/gray-user-profile-icon-png-fP8Q1P.png"
+            className="user-profile-img"
+          ></img>
         </span>
         <h2 className="chakra-heading css-3q8efk">Welcome</h2>
         <div className="css-ebzegt">
           <form>
             <div className="chakra-stack css-1db3zf7">
               <div role="group" className="form-input">
-                <div className="chakra-input__group css-bx0blc" data-group="true">
+                <div
+                  className="chakra-input__group css-bx0blc"
+                  data-group="true"
+                >
                   <div className="chakra-input__left-element css-1cw84h2">
-                    <img src="https://www.transparentpng.com/download/send-email-button/DyZNCL-send-email-button-free-download-transparent.png" className ="email-img"></img>
+                    <img
+                      src="https://www.transparentpng.com/download/send-email-button/DyZNCL-send-email-button-free-download-transparent.png"
+                      className="email-img"
+                    ></img>
                   </div>
                   <input
                     name="email"
                     type="email"
-                    placeholder="Email"in
+                    placeholder="Email"
+                    in
                     className="chakra-input css-1aepka5"
                     value={emailInput}
                     onChange={handleEmailInput}
@@ -43,9 +59,15 @@ export default function LoginPage({emailInput, setEmailInput, handleEmailInput, 
                 </div>
               </div>
               <div role="group" className="form-input">
-                <div className="chakra-input__group css-bx0blc" data-group="true">
+                <div
+                  className="chakra-input__group css-bx0blc"
+                  data-group="true"
+                >
                   <div className="chakra-input__left-element css-17ke578">
-                    <img src="https://www.pngitem.com/pimgs/m/140-1407340_lock-icon-clipart-png-download-white-login-password.png" className="password-img"></img>
+                    <img
+                      src="https://www.pngitem.com/pimgs/m/140-1407340_lock-icon-clipart-png-download-white-login-password.png"
+                      className="password-img"
+                    ></img>
                   </div>
                   <input
                     name="password"
@@ -62,7 +84,11 @@ export default function LoginPage({emailInput, setEmailInput, handleEmailInput, 
                   </div>
                 </div>
               </div>
-              <button type="submit" className="submit-login" onClick={loginUser}>
+              <button
+                type="submit"
+                className="submit-login"
+                onClick={loginUser}
+              >
                 Login
               </button>
             </div>
@@ -72,7 +98,7 @@ export default function LoginPage({emailInput, setEmailInput, handleEmailInput, 
       <div className="css-0">
         New to us?{" "}
         <Link to={"/register"} className="register-button">
-            Sign Up
+          Sign Up
         </Link>
       </div>
     </div>

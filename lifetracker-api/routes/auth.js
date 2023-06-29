@@ -14,7 +14,7 @@ router.get("/me", async function (req, res) {
 
 router.post("/login", async function (req, res, next) {
   try {
-    console.log("in auth")
+    console.log("logging in...")
     const user = await User.authenticate(req.body)
     return res.status(200).json({ user })
   } catch (err) {
@@ -24,6 +24,7 @@ router.post("/login", async function (req, res, next) {
 
 router.post("/register", async function (req, res, next) {
   try {
+    console.log("registering...")
     const user = await User.register(req.body)
     return res.status(201).json({ user })
   } catch (err) {

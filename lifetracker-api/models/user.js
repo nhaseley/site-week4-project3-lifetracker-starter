@@ -1,6 +1,5 @@
 const hi = require("../app")
 const db = require("../db")
-console.log("DB HERE" ,db)
 
 const bcrypt = require("bcrypt")
 const { BadRequestError, UnauthorizedError } = require("../utils/errors")
@@ -112,14 +111,16 @@ class User {
    * @returns user
    */
   static async fetchUserByEmail(email) {
+    console.log("current database: ", db.query(`SELECT * FROM users`))
     const result = await db.query(
       `SELECT id,
               email, 
+              username,
               password,
               first_name AS "firstName",
               last_name AS "lastName",
-              location,
-              date              
+              created_at,
+              updated_at              
            FROM users
            WHERE email = $1`,
       [email.toLowerCase()]
@@ -131,7 +132,7 @@ class User {
   }
 
   /**
-   * Fetch a user in the database by email
+   * Fetch a user in the database by id
    *
    * @param {String} userId
    * @returns user

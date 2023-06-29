@@ -19,5 +19,5 @@ CREATE TABLE nutrition (
   created_at TIMESTAMP NOT NULL
 );
 
-INSERT INTO users VALUES (1, 'nylevenya@hotmail.com', 'nylevenya', '2003nyleve', 'nya', 'haseley', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO users VALUES (1,'nylevenya@hotmail.com', 'nylevenya', '2003nyleve', 'nya', 'haseley', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 -- TABLE users to view this in terminal

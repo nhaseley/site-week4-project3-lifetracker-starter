@@ -18,15 +18,25 @@ function App() {
   function handlePasswordInput(event){
     setPasswordInput(event.target.value);
   }
-  
-  // function handleUsernameInput() {}
-  function handleFirstNameInput() {}
-  function handleLastNameInput() {}
-  function handleConfirmPasswordInput() {}
-  function signupUser() {}
-  // function loginUser() {}
+  function handleUsernameInput(event){
+    setUsernameInput(event.target.value);
+  }
+  function handleFirstNameInput(event){
+    setFirstNameInput(event.target.value);
+  }
+  function handleLastNameInput(event){
+    setLastNameInput(event.target.value);
+  }
+  function handleConfirmPasswordInput(event){
+    setConfirmPasswordInput(event.target.value);
+  }
   const [emailInput, setEmailInput] = useState("")
   const [passwordInput, setPasswordInput] = useState("")
+  const [usernameInput, setUsernameInput] = useState("")
+  const [firstNameInput, setFirstNameInput] = useState("")
+  const [lastNameInput, setLastNameInput] = useState("")
+  const [confirmPasswordInput, setConfirmPasswordInput] = useState("")
+
   return (
     <div className="app">
       <BrowserRouter>
@@ -52,13 +62,18 @@ function App() {
               path="/register"
               element={
                 <RegistrationPage
-                  // handleEmailInput={handleEmailInput}
-                  // handleUsernameInput={handleUsernameInput}
+                  emailInput={emailInput}
+                  handleEmailInput={handleEmailInput}
+                  usernameInput={usernameInput}
+                  handleUsernameInput={handleUsernameInput}
+                  firstNameInput={firstNameInput}
                   handleFirstNameInput={handleFirstNameInput}
+                  lastNameInput={lastNameInput}
                   handleLastNameInput={handleLastNameInput}
+                  passwordInput={passwordInput}
                   handlePasswordInput={handlePasswordInput}
+                  confirmPasswordInput={confirmPasswordInput}
                   handleConfirmPasswordInput={handleConfirmPasswordInput}
-                  signupUser={signupUser}
                 />
               }
             ></Route>
