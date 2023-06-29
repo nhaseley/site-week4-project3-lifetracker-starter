@@ -12,15 +12,21 @@ import NutritionPage from "../NutritionPage/NutritionPage";
 import SleepPage from "../SleepPage/SleepPage";
 
 function App() {
-  function handleEmailInput() {}
-  function handleUsernameInput() {}
+  function handleEmailInput(event){
+    setEmailInput(event.target.value);
+  }
+  function handlePasswordInput(event){
+    setPasswordInput(event.target.value);
+  }
+  
+  // function handleUsernameInput() {}
   function handleFirstNameInput() {}
   function handleLastNameInput() {}
-  function handlePasswordInput() {}
   function handleConfirmPasswordInput() {}
   function signupUser() {}
-  function loginUser() {}
-
+  // function loginUser() {}
+  const [emailInput, setEmailInput] = useState("")
+  const [passwordInput, setPasswordInput] = useState("")
   return (
     <div className="app">
       <BrowserRouter>
@@ -32,9 +38,12 @@ function App() {
               path="/login"
               element={
                 <LoginPage
+                  emailInput={emailInput}
+                  passwordInput={passwordInput}
+                  // setEmailInput={setEmailInput}
                   handleEmailInput={handleEmailInput}
-                  handlePasswordInput={handleUsernameInput}
-                  loginUser={loginUser}
+                  handlePasswordInput={handlePasswordInput}
+                  // loginUser={loginUser}
                 />
               }
             />
@@ -43,8 +52,8 @@ function App() {
               path="/register"
               element={
                 <RegistrationPage
-                  handleEmailInput={handleEmailInput}
-                  handleUsernameInput={handleUsernameInput}
+                  // handleEmailInput={handleEmailInput}
+                  // handleUsernameInput={handleUsernameInput}
                   handleFirstNameInput={handleFirstNameInput}
                   handleLastNameInput={handleLastNameInput}
                   handlePasswordInput={handlePasswordInput}

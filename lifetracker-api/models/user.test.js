@@ -2,7 +2,7 @@
 
 const { NotFoundError, BadRequestError, UnauthorizedError } = require("../utils/errors")
 const User = require("./user")
-const { commonBeforeAll, commonBeforeEach, commonAfterEach, commonAfterAll } = require("../tests/models/common")
+const { commonBeforeAll, commonBeforeEach, commonAfterEach, commonAfterAll } = require("../tests/common")
 
 beforeAll(commonBeforeAll)
 beforeEach(commonBeforeEach)

@@ -1,6 +1,6 @@
 "use strict"
 
-const { storage } = require("../../db/storage")
+const { storage } = require(".../db/storage")
 const User = require("../../models/user")
 const { createUserJwt } = require("../../utils/tokens")
 

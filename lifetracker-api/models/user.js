@@ -1,10 +1,10 @@
-
-const db = require(".../db")
+const hi = require("../app")
+const db = require("../db")
 console.log("DB HERE" ,db)
 
 const bcrypt = require("bcrypt")
 const { BadRequestError, UnauthorizedError } = require("../utils/errors")
-// const { validateFields } = require("../utils/validate")
+const { validateFields } = require("../utils/validate")
 
 const { BCRYPT_WORK_FACTOR } = require("../config")
 
@@ -67,8 +67,8 @@ class User {
    **/
 
   static async register(creds) {
-    const { email, password, firstName, lastName, location, date } = creds
-    const requiredCreds = ["email", "password", "firstName", "lastName", "location", "date"]
+    const { email, username, firstName, lastName, password, confirmPassword } = creds
+    const requiredCreds = ["email", "username", "firstName", "lastName", "password"]
     try {
       validateFields({ required: requiredCreds, obj: creds, location: "user registration" })
     } catch (err) {
@@ -80,26 +80,24 @@ class User {
     }
 
     const hashedPassword = await bcrypt.hash(password, BCRYPT_WORK_FACTOR)
-    const lowercasedEmail = email.toLowerCase()
 
     const result = await db.query(
       `INSERT INTO users (
+          email,
+          username, 
           password,
           first_name,
-          last_name,
-          email,
-          location,
-          date
+          last_name
         )
         VALUES ($1, $2, $3, $4, $5, $6)
         RETURNING id,
-                  email,            
+                  email,       
+                  username,
+                  password,
                   first_name AS "firstName", 
-                  last_name AS "lastName",
-                  location,
-                  date
+                  last_name AS "lastName"
                   `,
-      [hashedPassword, firstName, lastName, lowercasedEmail, location, date]
+      [lowercasedEmail.toLowerCase(), username.toLowerCase(), hashedPassword, firstName, lastName]
     )
 
     const user = result.rows[0]

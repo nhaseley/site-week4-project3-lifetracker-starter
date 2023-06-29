@@ -1,5 +1,3 @@
-
-
 /** Routes for authentication. */
 
 const express = require("express")
@@ -16,6 +14,7 @@ router.get("/me", async function (req, res) {
 
 router.post("/login", async function (req, res, next) {
   try {
+    console.log("in auth")
     const user = await User.authenticate(req.body)
     return res.status(200).json({ user })
   } catch (err) {

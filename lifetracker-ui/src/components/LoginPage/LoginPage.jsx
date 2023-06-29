@@ -1,8 +1,22 @@
 import * as React from "react";
 import "./LoginPage.css"
 import {Link} from "react-router-dom"
+import axios from "axios";
 
-export default function LoginPage(loginUser, handleEmailInput, handlePasswordInput) {
+export default function LoginPage({emailInput, setEmailInput, handleEmailInput, passwordInput, handlePasswordInput}) {
+  console.log(emailInput)
+  console.log(passwordInput)
+
+  async function loginUser(event) {
+    event.preventDefault()
+    let result = await axios.post('http://localhost:3001/login', {emailInput, passwordInput})
+    console.log(result);
+
+    if (result.data){
+      console.log("successful log in")
+    }
+  }
+  
   return (
     <div className="login-page">
       <div className="login-form">
@@ -23,7 +37,7 @@ export default function LoginPage(loginUser, handleEmailInput, handlePasswordInp
                     type="email"
                     placeholder="Email"in
                     className="chakra-input css-1aepka5"
-                    value=""
+                    value={emailInput}
                     onChange={handleEmailInput}
                   ></input>
                 </div>
@@ -38,7 +52,7 @@ export default function LoginPage(loginUser, handleEmailInput, handlePasswordInp
                     type="password"
                     placeholder="Password"
                     className="chakra-input css-1fwij33"
-                    value=""
+                    value={passwordInput}
                     onChange={handlePasswordInput}
                   ></input>
                   <div className="chakra-input__right-element css-1qww07b">
