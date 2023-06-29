@@ -5,8 +5,8 @@ CREATE TABLE users (
   password   TEXT NOT NULL,
   first_name TEXT NOT NULL,
   last_name  TEXT NOT NULL,
-  created_at TIMESTAMP NOT NULL,
-  updated_at TIMESTAMP NOT NULL
+  created_at TIMESTAMP DEFAULT NOW(),
+  updated_at TIMESTAMP DEFAULT NOW()
 );
 
 CREATE TABLE nutrition (
@@ -16,8 +16,8 @@ CREATE TABLE nutrition (
   calories   INT,
   image_url  TEXT NOT NULL,
   user_id    INTEGER,
-  created_at TIMESTAMP NOT NULL
+  created_at TIMESTAMP DEFAULT NOW()
 );
 
-INSERT INTO users VALUES (1,'nylevenya@hotmail.com', 'nylevenya', '2003nyleve', 'nya', 'haseley', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+-- INSERT INTO users VALUES (1,'nylevenya@hotmail.com', 'nylevenya', '2003nyleve', 'nya', 'haseley', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 -- TABLE users to view this in terminal

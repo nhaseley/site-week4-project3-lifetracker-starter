@@ -6,20 +6,24 @@ import axios from "axios";
 export default function LoginPage({
   emailInput,
   handleEmailInput,
+  setEmailInput,
   passwordInput,
   handlePasswordInput,
+  setPasswordInput
 }) {
 
   async function loginUser(event) {
     event.preventDefault();
-    let result = await axios.post("http://localhost:3001/login", {
+    let result = await axios.post("http://localhost:3001/auth/login", {
       emailInput,
       passwordInput,
     });
-    console.log(result);
+    console.log("login result: ", result);
 
     if (result.data) {
       console.log("successful log in");
+      setEmailInput("");
+      setPasswordInput("");
     }
   }
 

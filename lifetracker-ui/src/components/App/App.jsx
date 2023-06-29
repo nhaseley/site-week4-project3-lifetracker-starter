@@ -63,6 +63,7 @@ function App() {
               element={
                 <RegistrationPage
                   emailInput={emailInput}
+                  setEmailInput={setEmailInput}
                   handleEmailInput={handleEmailInput}
                   usernameInput={usernameInput}
                   handleUsernameInput={handleUsernameInput}
@@ -71,6 +72,7 @@ function App() {
                   lastNameInput={lastNameInput}
                   handleLastNameInput={handleLastNameInput}
                   passwordInput={passwordInput}
+                  setPasswordInput={setPasswordInput}
                   handlePasswordInput={handlePasswordInput}
                   confirmPasswordInput={confirmPasswordInput}
                   handleConfirmPasswordInput={handleConfirmPasswordInput}

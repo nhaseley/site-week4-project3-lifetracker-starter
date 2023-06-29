@@ -36,19 +36,19 @@ class User {
    **/
 
   static async authenticate(creds) {
-    const { email, password } = creds
-    const requiredCreds = ["email", "password"]
+    // const { email, password } = creds
+    const requiredCreds = ["emailInput", "passwordInput"]
     try {
       validateFields({ required: requiredCreds, obj: creds, location: "user authentication" })
     } catch (err) {
       throw err
     }
 
-    const user = await User.fetchUserByEmail(email)
+    const user = await User.fetchUserByEmail(creds.emailInput)
 
     if (user) {
       // compare hashed password to a new hash from password
-      const isValid = await bcrypt.compare(password, user.password)
+      const isValid = await bcrypt.compare(creds.passwordInput, user.password)
       if (isValid === true) {
         return User.createPublicUser(user)
       }
@@ -66,19 +66,21 @@ class User {
    **/
 
   static async register(creds) {
-    const { email, username, firstName, lastName, password, confirmPassword } = creds
-    const requiredCreds = ["email", "username", "firstName", "lastName", "password"]
+    // const { email, password } = creds
+    const requiredCreds = ["emailInput", "usernameInput", "passwordInput", "firstNameInput", "lastNameInput"]
     try {
       validateFields({ required: requiredCreds, obj: creds, location: "user registration" })
     } catch (err) {
       throw err
     }
-
-    if (User.fetchUserByEmail(email)) {
-      throw new BadRequestError(`Duplicate email: ${email}`)
+    if ((!creds.emailInput) || (!creds.passwordInput)){
+      throw new BadRequestError(`Fix credentials: ${creds}`)
+    }
+    if (await User.fetchUserByEmail(creds.emailInput)) {
+      throw new BadRequestError(`Duplicate email: ${creds.emailInput}`)
     }
 
-    const hashedPassword = await bcrypt.hash(password, BCRYPT_WORK_FACTOR)
+    const hashedPassword = await bcrypt.hash(creds.passwordInput, BCRYPT_WORK_FACTOR)
 
     const result = await db.query(
       `INSERT INTO users (
@@ -88,18 +90,17 @@ class User {
           first_name,
           last_name
         )
-        VALUES ($1, $2, $3, $4, $5, $6)
-        RETURNING id,
+        VALUES ($1, $2, $3, $4, $5)
+        RETURNING 
                   email,       
                   username,
                   password,
-                  first_name AS "firstName", 
-                  last_name AS "lastName"
-                  `,
-      [lowercasedEmail.toLowerCase(), username.toLowerCase(), hashedPassword, firstName, lastName]
-    )
+                  first_name, 
+                  last_name`,
+      [creds.emailInput.toLowerCase(), creds.usernameInput.toLowerCase(), hashedPassword, creds.firstNameInput, creds.lastNameInput]
+    );
 
-    const user = result.rows[0]
+    const user = result.rows[0];
 
     return user
   }
@@ -111,7 +112,6 @@ class User {
    * @returns user
    */
   static async fetchUserByEmail(email) {
-    console.log("current database: ", db.query(`SELECT * FROM users`))
     const result = await db.query(
       `SELECT id,
               email, 
@@ -127,7 +127,6 @@ class User {
     )
 
     const user = result.rows[0]
-
     return user
   }
 
@@ -152,7 +151,6 @@ class User {
     )
 
     const user = result.rows[0]
-
     return user
   }
 }

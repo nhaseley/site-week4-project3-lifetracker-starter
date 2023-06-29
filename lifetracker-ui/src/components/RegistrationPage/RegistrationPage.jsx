@@ -21,9 +21,12 @@ export default function RegistrationPage({
     event.preventDefault();
     let result = await axios.post("http://localhost:3001/auth/register", {
       emailInput,
+      usernameInput,
       passwordInput,
+      firstNameInput,
+      lastNameInput
     });
-    console.log(result);
+    console.log("registration result: ", result);
 
     if (result.data) {
       console.log("successful registration");
