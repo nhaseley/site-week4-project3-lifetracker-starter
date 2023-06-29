@@ -1,0 +1,244 @@
+.css-9cjjy5 {
+    display: flex;
+    flex-direction: column;
+    min-height: 80vh;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+}
+.css-13ra036 {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+.css-3fy9wq {
+    border-radius: 9999px;
+    display: inline-flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 500;
+    position: relative;
+    flex-shrink: 0;
+    font-size: calc(3rem / 2.5);
+    color: white;
+    border-color: white;
+    vertical-align: top;
+    width: 3rem;
+    height: 3rem;
+    background:transparent;
+    background: #4FD1C5;
+}
+.user-profile-img{
+    width: 2rem;
+    height: 2rem;
+}
+.email-img{
+    width: 1.5rem;
+    height: 1.5rem;
+}.password-img{
+    width: 1.5rem;
+    height: 1.5rem;
+}
+.css-3fy9wq:not([data-loaded]) {
+    --avatar-bg: #6079a0;
+}
+.css-3q8efk {
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+    font-weight: 700;
+    /* font-size: 1.875rem; */
+    /* line-height: 1.33; */
+    color: #38B2AC;    
+    font-size: 1.875rem;
+    line-height: 1.2;
+}
+.css-ebzegt {
+    min-width: 468px;
+}
+.css-1db3zf7 {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+    background-color: rgba(255, 255, 255, 0.92);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+.css-1kxonj9 {
+    width: 100%;
+    position: relative;
+}
+.css-bx0blc {
+    width: 100%;
+    display: flex;
+    position: relative;
+    isolation: isolate;
+}
+.css-1cw84h2 {
+    left: 0px;
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: 1rem;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    position: absolute;
+    top: 0px;
+    z-index: 2;
+    pointer-events: none;
+}
+.css-1aepka5 {
+    width: 100%;
+    min-width: 0px;
+    outline: transparent solid 2px;
+    outline-offset: 2px;
+    position: relative;
+    appearance: none;
+    transition-property: background-color,border-color,color,fill,stroke,opacity,box-shadow,transform;
+    transition-duration: 200ms;
+    font-size: 1rem;
+    padding-inline-start: 2.5rem;
+    padding-inline-end: 1rem;
+    height: 2.5rem;
+    border-radius: 0.375rem;
+    border-width: 1px;
+    border-style: solid;
+    border-image: initial;
+    border-color: inherit;
+    background: inherit;
+    margin-right: 10px;
+}
+.css-17ke578 {
+    left: 0px;
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: 1rem;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    position: absolute;
+    top: 0px;
+    z-index: 2;
+    pointer-events: none;
+    color: #8fa1bc;
+}
+.css-1fwij33 {
+    width: 100%;
+    min-width: 0px;
+    outline: transparent solid 2px;
+    outline-offset: 2px;
+    position: relative;
+    appearance: none;
+    transition-property: background-color,border-color,color,fill,stroke,opacity,box-shadow,transform;
+    transition-duration: 200ms;
+    font-size: 1rem;
+    padding-inline-start: 2.5rem;
+    padding-inline-end: 2.5rem;
+    height: 2.5rem;
+    border-radius: 0.375rem;
+    border-width: 1px;
+    border-style: solid;
+    border-image: initial;
+    border-color: inherit;
+    background: inherit;
+}
+.css-1qww07b {
+    right: 0px;
+    height: 2.5rem;
+    font-size: 1rem;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    position: absolute;
+    top: 0px;
+    z-index: 2;
+    width: 4.5rem;
+}
+.css-1xgetim {
+    display: inline-flex;
+    appearance: none;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    user-select: none;
+    position: relative;
+    white-space: nowrap;
+    vertical-align: middle;
+    outline: transparent solid 2px;
+    outline-offset: 2px;
+    line-height: 1.2;
+    border-radius: 0.375rem;
+    font-weight: 600;
+    transition-property: background-color,border-color,color,fill,stroke,opacity,box-shadow,transform;
+    transition-duration: 200ms;
+    min-width: 2rem;
+    font-size: 0.875rem;
+    padding-inline-start: 0.75rem;
+    padding-inline-end: 0.75rem;
+    background: #cfd7e2;
+    color: #01193f;
+    height: 1.75rem;
+}
+.css-4lvvxn {
+    display: inline-flex;
+    appearance: none;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    user-select: none;
+    position: relative;
+    white-space: nowrap;
+    vertical-align: middle;
+    outline: transparent solid 2px;
+    outline-offset: 2px;
+    line-height: 1.2;
+    font-weight: 600;
+    transition-property: background-color,border-color,color,fill,stroke,opacity,box-shadow,transform;
+    transition-duration: 200ms;
+    height: 2.5rem;
+    min-width: 2.5rem;
+    font-size: 1rem;
+    padding-inline-start: 1rem;
+    padding-inline-end: 1rem;
+    background: #319795;
+    color: white;
+    border-radius: 0px;
+    width: 100%;
+}
+.login-button {
+    transition-property: background-color,border-color,color,fill,stroke,opacity,box-shadow,transform;
+    transition-duration: 150ms;
+    transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+    cursor: pointer;
+    text-decoration: none;
+    outline: transparent solid 2px;
+    outline-offset: 2px;
+    color: #319795;
+}
+
+.names {
+    display: flex;
+    flex-direction: row;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+}
+.username-img{
+    width: 1.5rem;
+    height: 1.5rem;
+}

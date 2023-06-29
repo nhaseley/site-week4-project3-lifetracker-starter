@@ -1,9 +1,9 @@
 import * as React from "react";
-import "./Home.css";
+import "./Landing.css";
 import Hero from "../Hero/Hero"
 
 
-export default function Home() {
+export default function Landing() {
   return (
     <div className="css-16ecvb5">
       <Hero></Hero>

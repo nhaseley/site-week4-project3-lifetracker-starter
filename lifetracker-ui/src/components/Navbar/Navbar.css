@@ -85,6 +85,24 @@ html {
   margin-right: 20px;
 }
 
+.login-button{
+  text-decoration: none;
+  color: #00A3C4;
+}
+.css-1t9i4zo:hover{
+  background-color: #CFEDFB;
+}
+.register-button{
+  text-decoration: none;
+  color: black;
+}
+.css-td8gbm:hover{
+  background-color: #00A3C4;
+}
+
+
+
+
 .css-td8gbm {
   display: inline-flex;
   appearance: none;
