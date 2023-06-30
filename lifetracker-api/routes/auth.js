@@ -18,6 +18,8 @@ router.post("/login", async function (req, res, next) {
     const user = await User.authenticate(req.body)
     return res.status(200).json({ user })
   } catch (err) {
+    console.log("err", err)
+    res.send(err)
     next(err)
   }
 })
@@ -27,6 +29,7 @@ router.post("/register", async function (req, res, next) {
     const user = await User.register(req.body)
     return res.status(201).json({ user })
   } catch (err) {
+    res.send(err)
     next(err)
   }
 })

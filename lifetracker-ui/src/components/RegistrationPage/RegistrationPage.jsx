@@ -4,32 +4,31 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 
 export default function RegistrationPage({
-  emailInput,
-  handleEmailInput,
-  usernameInput,
-  handleUsernameInput,
-  firstNameInput,
-  handleFirstNameInput,
-  lastNameInput,
-  handleLastNameInput,
-  passwordInput,
-  handlePasswordInput,
-  confirmPasswordInput,
-  handleConfirmPasswordInput,
+  userLoginInfo,
+  setUserLoginInfo,
+  error,
+  setError,
 }) {
   async function signupUser(event) {
     event.preventDefault();
-    let result = await axios.post("http://localhost:3001/auth/register", {
-      emailInput,
-      usernameInput,
-      passwordInput,
-      firstNameInput,
-      lastNameInput
-    });
-    console.log("registration result: ", result);
+    if (userLoginInfo.confirmPassword !== userLoginInfo.password) {
+      setError({message: "Passwords do not match", status: 422})
+    } else {
+      let result = await axios.post("http://localhost:3001/auth/register", {
+        emailInput: userLoginInfo.email,
+        usernameInput: userLoginInfo.username,
+        passwordInput: userLoginInfo.password,
+        firstNameInput: userLoginInfo.firstName,
+        lastNameInput: userLoginInfo.lastName,
+      });
 
-    if (result.data) {
-      console.log("successful registration");
+      if (result.data.status) {
+        setError(result.data);
+      } else {
+        console.log("successful registration");
+        setError({});
+        setUserLoginInfo({email: "", username: "", firstName: "", lastName: "", password: "", confirmPassword:""})
+      }
     }
   }
 
@@ -62,8 +61,8 @@ export default function RegistrationPage({
                     type="email"
                     placeholder="Email"
                     className="chakra-input css-1aepka5"
-                    value={emailInput}
-                    onChange={handleEmailInput}
+                    value={userLoginInfo.email}
+                    onChange={(e) => setUserLoginInfo((u) => ({...u, email: e.target.value}))}
                   ></input>
                 </div>
               </div>
@@ -83,8 +82,8 @@ export default function RegistrationPage({
                     type="text"
                     placeholder="Username"
                     className="chakra-input css-1aepka5"
-                    value={usernameInput}
-                    onChange={handleUsernameInput}
+                    value={userLoginInfo.username}
+                    onChange={(e) => setUserLoginInfo((u) => ({...u, username: e.target.value}))}
                   ></input>
                 </div>
               </div>
@@ -99,8 +98,8 @@ export default function RegistrationPage({
                       type="text"
                       placeholder="First Name"
                       className="chakra-input css-1aepka5"
-                      value={firstNameInput}
-                      onChange={handleFirstNameInput}
+                      value={userLoginInfo.firstName}
+                      onChange={(e) => setUserLoginInfo((u) => ({...u, firstName: e.target.value}))}
                     ></input>
                   </div>
                 </div>
@@ -114,8 +113,8 @@ export default function RegistrationPage({
                       type="text"
                       placeholder="Last Name"
                       className="chakra-input css-1aepka5"
-                      value={lastNameInput}
-                      onChange={handleLastNameInput}
+                      value={userLoginInfo.lastName}
+                      onChange={(e) => setUserLoginInfo((u) => ({...u, lastName: e.target.value}))}
                     ></input>
                   </div>
                 </div>
@@ -136,8 +135,8 @@ export default function RegistrationPage({
                     type="password"
                     placeholder="Password"
                     className="chakra-input css-1fwij33"
-                    value={passwordInput}
-                    onChange={handlePasswordInput}
+                    value={userLoginInfo.password}
+                    onChange={(e) => setUserLoginInfo((u) => ({...u, password: e.target.value}))}
                   ></input>
                   <div className="chakra-input__right-element css-1qww07b">
                     <button type="button" className="chakra-button css-1xgetim">
@@ -162,14 +161,23 @@ export default function RegistrationPage({
                     type="password"
                     placeholder="Confirm Password"
                     className="chakra-input css-1fwij33"
-                    value={confirmPasswordInput}
-                    onChange={handleConfirmPasswordInput}
+                    value={userLoginInfo.confirmPassword}
+                    onChange={(e) => setUserLoginInfo((u) => ({...u, confirmPassword: e.target.value}))}
                   ></input>
                   <div className="chakra-input__right-element css-1qww07b">
                     <button type="button" className="chakra-button css-1xgetim">
                       Show
                     </button>
                   </div>
+                </div>
+                <div className="error">
+                  {error.status
+                    ? "Registration Failed: " +
+                      error.message +
+                      ". " +
+                      error.status +
+                      " Error."
+                    : null}
                 </div>
               </div>
               <button

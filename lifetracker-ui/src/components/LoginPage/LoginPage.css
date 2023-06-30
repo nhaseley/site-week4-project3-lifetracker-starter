@@ -220,6 +220,9 @@
     border-radius: 0px;
     width: 100%;
 }
+.submit-login:hover{
+    background-color: #234E52
+}
 .login-page .register-button {
     transition-property: background-color,border-color,color,fill,stroke,opacity,box-shadow,transform;
     transition-duration: 150ms;
@@ -229,4 +232,15 @@
     outline: transparent solid 2px;
     outline-offset: 2px;
     color: #319795;
+}
+.login-page .register-button:hover{
+    text-decoration: underline;
+}
+
+.error {
+    color: #319795;
+    padding: 8px;
+    align-items: center;
+    display: flex;
+    flex-direction:column
 }

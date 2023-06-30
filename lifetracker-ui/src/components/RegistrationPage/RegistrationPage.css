@@ -221,7 +221,9 @@
     border-radius: 0px;
     width: 100%;
 }
-
+.submit-registration:hover{
+    background-color: #234E52
+}
 .names {
     display: flex;
     flex-direction: row;
@@ -241,4 +243,15 @@
     outline: transparent solid 2px;
     outline-offset: 2px;
     color: #319795;
+}
+.registration-page .login-button:hover{
+    text-decoration: underline;
+}
+
+.error {
+    color: #319795;
+    padding: 8px;
+    align-items: center;
+    display: flex;
+    flex-direction:column
 }

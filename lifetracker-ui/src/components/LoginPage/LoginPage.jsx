@@ -4,26 +4,27 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 
 export default function LoginPage({
-  emailInput,
-  handleEmailInput,
-  setEmailInput,
-  passwordInput,
-  handlePasswordInput,
-  setPasswordInput
+  userLoginInfo,
+  setUserLoginInfo,
+  error,
+  setError,
 }) {
-
   async function loginUser(event) {
     event.preventDefault();
-    let result = await axios.post("http://localhost:3001/auth/login", {
-      emailInput,
-      passwordInput,
-    });
-    console.log("login result: ", result);
 
-    if (result.data) {
+    let result = await axios.post("http://localhost:3001/auth/login", {
+      emailInput: userLoginInfo.email,
+      passwordInput: userLoginInfo.password,
+    });
+
+    console.log("login result: ", result);
+    if (result.data.status) {
+      console.log("this login failed!");
+      setError(result.data);
+    } else {
       console.log("successful log in");
-      setEmailInput("");
-      setPasswordInput("");
+      setUserLoginInfo({email: "", password: ""})
+      setError({});
     }
   }
 
@@ -57,8 +58,8 @@ export default function LoginPage({
                     placeholder="Email"
                     in
                     className="chakra-input css-1aepka5"
-                    value={emailInput}
-                    onChange={handleEmailInput}
+                    value={userLoginInfo.email}
+                    onChange={(e) => setUserLoginInfo((u) => ({...u, email: e.target.value}))}
                   ></input>
                 </div>
               </div>
@@ -78,14 +79,17 @@ export default function LoginPage({
                     type="password"
                     placeholder="Password"
                     className="chakra-input css-1fwij33"
-                    value={passwordInput}
-                    onChange={handlePasswordInput}
+                    value={userLoginInfo.password}
+                    onChange={(e) => setUserLoginInfo((u) => ({...u, password: e.target.value}))}
                   ></input>
                   <div className="chakra-input__right-element css-1qww07b">
                     <button type="button" className="chakra-button css-1xgetim">
                       Show
                     </button>
                   </div>
+                </div>
+                <div className="error">
+                  {error.status ? "Login Failed: " + error.message  + ". " + error.status + " Error." : null}
                 </div>
               </div>
               <button

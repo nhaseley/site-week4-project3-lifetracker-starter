@@ -57,7 +57,7 @@ app.use(function (req, res, next) {
 /** Generic error handler; anything unhandled goes here. */
 app.use(function (err, req, res, next) {
   if (!config.IS_TESTING) console.error(err.stack)
-  const status = err.status || 500
+  const status = 500
   const message = err.message
 
   return res.status(status).json({

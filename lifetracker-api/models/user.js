@@ -53,8 +53,9 @@ class User {
         return User.createPublicUser(user)
       }
     }
-
+     
     throw new UnauthorizedError("Invalid username/password")
+     
   }
 
   /**
