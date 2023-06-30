@@ -18,7 +18,6 @@ function getDatabaseUri() {
   }
 
   const BCRYPT_WORK_FACTOR = IS_TESTING ? 1 : 13
-
   module.exports ={
 
     PORT,

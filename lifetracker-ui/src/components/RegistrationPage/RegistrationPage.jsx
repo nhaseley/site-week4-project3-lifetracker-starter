@@ -8,7 +8,11 @@ export default function RegistrationPage({
   setUserLoginInfo,
   error,
   setError,
+  passwordDisplayed,
+  handleHidePassword,
+  handleShowPassword
 }) {
+
   async function signupUser(event) {
     event.preventDefault();
     if (userLoginInfo.confirmPassword !== userLoginInfo.password) {
@@ -21,6 +25,7 @@ export default function RegistrationPage({
         firstNameInput: userLoginInfo.firstName,
         lastNameInput: userLoginInfo.lastName,
       });
+      console.log("login result: ", result);
 
       if (result.data.status) {
         setError(result.data);
@@ -132,15 +137,19 @@ export default function RegistrationPage({
                   </div>
                   <input
                     name="password"
-                    type="password"
+                    type = {passwordDisplayed.password ? "text": "password"}
                     placeholder="Password"
                     className="chakra-input css-1fwij33"
                     value={userLoginInfo.password}
                     onChange={(e) => setUserLoginInfo((u) => ({...u, password: e.target.value}))}
                   ></input>
                   <div className="chakra-input__right-element css-1qww07b">
-                    <button type="button" className="chakra-button css-1xgetim">
-                      Show
+                  <button 
+                    name="password-toggle"
+                    type="button" 
+                    className="chakra-button css-1xgetim" 
+                    onClick={passwordDisplayed.password ? handleHidePassword : handleShowPassword}>
+                    {passwordDisplayed.password ? "Hide" : "Show"}
                     </button>
                   </div>
                 </div>
@@ -158,15 +167,19 @@ export default function RegistrationPage({
                   </div>
                   <input
                     name="passwordConfirm"
-                    type="password"
+                    type = {passwordDisplayed.confirmPassword ? "text": "password"}
                     placeholder="Confirm Password"
                     className="chakra-input css-1fwij33"
                     value={userLoginInfo.confirmPassword}
                     onChange={(e) => setUserLoginInfo((u) => ({...u, confirmPassword: e.target.value}))}
                   ></input>
                   <div className="chakra-input__right-element css-1qww07b">
-                    <button type="button" className="chakra-button css-1xgetim">
-                      Show
+                  <button 
+                    name="confirm-password-toggle"
+                    type="button" 
+                    className="chakra-button css-1xgetim" 
+                    onClick={passwordDisplayed.confirmPassword ? handleHidePassword: handleShowPassword}>
+                    {passwordDisplayed.confirmPassword ? "Hide" : "Show"}
                     </button>
                   </div>
                 </div>

@@ -51,7 +51,12 @@ const user = require('./models/user')
 
 /** Handle 404 errors -- this matches everything */
 app.use(function (req, res, next) {
+  console.log("error here")
+  // const message = "not found"
+  // const status = 404
+  // res.send({message: message, status: status})
   return next(new NotFoundError())
+  // next(new NotFoundError())
 })
 
 /** Generic error handler; anything unhandled goes here. */

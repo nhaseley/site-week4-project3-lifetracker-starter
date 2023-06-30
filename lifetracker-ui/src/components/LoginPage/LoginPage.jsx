@@ -8,6 +8,10 @@ export default function LoginPage({
   setUserLoginInfo,
   error,
   setError,
+  passwordDisplayed,
+  handleShowPassword,
+  handleHidePassword
+
 }) {
   async function loginUser(event) {
     event.preventDefault();
@@ -17,7 +21,6 @@ export default function LoginPage({
       passwordInput: userLoginInfo.password,
     });
 
-    console.log("login result: ", result);
     if (result.data.status) {
       console.log("this login failed!");
       setError(result.data);
@@ -27,6 +30,7 @@ export default function LoginPage({
       setError({});
     }
   }
+  
 
   return (
     <div className="login-page">
@@ -37,7 +41,7 @@ export default function LoginPage({
             className="user-profile-img"
           ></img>
         </span>
-        <h2 className="chakra-heading css-3q8efk">Welcome</h2>
+        <h2 className="chakra-heading css-3q8efk">Welcome Back</h2>
         <div className="css-ebzegt">
           <form>
             <div className="chakra-stack css-1db3zf7">
@@ -76,16 +80,21 @@ export default function LoginPage({
                   </div>
                   <input
                     name="password"
-                    type="password"
+                    type = {passwordDisplayed.password ? "text": "password"}
                     placeholder="Password"
                     className="chakra-input css-1fwij33"
                     value={userLoginInfo.password}
                     onChange={(e) => setUserLoginInfo((u) => ({...u, password: e.target.value}))}
                   ></input>
                   <div className="chakra-input__right-element css-1qww07b">
-                    <button type="button" className="chakra-button css-1xgetim">
-                      Show
+                    <button 
+                    name = "password-toggle"
+                    type="button" 
+                    className="chakra-button css-1xgetim" 
+                    onClick={passwordDisplayed.password ? handleHidePassword : handleShowPassword}>
+                    {passwordDisplayed.password ? "Hide" : "Show"}
                     </button>
+                    <br></br>
                   </div>
                 </div>
                 <div className="error">

@@ -13,6 +13,8 @@ export default function ActivityPage(){
                         <button type="button" className="chakra-button css-n3canj">Record Nutrition</button>
                     </div>
                 </div>
+                <div className="grid">
+
                 <div className="css-18qrtb8">
                     <div className="css-xkuesw">
                         <div className="chakra-stack css-12mzq72">
@@ -32,6 +34,7 @@ export default function ActivityPage(){
                             </div>
                         </div>
                     </div>
+                    
                     <div className="css-1k6gjzc">
                         <div className="chakra-stack css-12mzq72">
                             <div className="chakra-stack css-8g8ihq">
@@ -98,6 +101,7 @@ export default function ActivityPage(){
                                 </div>
                             </div>
                         </div>
+                    </div>
                     </div>
                 </div>
                 <div className="css-8inehh"></div>
