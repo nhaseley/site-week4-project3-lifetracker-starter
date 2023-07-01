@@ -83,12 +83,19 @@ html {
 }
 .register-button{
   text-decoration: none;
-  color: black;
+  color: white;
 }
 .css-td8gbm:hover{
   background-color: #00A3C4;
 }
-
+.log-out-button{
+  text-decoration: none;
+  color: white;
+}
+.log-out-button:hover{
+  background-color: #00A3C4;
+  color: white
+}
 
 
 

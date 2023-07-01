@@ -84,6 +84,7 @@ h1 {
 .css-j7qwjs {
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 .NutritionPage .css-hzsul0 {
   font-size: 2.25rem;
@@ -131,6 +132,7 @@ h1 {
   padding-inline-start: 1rem;
   padding-inline-end: 1rem;
   background: #81b3fa;
+  width: 375px
 }
 
 .record-nutrition-button{
@@ -180,23 +182,7 @@ h1 {
   -webkit-box-align: center;
   align-items: center;
 }
-.css-13ra036 {
-  display: flex;
-  -webkit-box-align: center;
-  align-items: center;
-  -webkit-box-pack: center;
-  justify-content: center;
-  flex-direction: column;
-  gap: 0.5rem;
-  margin-bottom: 0.5rem;
-}
-.NutritionPage .css-15a3bhq {
-  font-size: 2.25rem;
-  line-height: 1.2;
-  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
-  font-weight: 700;
-  color: #81b3fa;
-}
+
 .css-ebzegt {
   min-width: 468px;
 }
@@ -204,6 +190,11 @@ form {
   display: block;
   margin-top: 0em;
 }
+
+
+
+
+
 .css-1db3zf7 {
   display: flex;
   flex-direction: column;
@@ -382,33 +373,6 @@ px
 ;
   border-top-width: 1px;
 }
-.NutritionPage .css-1nrq84c {
-  display: inline-flex;
-  appearance: none;
-  -webkit-box-align: center;
-  align-items: center;
-  -webkit-box-pack: center;
-  justify-content: center;
-  user-select: none;
-  position: relative;
-  white-space: nowrap;
-  vertical-align: middle;
-  outline: transparent solid 2px;
-  outline-offset: 2px;
-  line-height: 1.2;
-  font-weight: 600;
-  transition-property: background-color,border-color,color,fill,stroke,opacity,box-shadow,transform;
-  transition-duration: 200ms;
-  height: 2.5rem;
-  min-width: 2.5rem;
-  font-size: 1rem;
-  padding-inline-start: 1rem;
-  padding-inline-end: 1rem;
-  background: #81b3fa;
-  color: white;
-  border-radius: 0px;
-  width: 100%;
-}
 
 
 
@@ -417,6 +381,9 @@ px
 
 
 
+
+
+/* ------------------------------- */
 
 .css-xixnl8 {
   display: flex;

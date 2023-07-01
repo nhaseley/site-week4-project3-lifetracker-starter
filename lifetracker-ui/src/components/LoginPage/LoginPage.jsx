@@ -2,6 +2,7 @@ import * as React from "react";
 import "./LoginPage.css";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import ActivityPage from "../ActivityPage/ActivityPage";
 
 export default function LoginPage({
   userLoginInfo,
@@ -10,7 +11,9 @@ export default function LoginPage({
   setError,
   passwordDisplayed,
   handleShowPassword,
-  handleHidePassword
+  handleHidePassword,
+  setUserLoggedIn,
+  userLoggedIn
 
 }) {
   async function loginUser(event) {
@@ -28,15 +31,24 @@ export default function LoginPage({
       console.log("successful log in");
       setUserLoginInfo({email: "", password: ""})
       setError({});
+      
+      setUserLoggedIn(true)
+      // return <ActivityPage/>
     }
   }
 
   function handleDemo(){
     setUserLoginInfo({email: "nya@gmail.com", password: "nya"})
   }
-  
+  console.log(userLoggedIn)
+  // if (userLoggedIn){
+  //   return <ActivityPage/>
+  // }
 
   return (
+
+    
+
     <div className="login-page">
       <div className="login-form">
         <span className="chakra-avatar css-3fy9wq">
@@ -124,5 +136,6 @@ export default function LoginPage({
       </div>
       <button className="demo-button" onClick={handleDemo}> Demo Login</button>
     </div>
+    
   );
 }

@@ -10,7 +10,8 @@ export default function RegistrationPage({
   setError,
   passwordDisplayed,
   handleHidePassword,
-  handleShowPassword
+  handleShowPassword,
+  setUserLoggedIn
 }) {
 
   async function signupUser(event) {

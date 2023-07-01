@@ -196,7 +196,7 @@ Update the `App` component to manage authentication state:
 - [x] Build the **`RegistrationPage`** component to:
   - [x] Render JSX that is wrapped by an element with the class name of `registration-page`
   - [ ] Using either a custom hook, context, or manually handled state, check to see if a user is already logged in
-    - [ ] If the user is already logged in, it should redirect them to the `/activity` page
+    - [x] If the user is already logged in, it should redirect them to the `/activity` page
     - [x] If no user is authenticated, it should render the `RegistrationForm` component and pass it any props it needs
 
 #### Implement the `LandingPage` Component
@@ -256,8 +256,8 @@ Update the `App` component to manage authentication state:
   - [ ] Take the `appState` and `setAppState` as props and extract all the necessary data from it.
   - [ ] Render a nested `Routes` component from `react-router-dom`.
     - [ ] There should be multiple `Route` components:
-      - [ ] The `/nutrition` route should render the `NutritionOverview` component
-      - [ ] The `/nutrition/create` route should render the `NutritionNew` component
+      - [x] The `/nutrition` route should render the `NutritionOverview` component
+      - [x] The `/nutrition/create` route should render the `NutritionNew` component
       - [ ] The `/nutrition/id/:nutritionId` should render the `NutritionDetail` component
       - [ ] Any other route should render the `NotFound` component
 
@@ -283,9 +283,9 @@ Update the `App` component to manage authentication state:
 
 #### Implement the `NutritionNew` Component
 
-- [ ] Build the **`NutritionNew`** component to:
-  - [ ] Render JSX that is wrapped by an element with the class name of `nutrition-new`
-  - [ ] Render the `NutritionForm` component and pass it the appropriate props
+- [x] Build the **`NutritionNew`** component to:
+  - [x] Render JSX that is wrapped by an element with the class name of `nutrition-new`
+  - [x] Render the `NutritionForm` component and pass it the appropriate props
 
 #### Implement the `NutritionForm` Component
 

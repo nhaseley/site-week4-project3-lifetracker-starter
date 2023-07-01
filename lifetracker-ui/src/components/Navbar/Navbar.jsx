@@ -1,9 +1,8 @@
 import "./Navbar.css";
 import * as React from "react";
-import {Outlet, Link} from "react-router-dom"
+import { Outlet, Link } from "react-router-dom";
 
-
-export default function Navbar() {
+export default function Navbar({ userLoggedIn, setUserLoggedIn }) {
   return (
     <>
       <div className="navbar">
@@ -28,18 +27,28 @@ export default function Navbar() {
           </Link>
         </div>
         <div className="css-70qvj9">
-            <button type="button" className="chakra-button css-1t9i4zo">
-            <Link to={"/login"} className="login-button">
-                Sign In
-            </Link>
+          {!userLoggedIn ? (
+            <>
+              <button type="button" className="chakra-button css-1t9i4zo">
+                <Link to={"/login"} className="login-button">
+                  Sign In
+                </Link>
+              </button>
+              <button type="button" className="chakra-button css-td8gbm">
+                <Link to={"/register"} className="register-button">
+                  Register
+                </Link>
+              </button>
+            </>
+          ) : (
+            <button type="button" className="css-td8gbm">
+              <Link to={"/activity"} className="log-out-button">
+                  Log Out
+                </Link>
              
             </button>
-            <button type="button" className="chakra-button css-td8gbm">
-            <Link to={"/register"} className="register-button">
-                Register
-            </Link>
-
-            </button>
+          )}
+          {/* TODO: how to reset for logging out */}
         </div>
       </div>
       <Outlet />
