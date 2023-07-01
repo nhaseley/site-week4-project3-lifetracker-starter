@@ -37,6 +37,10 @@ export default function RegistrationPage({
     }
   }
 
+  function handleDemo(){
+    setUserLoginInfo({email: "nya@gmail.com", username:"nya", firstName: "nya", lastName: "haseley-ayende", password: "nya", confirmPassword: "nya" })
+  }
+
   return (
     <div className="registration-page">
       <div className="registration-form">
@@ -210,6 +214,7 @@ export default function RegistrationPage({
           Login
         </Link>
       </div>
+      <button className="demo-button" onClick={handleDemo}> Demo Registration</button>
     </div>
   );
 }

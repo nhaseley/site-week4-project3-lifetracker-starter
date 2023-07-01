@@ -1,6 +1,4 @@
-.NutritionPage {
-  background: #f7fafc;
-}
+
 .NutritionPage .nutrition-feed {
   display: flex;
   align-items: center;
@@ -28,4 +26,516 @@ h1 {
   align-items: center;
   flex-direction: column;
   color: #00A3C4
+}
+
+.css-1bpnzr3 {
+  margin-top: 2.5rem;
+}
+.css-1ef7k5z {
+  background: #81b3fa;
+  padding-top: 6rem;
+  padding-bottom: 5rem;
+  padding-inline-start: 1.5rem;
+  padding-inline-end: 1.5rem;
+}
+.css-1cgbrw5 {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  text-align: center;
+}
+.css-b5coes {
+  line-height: 1.2;
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+  color: white;
+  font-weight: 800;
+  font-size: 3rem;
+}
+.css-vpbd2d {
+  display: flex;
+  max-width: 1680px;
+  margin-inline: auto;
+  justify-content: center;
+}
+.css-1qfrez2 {
+  display: flex;
+  margin-top: 4rem;
+  max-width: 1680px;
+  margin-inline: auto;
+  width: 100%;
+}
+
+.css-uiodal {
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  margin-inline: auto;
+  flex: 1 1 0%;
+}
+.NutritionPage .nutrition-feed {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  max-width: 600px;
+}
+.css-j7qwjs {
+  display: flex;
+  flex-direction: column;
+}
+.NutritionPage .css-hzsul0 {
+  font-size: 2.25rem;
+  line-height: 1.2;
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+  font-weight: 700;
+  line-height: 1.33;
+  margin-bottom: 2.5rem;
+  color: #81b3fa;
+}
+.NutritionPage .button {
+  display: flex;
+}
+.css-spn4bz {
+  transition-property: background-color,border-color,color,fill,stroke,opacity,box-shadow,transform;
+  transition-duration: 150ms;
+  transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  cursor: pointer;
+  text-decoration: none;
+  outline: transparent solid 2px;
+  outline-offset: 2px;
+  color: inherit;
+}
+.NutritionPage .css-ez23ye {
+  display: inline-flex;
+  appearance: none;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  user-select: none;
+  position: relative;
+  white-space: nowrap;
+  vertical-align: middle;
+  outline: transparent solid 2px;
+  outline-offset: 2px;
+  line-height: 1.2;
+  border-radius: 0.375rem;
+  font-weight: 600;
+  transition-property: background-color,border-color,color,fill,stroke,opacity,box-shadow,transform;
+  transition-duration: 200ms;
+  height: 2.5rem;
+  min-width: 2.5rem;
+  font-size: 1rem;
+  padding-inline-start: 1rem;
+  padding-inline-end: 1rem;
+  background: #81b3fa;
+}
+
+.record-nutrition-button{
+  color: white;
+  text-decoration: none;
+
+}
+
+.NutritionPage .button button {
+  flex: 1;
+}
+.css-ni3ua3 {
+  object-fit: cover;
+  margin-top: 2.5rem;
+  margin-bottom: 2.5rem;
+  width: 300px;
+  height: 300px;
+  border-radius: 0.5rem;
+}
+.css-pwgvc2 {
+  display: flex;
+  margin-top: 4rem;
+  max-width: 1680px;
+  margin-inline: auto;
+
+}
+.css-1jtnem3 {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+  flex: 1 1 0%;
+  margin-inline-start: 2.5rem;
+  margin-inline-end: 2.5rem;
+  margin-bottom: 8rem;
+}
+.NutritionPage .css-1hv8zgx {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr 1fr;
+  grid-row-gap: 3rem;
+  grid-column-gap: 2.5rem;
+}
+.css-mlsaez {
+  display: flex;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+}
+.css-13ra036 {
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+.NutritionPage .css-15a3bhq {
+  font-size: 2.25rem;
+  line-height: 1.2;
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+  font-weight: 700;
+  color: #81b3fa;
+}
+.css-ebzegt {
+  min-width: 468px;
+}
+form {
+  display: block;
+  margin-top: 0em;
+}
+.css-1db3zf7 {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+  background-color: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+.css-1kxonj9 {
+  width: 100%;
+  position: relative;
+}
+.css-bx0blc {
+  width: 100%;
+  display: flex;
+  position: relative;
+  isolation: isolate;
+}
+.css-p20xy6 {
+  width: 100%;
+  min-width: 0px;
+  outline: transparent solid 2px;
+  outline-offset: 2px;
+  position: relative;
+  appearance: none;
+  transition-property: background-color,border-color,color,fill,stroke,opacity,box-shadow,transform;
+  transition-duration: 200ms;
+  font-size: 1rem;
+  padding-inline-start: 1rem;
+  padding-inline-end: 1rem;
+  height: 2.5rem;
+  border-radius: 0.375rem;
+  border-width: 1px;
+  border-style: solid;
+  border-image: initial;
+  border-color: inherit;
+  background: inherit;
+}
+.css-g6pte {
+  display: block;
+  text-align: start;
+  font-size: 1rem;
+  margin-inline-end: 0.75rem;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  transition-property: background-color,border-color,color,fill,stroke,opacity,box-shadow,transform;
+  transition-duration: 200ms;
+  opacity: 1;
+}
+.css-1tfjd1n {
+  margin-inline-start: 0.25rem;
+  color: #E53E3E;
+}
+.css-42b2qy {
+  width: 100%;
+  height: fit-content;
+  position: relative;
+}
+.css-1gpsbw3 {
+  padding-inline-end: 2rem;
+  width: 100%;
+  min-width: 0px;
+  outline: transparent solid 2px;
+  outline-offset: 2px;
+  position: relative;
+  appearance: none;
+  transition-property: background-color,border-color,color,fill,stroke,opacity,box-shadow,transform;
+  transition-duration: 200ms;
+  padding-bottom: 1px;
+  line-height: normal;
+  background: inherit;
+  --select-bg: white;
+  font-size: 1rem;
+  padding-inline-start: 1rem;
+  height: 2.5rem;
+  border-radius: 0.375rem;
+  border-width: 1px;
+  border-style: solid;
+  border-image: initial;
+  border-color: inherit;
+}
+.css-1gpsbw3 > option, .css-1gpsbw3 > optgroup {
+  background: white;
+}
+.css-iohxn1 {
+  width: 1.5rem;
+  height: 100%;
+  right: 0.5rem;
+  color: currentcolor;
+  font-size: 1.25rem;
+  position: absolute;
+  display: inline-flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  pointer-events: none;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.css-9jay18 {
+  display: flex;
+  flex-direction: row;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+}
+.css-3e5t3k {
+  position: relative;
+  z-index: 0;
+  --number-input-input-padding: calc(1.5rem + 0.5rem);
+}
+.css-1551roq {
+  width: 100%;
+  min-width: 0px;
+  outline: transparent solid 2px;
+  outline-offset: 2px;
+  position: relative;
+  appearance: none;
+  transition-property: background-color,border-color,color,fill,stroke,opacity,box-shadow,transform;
+  transition-duration: 200ms;
+  font-size: 1rem;
+  padding-inline-start: 1rem;
+  padding-inline-end: calc(1.5 + 0.5rem);
+  height: 2.5rem;
+  border-radius: 0.375rem;
+  vertical-align: top;
+  border-width: 1px;
+  border-style: solid;
+  border-image: initial;
+  border-color: inherit;
+  background: inherit;
+}
+.css-1jj9yua {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  margin: 1px;
+  height: calc(100% - 2px);
+  z-index: 1;
+  width: 1.5;
+}
+.css-1m5jnul {
+  border-inline-start-width: 1px;
+  border-inline-start-style: solid;
+  border-inline-start-color: #b2bed1;
+  color: #01193f;
+  background: transparent;
+  font-size: calc(0.75rem);
+  display: flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+  flex: 1 1 0%;
+  transition-property: background-color,border-color,color,fill,stroke,opacity,box-shadow,transform;
+  transition-duration: 200ms;
+  user-select: none;
+  cursor: pointer;
+  line-height: normal;
+}
+.css-onkibi {
+  width: 1em;
+  height: 1em;
+  display: inline-block;
+  line-height: 1em;
+  flex-shrink: 0;
+  color: currentcolor;
+  vertical-align: middle;
+}
+.css-1m5jnul:last-of-type {
+  border-bottom-right-radius: 0.375rem;
+  margin-top: -1px
+px
+;
+  border-top-width: 1px;
+}
+.NutritionPage .css-1nrq84c {
+  display: inline-flex;
+  appearance: none;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  user-select: none;
+  position: relative;
+  white-space: nowrap;
+  vertical-align: middle;
+  outline: transparent solid 2px;
+  outline-offset: 2px;
+  line-height: 1.2;
+  font-weight: 600;
+  transition-property: background-color,border-color,color,fill,stroke,opacity,box-shadow,transform;
+  transition-duration: 200ms;
+  height: 2.5rem;
+  min-width: 2.5rem;
+  font-size: 1rem;
+  padding-inline-start: 1rem;
+  padding-inline-end: 1rem;
+  background: #81b3fa;
+  color: white;
+  border-radius: 0px;
+  width: 100%;
+}
+
+
+
+
+
+
+
+
+
+.css-xixnl8 {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
+  width: 100%;
+}
+.css-89mcmc {
+  font-size: 0.875rem;
+  color: #022b69;
+}
+.css-56yjmq {
+  display: flex;
+  margin-bottom: 2.5rem;
+}
+.css-en15ln {
+  border-radius: 9999px;
+  display: inline-flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: 500;
+  position: relative;
+  flex-shrink: 0;
+  background: #940c00;
+  font-size: calc(3rem / 2.5);
+  color: white;
+  border-color: white;
+  vertical-align: top;
+  width: 3rem;
+  height: 3rem;
+  --avatar-border-color: white;
+  --avatar-size: 3rem;
+  --avatar-font-size: calc(3rem / 2.5);
+}
+.css-1ebyn6 {
+  font-size: calc(3rem / 2.5);
+  line-height: 1;
+}
+.css-1kw2fa0 {
+  margin-left: 0.75rem;
+}
+.css-y5314g {
+  font-size: 2.25rem;
+  line-height: 1.2;
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+    font-weight: 2.25rem;
+    
+    color: white;
+}
+.css-lvvibp {
+  display: inline-block;
+  white-space: nowrap;
+  vertical-align: middle;
+  padding-inline-start: 0.25rem;
+  padding-inline-end: 0.25rem;
+  text-transform: uppercase;
+  border-radius: 0.125rem;
+  font-weight: 2.25rem;
+  background: #C6F6D5;
+  color: #22543D;
+  margin-left: 0.25rem;
+  font-size: 0.9rem;
+}
+.css-1lekzkb {
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+}
+.css-1mbo1ls {
+  position: relative;
+  flex: 1 1 0%;
+}
+.css-14go5ty {
+  font-weight: 500;
+  font-size: 0.875rem;
+}
+.css-1axeus7 {
+  vertical-align: baseline;
+  font-weight: 600;
+  font-size: 1.5rem;
+  font-variant-numeric: proportional-nums;
+}
+.css-faxls7 {
+  border-radius: 9999px;
+  display: inline-flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: 500;
+  position: relative;
+  flex-shrink: 0;
+  background: #940c00;
+  font-size: calc(3rem / 2.5);
+  color: white;
+  border-color: white;
+  vertical-align: top;
+  width: 3rem;
+  height: 3rem;
+}
+
+.css-2plr3x {
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  border-radius: 0.5rem;
+  padding-inline-start: 2.5rem;
+  padding-inline-end: 2.5rem;
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
+  background-color: #81b3fa;
 }

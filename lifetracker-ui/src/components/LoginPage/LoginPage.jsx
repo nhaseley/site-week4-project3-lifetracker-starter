@@ -30,6 +30,10 @@ export default function LoginPage({
       setError({});
     }
   }
+
+  function handleDemo(){
+    setUserLoginInfo({email: "nya@gmail.com", password: "nya"})
+  }
   
 
   return (
@@ -118,6 +122,7 @@ export default function LoginPage({
           Sign Up
         </Link>
       </div>
+      <button className="demo-button" onClick={handleDemo}> Demo Login</button>
     </div>
   );
 }

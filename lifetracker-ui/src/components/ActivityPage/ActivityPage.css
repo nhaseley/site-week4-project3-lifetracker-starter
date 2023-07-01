@@ -55,8 +55,12 @@
     font-size: 0.875rem;
     padding-inline-start: 0.75rem;
     padding-inline-end: 0.75rem;
+    border: 1px solid currentcolor;
     background: #319795;
     color: white;
+}
+.css-moltat:hover{
+    background: #285E61;
 }
 .css-l6faz9 {
     display: inline-flex;
@@ -82,8 +86,11 @@
     padding-inline-start: 0.75rem;
     padding-inline-end: 0.75rem;
     border: 1px solid currentcolor;
-    color: #319795;
-    background: transparent;
+    color: white;
+    background: #00A3C4;
+}
+.css-l6faz9:hover{
+    background: #0987A0;
 }
 .css-n3canj {
     display: inline-flex;
@@ -109,20 +116,18 @@
     padding-inline-start: 0.75rem;
     padding-inline-end: 0.75rem;
     border: 1px solid currentcolor;
-    color: #005cdd;
-    background: transparent;
+    color: white;
+    background: #005cdd;
+}
+.css-n3canj:hover{
+    background: #00429f;
 }
 .css-18qrtb8 {
     display: grid;
     grid-gap: 2.5rem;
     grid-template-columns: repeat(2, minmax(0px, 1fr));
 }
-/* .grid{
-    width: 500px;
-    height: 500px; 
 
-
-} */
 .css-xkuesw {
     width: 100%;
     background: #319795;
@@ -270,3 +275,23 @@
     font-size: 1.5rem;
     font-variant-numeric: proportional-nums;
 }
+.add-exercise-button{
+    text-decoration: none;
+    color: white;
+}
+
+.add-sleep-button{
+    text-decoration: none;
+    color: white
+}
+.add-nutrition-button{
+    text-decoration: none;
+    color: white;
+}
+/* .ActivityPage .css-1hv8zgx {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr 1fr;
+    grid-row-gap: 3rem;
+    grid-column-gap: 2.5rem;
+    margin-left: 170px
+  } */
