@@ -27,6 +27,8 @@ function App() {
   const [error, setError] = useState({})
   const [passwordDisplayed, setPasswordDisplayed] = useState({password:false, confirmPassword: false})
   const [userLoggedIn, setUserLoggedIn] = useState(false)
+  const [tokenFirstName, setTokenFirstName] = useState();
+
 
 // ---- functions ----
   function handleShowPassword(event){
@@ -35,13 +37,17 @@ function App() {
   function handleHidePassword(event){
     event.target.name === "password-toggle" ? setPasswordDisplayed({password: false, confirmPassword: passwordDisplayed.confirmPassword}): setPasswordDisplayed({password: passwordDisplayed.password, confirmPassword: false})
   }
+  function handleLogout (){
+    localStorage.removeItem("token")
+    setUserLoggedIn(false)
+  }
 
 // ---- return object ----
   return (
     <div className="app">
       <BrowserRouter>
         <Routes>
-          <Route path="" element={<Navbar userLoggedIn={userLoggedIn} setUserLoggedIn={setUserLoggedIn}/>}>
+          <Route path="" element={<Navbar userLoggedIn={userLoggedIn} setUserLoggedIn={setUserLoggedIn} handleLogout={handleLogout}/>}>
             <Route path="/" element={<Landing />}></Route>
 
             <Route
@@ -57,6 +63,8 @@ function App() {
                   handleHidePassword={handleHidePassword}
                   setUserLoggedIn={setUserLoggedIn}
                   userLoggedIn={userLoggedIn}
+                  tokenFirstName={tokenFirstName}
+                  setTokenFirstName={setTokenFirstName}
                 />
               }
             />
@@ -73,6 +81,8 @@ function App() {
                   handleShowPassword={handleShowPassword}
                   handleHidePassword={handleHidePassword}
                   setUserLoggedIn={setUserLoggedIn}
+                  tokenFirstName={tokenFirstName}
+                  setTokenFirstName={setTokenFirstName}
                 />
               }
             ></Route>

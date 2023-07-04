@@ -2,7 +2,7 @@ import "./Navbar.css";
 import * as React from "react";
 import { Outlet, Link } from "react-router-dom";
 
-export default function Navbar({ userLoggedIn, setUserLoggedIn }) {
+export default function Navbar({ userLoggedIn, setUserLoggedIn, handleLogout }) {
   return (
     <>
       <div className="navbar">
@@ -38,6 +38,9 @@ export default function Navbar({ userLoggedIn, setUserLoggedIn }) {
                 <Link to={"/register"} className="register-button">
                   Register
                 </Link>
+              </button>
+              <button type="button" className="logout-button" onClick={handleLogout}>
+                Log Out
               </button>
             </>
           ) : (

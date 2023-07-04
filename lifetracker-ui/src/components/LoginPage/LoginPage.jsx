@@ -1,8 +1,10 @@
 import * as React from "react";
+import { useEffect } from "react"
 import "./LoginPage.css";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import ActivityPage from "../ActivityPage/ActivityPage";
+import jwtDecode from "jwt-decode";
 
 export default function LoginPage({
   userLoginInfo,
@@ -13,9 +15,30 @@ export default function LoginPage({
   handleShowPassword,
   handleHidePassword,
   setUserLoggedIn,
-  userLoggedIn
-
+  userLoggedIn,
+  tokenFirstName,
+  setTokenFirstName
 }) {
+
+  useEffect(() => {
+    const checkLoggedIn = () => {
+    // check if user is already logged in when they first access the webapp
+    const token = localStorage.getItem("token");
+    if (token){ 
+      const decodedToken = jwtDecode(token);
+      setTokenFirstName(decodedToken.firstName)
+      if (decodedToken.exp * 1000 > Date.now()){
+        setUserLoggedIn(true)
+      } else {
+        // Token has expired, log out the user
+        handleLogout();
+      }
+    }
+}; 
+}, [])
+
+ 
+
   async function loginUser(event) {
     event.preventDefault();
 
@@ -23,16 +46,23 @@ export default function LoginPage({
       emailInput: userLoginInfo.email,
       passwordInput: userLoginInfo.password,
     });
+    console.log("login result: ", result)
 
     if (result.data.status) {
       console.log("this login failed!");
       setError(result.data);
     } else {
       console.log("successful log in");
+      const token = result.data.token;
+
+      localStorage.setItem("token", token)
+      const decodedToken = jwtDecode(token);
+      setTokenFirstName(decodedToken.firstName)
+
       setUserLoginInfo({email: "", password: ""})
       setError({});
-      
       setUserLoggedIn(true)
+      console.log("Welcome, ", decodedToken.firstName, "!")
       // return <ActivityPage/>
     }
   }
@@ -47,9 +77,9 @@ export default function LoginPage({
 
   return (
 
-    
-
+    <div > Here we are logged in as: {tokenFirstName} 
     <div className="login-page">
+
       <div className="login-form">
         <span className="chakra-avatar css-3fy9wq">
           <img
@@ -136,6 +166,6 @@ export default function LoginPage({
       </div>
       <button className="demo-button" onClick={handleDemo}> Demo Login</button>
     </div>
-    
+    </div>
   );
 }

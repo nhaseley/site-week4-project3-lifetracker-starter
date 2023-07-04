@@ -2,6 +2,8 @@ import * as React from "react";
 import "./RegistrationPage.css";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import jwtDecode from "jwt-decode";
+
 
 export default function RegistrationPage({
   userLoginInfo,
@@ -11,7 +13,9 @@ export default function RegistrationPage({
   passwordDisplayed,
   handleHidePassword,
   handleShowPassword,
-  setUserLoggedIn
+  setUserLoggedIn,
+  tokenFirstName,
+  setTokenFirstName
 }) {
 
   async function signupUser(event) {
@@ -26,12 +30,21 @@ export default function RegistrationPage({
         firstNameInput: userLoginInfo.firstName,
         lastNameInput: userLoginInfo.lastName,
       });
-      console.log("login result: ", result);
+      console.log("registration result: ", result);
 
       if (result.data.status) {
+        console.log("this registration failed!")
         setError(result.data);
       } else {
         console.log("successful registration");
+        const token = result.data.token;
+        console.log("token on registration: ", token)
+
+        localStorage.setItem("token", token)
+        const decodedToken = jwtDecode(token)
+        setTokenFirstName(decodedToken.firstName)
+
+        setUserLoggedIn(true);
         setError({});
         setUserLoginInfo({email: "", username: "", firstName: "", lastName: "", password: "", confirmPassword:""})
       }
