@@ -7,7 +7,6 @@ const authenticateJWT = async (req, res, next) => {
    const token = req.data.token
    console.log("TOKEN HERE: ", token)
    if (!token) {
-    console.log("here", req.headers.authorization)
     res.send({message: "Missing authorization token", status: 401 })
     //    return res.status(401).json({ error: 'Missing authorization token' })
    }

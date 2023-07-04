@@ -71,9 +71,6 @@ export default function LoginPage({
     setUserLoginInfo({email: "nya@gmail.com", password: "nya"})
   }
   console.log(userLoggedIn)
-  // if (userLoggedIn){
-  //   return <ActivityPage/>
-  // }
 
   return (
 

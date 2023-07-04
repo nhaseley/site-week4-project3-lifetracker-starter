@@ -2,7 +2,11 @@ import "./Navbar.css";
 import * as React from "react";
 import { Outlet, Link } from "react-router-dom";
 
-export default function Navbar({ userLoggedIn, setUserLoggedIn, handleLogout }) {
+export default function Navbar({
+  userLoggedIn,
+  setUserLoggedIn,
+  handleLogout,
+}) {
   return (
     <>
       <div className="navbar">
@@ -39,19 +43,15 @@ export default function Navbar({ userLoggedIn, setUserLoggedIn, handleLogout }) 
                   Register
                 </Link>
               </button>
-              <button type="button" className="logout-button" onClick={handleLogout}>
-                Log Out
-              </button>
+            
             </>
           ) : (
-            <button type="button" className="css-td8gbm">
+            <button type="button" className="css-td8gbm" onClick={handleLogout}>
               <Link to={"/activity"} className="log-out-button">
-                  Log Out
-                </Link>
-             
+                Log Out
+              </Link>
             </button>
           )}
-          {/* TODO: how to reset for logging out */}
         </div>
       </div>
       <Outlet />
