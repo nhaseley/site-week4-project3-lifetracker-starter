@@ -18,7 +18,8 @@ export default function LoginPage({
   userLoggedIn,
   tokenFirstName,
   setTokenFirstName,
-  logoutUser
+  logoutUser,
+  setUser_Id
 }) {
 
  
@@ -50,16 +51,21 @@ export default function LoginPage({
       emailInput: userLoginInfo.email,
       passwordInput: userLoginInfo.password,
     });
-    console.log("login result: ", result)
 
     if (result.data.status) {
-      console.log("this login failed!");
+      console.log("login failed!");
       setError(result.data);
     } else {
       console.log("successful log in");
       const token = result.data.token;
+      console.log("token on login: ", token)
+
       localStorage.setItem("token", token)
       const decodedToken = jwtDecode(token);
+      
+      setUser_Id(userLoginInfo.id+1) 
+      // used for nutritions page
+
       setTokenFirstName(decodedToken.firstName)
 
       setUserLoginInfo({email: "", password: ""})

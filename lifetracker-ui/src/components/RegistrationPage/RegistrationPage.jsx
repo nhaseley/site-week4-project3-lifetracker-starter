@@ -34,7 +34,7 @@ export default function RegistrationPage({
       console.log("registration result: ", result);
 
       if (result.data.status) {
-        console.log("this registration failed!")
+        console.log("registration failed!")
         setError(result.data);
       } else {
         console.log("successful registration");

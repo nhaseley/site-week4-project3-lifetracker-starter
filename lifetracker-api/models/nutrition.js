@@ -11,7 +11,7 @@ const crypto = require("crypto");
 const jwt = require("jsonwebtoken");
 const secretKey = crypto.randomBytes(64).toString("hex");
 
-class User {
+class Nutrition {
   /**
    * Convert a nutrition from the database into a nutrition object that can be viewed publically.
    *
@@ -19,23 +19,39 @@ class User {
    * @param {User} nutrition - nutrition from database
    * @returns nutrition
    */
-  static createNutrition(nutrition, userId) {
-    if (!nutrition.name || !nutrition.category || !nutrition.imageUrl || !nutrition.calories || !nutrition.imageUrl || !userId){
+  static async createNutrition(nutrition) {
+    if (!nutrition.name || !nutrition.category || !nutrition.imageUrl || !nutrition.calories || !nutrition.quantity|| !nutrition.imageUrl || !nutrition.user_id){
         throw new BadRequestError("Nutrition field(s) not supplied")
     }
-    if (User.fetchNutritionById(nutrition.id)) {
-        throw new BadRequestError(`Duplicate nutrition: ${nutrition}`);
-      }
-    return {
-      id: nutrition.id,
-      userId: userId,
-      name: nutrition.name,
-      category: nutrition.category,
-      imageUrl: nutrition.imageUrl,
-      calories: nutrition.calories,
-      quantity: 1
+      const result = await db.query(
+        `INSERT INTO nutrition (
+            user_id, 
+            name,
+            category,
+            image_url,
+            calories,
+            quantity
+          )
+          VALUES ($1, $2, $3, $4, $5, $6)
+          RETURNING 
+                user_id, 
+                name,
+                category,
+                image_url,
+                calories,
+                quantity`,
+        [
+          nutrition.user_id,
+          nutrition.name.toLowerCase(),
+          nutrition.category.toLowerCase(),
+          nutrition.imageUrl.toLowerCase(),
+          nutrition.calories,
+          nutrition.quantity
+        ]
+      );
+      const nutritionRes = result.rows[0];
+      return nutritionRes
     }
-  }
 
   /**
    * Fetch a nutrition in the database by id
@@ -46,12 +62,11 @@ class User {
   static async fetchNutritionById(id) {
     const result = await db.query(
       `SELECT id,
-              userId,
+              user_id,
               name, 
               category,
               imageUrl,
-              calories,
-              quantity            
+              calories            
            FROM nutrition
            WHERE id = $1`,
       [id]
@@ -72,17 +87,17 @@ class User {
    * @param {String} id
    * @returns nutition
    */
-   static async listNutritionForUser(userId) {
+   static async listNutritionForUser(user_id) {
     const result = await db.query(
       `SELECT id,
+              user_id, 
               name, 
               category,
               imageUrl,
-              calories,
-              quantity            
+              calories           
            FROM nutrition
-           WHERE userId = $1`,
-      [userId]
+           WHERE user_id = $1`,
+      [user_id]
     );
 // TODO: add to a list instead of retunring first instance?
     const nutrition = result.rows[0];
@@ -95,4 +110,4 @@ class User {
 
 }
 
-module.exports = User;
+module.exports = Nutrition;

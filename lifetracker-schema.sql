@@ -14,7 +14,25 @@ CREATE TABLE nutrition (
   name       TEXT NOT NULL,
   category   TEXT NOT NULL,
   calories   INT,
+  quantity   INT,
   image_url  TEXT NOT NULL,
+  user_id    INTEGER,
+  created_at TIMESTAMP DEFAULT NOW()
+);
+
+CREATE TABLE sleep (
+  id         SERIAL PRIMARY KEY,
+  startTime  TEXT NOT NULL,
+  endTime    TEXT NOT NULL,
+  user_id    INTEGER,
+  created_at TIMESTAMP DEFAULT NOW()
+);
+CREATE TABLE exercise (
+  id         SERIAL PRIMARY KEY,
+  name        TEXT NOT NULL,
+  category    TEXT NOT NULL,
+  duration   INT,
+  intensity  INT,
   user_id    INTEGER,
   created_at TIMESTAMP DEFAULT NOW()
 );

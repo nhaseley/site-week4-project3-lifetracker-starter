@@ -160,10 +160,10 @@ class User {
   /**
    * Fetch a user in the database by id
    *
-   * @param {String} userId
+   * @param {String} user_id
    * @returns user
    */
-  static async fetchById(userId) {
+  static async fetchById(user_id) {
     const result = await db.query(
       `SELECT id,
               email,    
@@ -174,7 +174,7 @@ class User {
               date              
            FROM users
            WHERE id = $1`,
-      [userId]
+      [user_id]
     );
 
     const user = result.rows[0];

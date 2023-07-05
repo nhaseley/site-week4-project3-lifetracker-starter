@@ -31,7 +31,7 @@ By the end of this project you will be able to...
   - [x] If the user is logged in, it should display a **Sign Out** button.
   - [x] If no user is logged in, it should display **Login** and **Register** buttons.
   - [x] Display a logo on the far left side, and contain links to the individual detailed activity pages.
-- [ ] Users should have the ability to track at least **one** type of activity (i.e., nutrition, exercise, sleep, etc.). Each activity should be tracked on separate pages.
+- [x] Users should have the ability to track at least **one** type of activity (i.e., nutrition, exercise, sleep, etc.). Each activity should be tracked on separate pages.
 - [ ] **Detailed Activity Page:** Display and enter activities.
   - [ ] Display a feed of all previously tracked activities.
   - [ ] A form to enter relevant information (i.e., if tracking nutrition, the user can enter calories, timestamp, image, category, etc.).
@@ -251,15 +251,15 @@ Update the `App` component to manage authentication state:
 
 #### Implement the `NutritionPage` Component
 
-- [ ] Build the **`NutritionPage`** component to:
+- [x] Build the **`NutritionPage`** component to:
   - [x] Render JSX that is wrapped by an element with the class name of `nutrition-page`
   - [ ] Take the `appState` and `setAppState` as props and extract all the necessary data from it.
-  - [ ] Render a nested `Routes` component from `react-router-dom`.
-    - [ ] There should be multiple `Route` components:
+  - [x] Render a nested `Routes` component from `react-router-dom`.
+    - [x] There should be multiple `Route` components:
       - [x] The `/nutrition` route should render the `NutritionOverview` component
       - [x] The `/nutrition/create` route should render the `NutritionNew` component
       - [ ] The `/nutrition/id/:nutritionId` should render the `NutritionDetail` component
-      - [ ] Any other route should render the `NotFound` component
+      - [x] Any other route should render the `NotFound` component
 
 #### Implement the `NutritionOverview` Component
 
@@ -620,8 +620,8 @@ Here are the pieces of functionality that should be built out for the backend:
     - [ ] Commit all work to `git`
   - [ ] The **/nutrition** routes
     - [ ] In the `routes` directory, create two new files: `routes/nutrition.js` and `routes/nutrition.test.js`
-      - [ ] A new Express router should be created that will be mounted at the `/nutrition` endpoint. It should handle:
-        - [ ] `GET` requests to the `/` endpoint
+      - [x] A new Express router should be created that will be mounted at the `/nutrition` endpoint. It should handle:
+        - [x] `GET` requests to the `/` endpoint
           - [ ] It should send a JSON response back to the client with all of the user-owned nutrition instances in an array like so: `{ "nutritions": [...] }`
         - [ ] `POST` requests to the `/` endpoint
           - [ ] It should accept a request body with one `nutrition` key containing an object with all the attributes of the `nutrition` entry

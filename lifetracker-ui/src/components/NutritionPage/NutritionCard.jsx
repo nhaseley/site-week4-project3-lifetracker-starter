@@ -28,7 +28,7 @@ export default function NutritionCard({ item }) {
               <span className="nutrition-category" >{item.category}</span>
             </h2>
           </div>
-          <img className="nutrition-image" src={item.imageUrl}></img>
+          <img className="nutrition-image" src={item.image_url}></img>
         </div>
         <div className="white css-1lekzkb">
           <div className="nutrition-calories">

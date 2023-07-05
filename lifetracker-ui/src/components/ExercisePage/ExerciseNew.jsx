@@ -1,8 +1,9 @@
 import * as React from "react";
 import "./ExerciseNew.css";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
-export default function ExerciseNew({exercises, setExercises, exerciseForm, setExerciseForm}){
+export default function ExerciseNew({exercises, setExercises, exerciseForm, setExerciseForm, user_id}){
     function incrementDuration(){
         exerciseForm.duration += 1
         console.log("exercise form: ", exerciseForm)
@@ -24,8 +25,21 @@ export default function ExerciseNew({exercises, setExercises, exerciseForm, setE
         }
         console.log("exercise form: ", exerciseForm)
       }
-      function clearExerciseForm(){
-        setExercises([...exercises, exerciseForm])
+      async function clearExerciseForm(){
+        let result = await axios.post(
+            "http://localhost:3001/auth/create-exercise",
+            {
+              user_id: user_id,
+              name: exerciseForm.name,
+              category: exerciseForm.category,
+              duration: exerciseForm.duration,
+              intensity: exerciseForm.intensity,
+            }
+          );
+      
+          console.log("create exercise result: ", result.data.updatedExercise);
+        setExercises([...exercises, result.data.updatedExercise])
+        // setExercises([...exercises, exerciseForm])
       
         setExerciseForm({
           name: "",
@@ -60,9 +74,11 @@ export default function ExerciseNew({exercises, setExercises, exerciseForm, setE
                                         <div className="chakra-select__wrapper css-42b2qy">
                                             <select name="category" id="field-:rs:" required="" aria-required="true" className="chakra-select css-1gpsbw3" onChange={(e) => setExerciseForm((u) => ({...u, category: e.target.value}))}>
                                                 <option value="">Select a category</option>
-                                                <option value="snack">Snack</option>
-                                                <option value="beverage">Beverage</option>
-                                                <option value="food">Food</option>
+                                                <option value="run">Run</option>
+                                                <option value="bike">Bike</option>
+                                                <option value="lift">Lift</option>
+                                                <option value="swim">Swim</option>
+                                                <option value="sports">Sports</option>
                                             </select>
                                             <div className="chakra-select__icon-wrapper css-iohxn1">
                                                 <svg viewBox="0 0 24 24" role="presentation" className="chakra-select__icon" focusable="false" aria-hidden="true" style={{width: "1em", height: "1em", color: "currentcolor"}}><path fill="currentColor" d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"></path></svg>
@@ -77,10 +93,10 @@ export default function ExerciseNew({exercises, setExercises, exerciseForm, setE
                                             <div value="1" className="chakra-numberinput css-3e5t3k">
                                             <input name="quantity" inputMode="decimal" type="text" pattern="[0-9]*(.[0-9]+)?" id="field-:rt:" aria-readonly="false" aria-required="true" required="" role="spinbutton" aria-valuemin="1" aria-valuemax="100" aria-valuenow="1" aria-valuetext="1" autoComplete="off" autoCorrect="off" className="chakra-numberinput__field css-1551roq" value={exerciseForm.duration}></input>
                                             <div aria-hidden="true" className="css-1jj9yua">
-                                                <div role="button" tabIndex="-1" className="css-1m5jnul">
-                                                <svg viewBox="0 0 24 24" focusable="false" className="chakra-icon css-onkibi"><path fill="currentColor" d="M12.8,5.4c-0.377-0.504-1.223-0.504-1.6,0l-9,12c-0.228,0.303-0.264,0.708-0.095,1.047 C2.275,18.786,2.621,19,3,19h18c0.379,0,0.725-0.214,0.895-0.553c0.169-0.339,0.133-0.744-0.095-1.047L12.8,5.4z"></path></svg>
+                                                <div role="button" tabIndex="-1" className="css-1m5jnul"onClick={incrementDuration}>
+                                                <svg viewBox="0 0 24 24" focusable="false" className="chakra-icon css-onkibi" ><path fill="currentColor" d="M12.8,5.4c-0.377-0.504-1.223-0.504-1.6,0l-9,12c-0.228,0.303-0.264,0.708-0.095,1.047 C2.275,18.786,2.621,19,3,19h18c0.379,0,0.725-0.214,0.895-0.553c0.169-0.339,0.133-0.744-0.095-1.047L12.8,5.4z"></path></svg>
                                                 </div>
-                                                <div role="button" tabIndex="-1" disabled="" aria-disabled="true" className="css-1m5jnul">
+                                                <div role="button" tabIndex="-1" disabled="" aria-disabled="true" className="css-1m5jnul" onClick={decrementDuration}>
                                                 <svg viewBox="0 0 24 24" focusable="false" className="chakra-icon css-onkibi"><path fill="currentColor" d="M21,5H3C2.621,5,2.275,5.214,2.105,5.553C1.937,5.892,1.973,6.297,2.2,6.6l9,12 c0.188,0.252,0.485,0.4,0.8,0.4s0.611-0.148,0.8-0.4l9-12c0.228-0.303,0.264-0.708,0.095-1.047C21.725,5.214,21.379,5,21,5z"></path></svg>
                                                 </div>
                                             </div>
@@ -93,10 +109,10 @@ export default function ExerciseNew({exercises, setExercises, exerciseForm, setE
                                             <div value="" className="chakra-numberinput css-3e5t3k">
                                                 <input name="calories" inputMode="decimal" type="text" pattern="[0-9]*(.[0-9]+)?" id="field-:ru:" aria-readonly="false" aria-required="true" required="" role="spinbutton" aria-valuemin="0" aria-valuemax="100000" autoComplete="off" autoCorrect="off" className="chakra-numberinput__field css-1551roq" value={exerciseForm.intensity}></input>
                                                 <div aria-hidden="true" className="css-1jj9yua">
-                                                    <div role="button" tabIndex="-1" className="css-1m5jnul">
+                                                    <div role="button" tabIndex="-1" className="css-1m5jnul" onClick={incrementIntensity}>
                                                         <svg viewBox="0 0 24 24" focusable="false" className="chakra-icon css-onkibi"><path fill="currentColor" d="M12.8,5.4c-0.377-0.504-1.223-0.504-1.6,0l-9,12c-0.228,0.303-0.264,0.708-0.095,1.047 C2.275,18.786,2.621,19,3,19h18c0.379,0,0.725-0.214,0.895-0.553c0.169-0.339,0.133-0.744-0.095-1.047L12.8,5.4z"></path></svg>
                                                     </div>
-                                                    <div role="button" tabIndex="-1" className="css-1m5jnul">
+                                                    <div role="button" tabIndex="-1" className="css-1m5jnul" onClick={decrementIntensity}> 
                                                         <svg viewBox="0 0 24 24" focusable="false" className="chakra-icon css-onkibi"><path fill="currentColor" d="M21,5H3C2.621,5,2.275,5.214,2.105,5.553C1.937,5.892,1.973,6.297,2.2,6.6l9,12 c0.188,0.252,0.485,0.4,0.8,0.4s0.611-0.148,0.8-0.4l9-12c0.228-0.303,0.264-0.708,0.095-1.047C21.725,5.214,21.379,5,21,5z"></path></svg>
                                                     </div>
                                                 </div>

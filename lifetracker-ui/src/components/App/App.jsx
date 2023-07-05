@@ -17,6 +17,7 @@ import ExerciseNew from "../ExercisePage/ExerciseNew";
 function App() {
   // ---- states ----
   const [userLoginInfo, setUserLoginInfo] = useState({
+    id: 1,
     email: "",
     username: "",
     firstName: "",
@@ -24,6 +25,7 @@ function App() {
     password: "",
     confirmPassword: "",
   });
+  const [user_id, setUser_Id] = useState(userLoginInfo.id);
   const [error, setError] = useState({});
   const [passwordDisplayed, setPasswordDisplayed] = useState({
     password: false,
@@ -34,6 +36,7 @@ function App() {
   
   const [nutritions, setNutritions] = useState([]);
   const [nutritionForm, setNutritionForm] = useState({
+    // id: 3,
     name: "",
     category: "",
     quantity: 0,
@@ -115,6 +118,7 @@ function App() {
                   tokenFirstName={tokenFirstName}
                   setTokenFirstName={setTokenFirstName}
                   logoutUser={logoutUser}
+                  setUser_Id={setUser_Id}
                 />
               }
             />
@@ -149,22 +153,23 @@ function App() {
                 <NutritionPage
                   userLoggedIn={userLoggedIn}
                   nutritions={nutritions}
+                  user_id={user_id}
                 />
               }
             ></Route>
-            <Route path="/nutrition/create" element={<NutritionNew nutritions={nutritions} setNutritions={setNutritions} nutritionForm={nutritionForm} setNutritionForm={setNutritionForm}/>}></Route>
+            <Route path="/nutrition/create" element={<NutritionNew nutritions={nutritions} setNutritions={setNutritions} nutritionForm={nutritionForm} setNutritionForm={setNutritionForm} user_id={user_id}/>}></Route>
 
             <Route
               path="/sleep"
               element={<SleepPage userLoggedIn={userLoggedIn} sleeps={sleeps} />}
             ></Route>
-            <Route path="/sleep/create" element={<SleepNew sleeps={sleeps} setSleeps ={setSleeps} sleepForm={sleepForm} setSleepForm={setSleepForm}/>}></Route>
+            <Route path="/sleep/create" element={<SleepNew sleeps={sleeps} setSleeps ={setSleeps} sleepForm={sleepForm} setSleepForm={setSleepForm} user_id={user_id}/>}></Route>
 
             <Route
               path="/exercise"
               element={<ExercisePage userLoggedIn={userLoggedIn} exercises={exercises}/>}
             ></Route>
-            <Route path="/exercise/create" element={<ExerciseNew exercises={exercises} setExercises={setExercises} exerciseForm={exerciseForm} setExerciseForm={setExerciseForm} />}></Route>
+            <Route path="/exercise/create" element={<ExerciseNew exercises={exercises} setExercises={setExercises} exerciseForm={exerciseForm} setExerciseForm={setExerciseForm} user_id={user_id}/>}></Route>
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>

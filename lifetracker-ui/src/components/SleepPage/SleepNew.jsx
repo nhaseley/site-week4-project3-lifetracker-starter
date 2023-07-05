@@ -1,21 +1,27 @@
 import * as React from "react";
 import "./SleepNew.css";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
-export default function SleepNew({sleeps, setSleeps, sleepForm, setSleepForm}){
-
-    
-
-    function clearSleepForm(){
-        console.log(sleepForm)
-        setSleeps([...sleeps, sleepForm])
+export default function SleepNew({sleeps, setSleeps, sleepForm, setSleepForm, user_id}){
+    async function clearSleepForm(){
+        let result = await axios.post(
+            "http://localhost:3001/auth/create-sleep",
+            {
+              user_id: user_id,
+              startTime: sleepForm.startTime,
+              endTime: sleepForm.endTime,
+            }
+        );
+        console.log("create sleep result: ", result.data.updatedSleep)
+        setSleeps([...sleeps, result.data.updatedSleep])
+        // setSleeps([...sleeps, sleepForm])
       
         setSleepForm({
           startTime: "",
           endTime: "",
         })
     }
-    console.log("sleeps: ", sleeps)
 
 
     return(

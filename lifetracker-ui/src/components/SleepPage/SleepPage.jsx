@@ -4,8 +4,6 @@ import { Link } from "react-router-dom";
 import SleepCard from "./SleepCard"
 
 export default function SleepPage({ userLoggedIn, sleeps }) {
-  console.log("sleeps: ", sleeps);
-
   return (
     <div className="SleepPage css-1bpnzr3">
       {!userLoggedIn ? (
