@@ -15,7 +15,8 @@ export default function RegistrationPage({
   handleShowPassword,
   setUserLoggedIn,
   tokenFirstName,
-  setTokenFirstName
+  setTokenFirstName,
+  userLoggedIn
 }) {
 
   async function signupUser(event) {
@@ -56,6 +57,8 @@ export default function RegistrationPage({
   }
 
   return (
+    userLoggedIn ? <Link to={"/activity"}> Navigate to your activity page here </Link>:
+
     <div className="registration-page">
       <div className="registration-form">
         <span className="chakra-avatar css-3fy9wq">

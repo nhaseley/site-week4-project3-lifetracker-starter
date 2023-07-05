@@ -5,7 +5,7 @@ import { Outlet, Link } from "react-router-dom";
 export default function Navbar({
   userLoggedIn,
   setUserLoggedIn,
-  handleLogout,
+  logoutUser
 }) {
   return (
     <>
@@ -46,8 +46,8 @@ export default function Navbar({
             
             </>
           ) : (
-            <button type="button" className="css-td8gbm" onClick={handleLogout}>
-              <Link to={"/activity"} className="log-out-button">
+            <button type="button" className="css-td8gbm" onClick={logoutUser}>
+              <Link to={"/"} className="logout-button">
                 Log Out
               </Link>
             </button>

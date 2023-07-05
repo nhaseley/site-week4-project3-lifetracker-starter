@@ -126,7 +126,7 @@ html {
   color: black;
 }
 
-.log-out-button {
+.logout-button {
   display: inline-flex;
   appearance: none;
   -webkit-box-align: center;

@@ -2,7 +2,22 @@ import * as React from "react";
 import "./SleepNew.css";
 import { Link } from "react-router-dom";
 
-export default function SleepNew(){
+export default function SleepNew({sleeps, setSleeps, sleepForm, setSleepForm}){
+
+    
+
+    function clearSleepForm(){
+        console.log(sleepForm)
+        setSleeps([...sleeps, sleepForm])
+      
+        setSleepForm({
+          startTime: "",
+          endTime: "",
+        })
+    }
+    console.log("sleeps: ", sleeps)
+
+
     return(
 <div className="SleepNew">
         <div className="css-vpbd2d">
@@ -17,22 +32,22 @@ export default function SleepNew(){
                                         <form>
                                             <div className="chakra-stack css-1db3zf7">
                                                 <div role="group" className="chakra-form-control css-1kxonj9">
-                                                    <label id="field-:r3:-label" htmlFor="field-:r3:" className="chakra-form__label css-g6pte">Start Time
+                                                    <label id="field-:r3:-label" htmlFor="field-:r3:" className="chakra-form__label css-g6pte" onChange={(e) => setSleepForm((u) => ({...u, startTime: e.target.value}))}>Start Time
                                                         <span role="presentation" aria-hidden="true" className="chakra-form__required-indicator css-1tfjd1n">*</span>
                                                     </label>
                                                     <div className="chakra-input__group css-bx0blc" data-group="true">
-                                                        <input name="startTime" type="datetime-local" placeholder="Start Time" id="field-:r2:" required="" aria-required="true" className="chakra-input css-p20xy6" value=""></input>
+                                                        <input name="startTime" type="datetime-local" placeholder="Start Time" id="field-:r2:" required="" aria-required="true" className="chakra-input css-p20xy6" value="2017-06-01T08:30"></input>
                                                     </div>
                                                 </div>
                                                 <div role="group" className="chakra-form-control css-1kxonj9">
-                                                    <label id="field-:r3:-label" htmlFor="field-:r3:" className="chakra-form__label css-g6pte">End Time
+                                                    <label id="field-:r3:-label" htmlFor="field-:r3:" className="chakra-form__label css-g6pte" onChange={(e) => setSleepForm((u) => ({...u, endTime: e.target.value}))}>End Time
                                                         <span role="presentation" aria-hidden="true" className="chakra-form__required-indicator css-1tfjd1n">*</span>
                                                     </label>
                                                     <div className="chakra-input__group css-bx0blc" data-group="true">
-                                                        <input name="endTime" type="datetime-local" placeholder="End Time" id="field-:r3:" required="" aria-required="true" className="chakra-input css-p20xy6" value=""></input>
+                                                        <input name="endTime" type="datetime-local" placeholder="End Time" id="field-:r3:" required="" aria-required="true" className="chakra-input css-p20xy6" value="2017-06-01T10:30"></input>
                                                     </div>
                                                 </div>
-                                                <button type="submit" className="chakra-button css-1nrq84c">Save</button>
+                                                <button type="submit" className="chakra-button css-1nrq84c" onClick={clearSleepForm}> <Link className="save-sleep-link" to={"/sleep"}>Save </Link> </button>
                                             </div>
                                         </form>
                                     </div>

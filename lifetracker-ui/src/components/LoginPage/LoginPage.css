@@ -253,3 +253,8 @@
     background-color: #319795;
     color: white;
 }
+
+.log-in-link{
+    text-decoration: none;
+    color: white;
+}

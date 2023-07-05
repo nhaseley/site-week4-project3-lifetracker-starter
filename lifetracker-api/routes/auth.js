@@ -5,10 +5,6 @@ const User = require("../models/user")
 const router = express.Router()
 const { authenticateJWT } = require('../utils/tokens')
 
-
-
-
-
 // router.get("/me", async function (req, res) {
 //     // return res.status(200).json(
 //         // TODO: FIX?
@@ -22,8 +18,6 @@ router.post("/login", async function (req, res, next) {
     const user = await User.authenticate(req.body)
     if (user){
       const token = await User.generateAuthToken(user)
-      console.log("TOKEN: ", token)
-      console.log("USER: ", user)
       return res.status(200).json({ user, token})
       // return res.status(200).json({ user })
     }

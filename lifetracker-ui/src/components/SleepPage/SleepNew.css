@@ -33,3 +33,7 @@
     border-radius: 0px;
     width: 100%;
   }
+  .save-sleep-link{
+    text-decoration: none;
+    color: white
+  }

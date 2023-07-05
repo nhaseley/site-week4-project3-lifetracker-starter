@@ -17,8 +17,12 @@ export default function LoginPage({
   setUserLoggedIn,
   userLoggedIn,
   tokenFirstName,
-  setTokenFirstName
+  setTokenFirstName,
+  logoutUser
 }) {
+
+ 
+
 
   useEffect(() => {
     const checkLoggedIn = () => {
@@ -31,7 +35,7 @@ export default function LoginPage({
         setUserLoggedIn(true)
       } else {
         // Token has expired, log out the user
-        handleLogout();
+        logoutUser();
       }
     }
 }; 
@@ -54,7 +58,6 @@ export default function LoginPage({
     } else {
       console.log("successful log in");
       const token = result.data.token;
-
       localStorage.setItem("token", token)
       const decodedToken = jwtDecode(token);
       setTokenFirstName(decodedToken.firstName)
@@ -62,7 +65,6 @@ export default function LoginPage({
       setUserLoginInfo({email: "", password: ""})
       setError({});
       setUserLoggedIn(true)
-      console.log("Welcome, ", decodedToken.firstName, "!")
       // return <ActivityPage/>
     }
   }
@@ -70,9 +72,10 @@ export default function LoginPage({
   function handleDemo(){
     setUserLoginInfo({email: "nya@gmail.com", password: "nya"})
   }
-  console.log(userLoggedIn)
 
   return (
+    userLoggedIn ? <Link to={"/activity"}> Navigate to your activity page here </Link>:
+
 
     <div > Here we are logged in as: {tokenFirstName} 
     <div className="login-page">
@@ -149,7 +152,9 @@ export default function LoginPage({
                 className="submit-login"
                 onClick={loginUser}
               >
+                <Link to={"/activity"} className="log-in-link">
                 Login
+                </Link>
               </button>
             </div>
           </form>
