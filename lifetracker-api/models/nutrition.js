@@ -2,7 +2,7 @@
 const db = require("../db");
 
 const bcrypt = require("bcrypt");
-const { BadRequestError, UnauthorizedError } = require("../utils/errors");
+const { BadRequestError, UnauthorizedError, NotFoundError } = require("../utils/errors");
 const { validateFields } = require("../utils/validate");
 
 const { BCRYPT_WORK_FACTOR } = require("../config");
@@ -65,8 +65,10 @@ class Nutrition {
               user_id,
               name, 
               category,
-              imageUrl,
-              calories            
+              image_url,
+              calories,
+              quantity,
+              created_at            
            FROM nutrition
            WHERE id = $1`,
       [id]
@@ -93,15 +95,17 @@ class Nutrition {
               user_id, 
               name, 
               category,
-              imageUrl,
-              calories           
+              image_url,
+              calories,
+              quantity,
+              created_at         
            FROM nutrition
            WHERE user_id = $1`,
       [user_id]
     );
 // TODO: add to a list instead of retunring first instance?
-    const nutrition = result.rows[0];
-    if (!nutrition){
+    const nutrition = result.rows;
+    if (!nutrition || nutrition.length == 0){
         throw new NotFoundError("No nutrition logged from this user")
     }
     return nutrition;

@@ -53,7 +53,6 @@ class User {
     }
 
     const user = await User.fetchUserByEmail(creds.emailInput);
-
     if (user) {
       // compare hashed password to a new hash from password
       const isValid = await bcrypt.compare(creds.passwordInput, user.password);

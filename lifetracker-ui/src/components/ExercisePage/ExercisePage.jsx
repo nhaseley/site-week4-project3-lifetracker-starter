@@ -1,9 +1,23 @@
 import * as React from "react";
+import {useEffect} from "react";
 import "./ExercisePage.css";
 import { Link } from "react-router-dom";
 import ExerciseCard from "./ExerciseCard";
+import axios from "axios";
 
-export default function ExercisePage({ userLoggedIn, exercises }) {
+export default function ExercisePage({ userLoggedIn, exercises, setExercises, user_id}) {
+    useEffect(() => 
+    async function showExercises(){
+      let result = await axios.post("http://localhost:3001/auth/exercise", {  
+        user_id: user_id
+      });
+      if (((result.status === 201) || (result.data.status === 200)) && (result.data.exerciseList)){ 
+        // successful post
+        setExercises([result.data.exerciseList])
+      }
+    }, []
+  )
+
   return (
     <div className="ExercisePage css-1bpnzr3">
       {!userLoggedIn ? (
@@ -69,7 +83,7 @@ export default function ExercisePage({ userLoggedIn, exercises }) {
                         </Link>
                       </button>
                     </div>
-                    {exercises?.map((item) => (
+                    {exercises[0]?.map((item) => (
                       <ExerciseCard item={item} />
                     ))}
                   </div>

@@ -3,8 +3,7 @@ import "./NutritionCard.css";
 export default function NutritionCard({ item }) {
   return (
     <div className="nutrition-card">
-      <span className="nutrition-date">Today at 1:35 PM</span>
-      {/* TODO: createdAt */}
+      <span className="nutrition-date">{(new Date(item.created_at)).toLocaleString()}</span>
       <div className="css-2plr3x">
         <div className="css-56yjmq">
           <span

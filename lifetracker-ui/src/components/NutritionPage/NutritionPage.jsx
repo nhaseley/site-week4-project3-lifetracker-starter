@@ -1,4 +1,5 @@
 import * as React from "react";
+import {useEffect} from "react";
 import "./NutritionPage.css";
 import { Link } from "react-router-dom";
 import NutritionCard from "./NutritionCard";
@@ -7,17 +8,20 @@ import axios from "axios";
 export default function NutritionPage({
   userLoggedIn,
   nutritions,
+  setNutritions,
   user_id,
 }) {
-  async function showNutritions(event){
-    event.preventDefault();
 
-    let result = await axios.post("http://localhost:3001/auth/nutrition", {
-      user_id: user_id
-    });
-    console.log("showNutritions result: ", result)
-
-  }
+  useEffect(() => 
+    async function showNutritions(){
+      let result = await axios.post("http://localhost:3001/auth/nutrition", {
+        user_id: user_id
+      });
+      if (((result.status === 201) || (result.data.status === 200)) && (result.data.nutritionList)){ 
+        setNutritions([result.data.nutritionList])
+      }
+    }, []
+  )
 
   return (
     <div className="NutritionPage nutrition-page">
@@ -84,11 +88,14 @@ export default function NutritionPage({
                         </Link>
                       </button>
                     </div>
-
-                    {/* {console.log(showNutritions(user_id))} */}
-                    {nutritions?.map((item) => (
+                    <>
+                    {nutritions[0]?.map((item) => (
+                      <>
+                      {/* {console.log("item: ", item)} */}
                       <NutritionCard item={item}/>
-                    ))}
+                      </>
+                    ))} 
+                    </>
                   </div>
                 </div>
               </div>

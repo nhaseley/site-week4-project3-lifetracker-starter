@@ -63,7 +63,7 @@ export default function LoginPage({
       localStorage.setItem("token", token)
       const decodedToken = jwtDecode(token);
       
-      setUser_Id(userLoginInfo.id+1) 
+      setUser_Id(result.data.user.id) 
       // used for nutritions page
 
       setTokenFirstName(decodedToken.firstName)

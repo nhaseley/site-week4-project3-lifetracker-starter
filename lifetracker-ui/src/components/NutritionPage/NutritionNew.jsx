@@ -4,8 +4,6 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 
 export default function NutritionNew({
-  nutritions,
-  setNutritions,
   nutritionForm,
   setNutritionForm,
   user_id,
@@ -39,10 +37,6 @@ export default function NutritionNew({
       }
     );
 
-    console.log("create nutrition result: ", result.data.updatedNutrition);
-    setNutritions([...nutritions, result.data.updatedNutrition]);
-    // setNutritions([...nutritions, nutritionForm])
-    
     setNutritionForm({
       name: "",
       category: "",
@@ -348,13 +342,11 @@ export default function NutritionNew({
                             className="submit-nutrition"
                             onClick={clearNutritionForm}
                           >
-                            {" "}
                             <Link
                               className="save-nutrition-link"
                               to={"/nutrition"}
                             >
-                              {" "}
-                              Save{" "}
+                              Save
                             </Link>
                           </button>
                         </div>

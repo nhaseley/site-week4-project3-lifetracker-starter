@@ -3,27 +3,22 @@ import "./ExerciseNew.css";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
-export default function ExerciseNew({exercises, setExercises, exerciseForm, setExerciseForm, user_id}){
+export default function ExerciseNew({exerciseForm, setExerciseForm, user_id}){
     function incrementDuration(){
         exerciseForm.duration += 1
-        console.log("exercise form: ", exerciseForm)
       }
       function decrementDuration(){
         if (exerciseForm.duration > 0){
           exerciseForm.duration -= 1
         }
-        console.log("exercise form: ", exerciseForm)
-      
       }
         function incrementIntensity(){
           exerciseForm.intensity += 1
-          console.log("exercise form: ", exerciseForm)
       }
       function decrementIntensity(){
         if (exerciseForm.intensity > 0){
           exerciseForm.intensity -= 1
         }
-        console.log("exercise form: ", exerciseForm)
       }
       async function clearExerciseForm(){
         let result = await axios.post(
@@ -36,11 +31,7 @@ export default function ExerciseNew({exercises, setExercises, exerciseForm, setE
               intensity: exerciseForm.intensity,
             }
           );
-      
-          console.log("create exercise result: ", result.data.updatedExercise);
-        setExercises([...exercises, result.data.updatedExercise])
-        // setExercises([...exercises, exerciseForm])
-      
+            
         setExerciseForm({
           name: "",
           category: "",

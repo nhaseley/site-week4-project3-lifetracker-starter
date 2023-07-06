@@ -2,7 +2,7 @@
 const db = require("../db");
 
 const bcrypt = require("bcrypt");
-const { BadRequestError, UnauthorizedError } = require("../utils/errors");
+const { BadRequestError, UnauthorizedError, NotFoundError } = require("../utils/errors");
 const { validateFields } = require("../utils/validate");
 
 const { BCRYPT_WORK_FACTOR } = require("../config");
@@ -64,7 +64,8 @@ class Exercise {
               name, 
               category,
               duration,
-              intensity            
+              intensity,
+              created_at            
            FROM exercise
            WHERE id = $1`,
       [id]
@@ -92,14 +93,15 @@ class Exercise {
               name, 
               category,
               duration,
-              intensity           
+              intensity,
+              created_at           
            FROM exercise
            WHERE user_id = $1`,
       [user_id]
     );
 // TODO: add to a list instead of retunring first instance?
-    const exercise = result.rows[0];
-    if (!exercise){
+    const exercise = result.rows;
+    if (!exercise || exercise.length == 0){
         throw new NotFoundError("No exercise logged from this user")
     }
     return exercise;

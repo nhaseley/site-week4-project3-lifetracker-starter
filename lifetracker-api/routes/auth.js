@@ -66,8 +66,18 @@ router.post("/create-exercise", async function (req, res, next) {
 
 router.post("/nutrition", async function (req, res, next) {
   try {
-    const nutritionList = await Nutrition.listNutritionForUser(req.body)
+    const nutritionList = await Nutrition.listNutritionForUser(req.body.user_id)
     return res.status(201).json({ nutritionList })
+  } catch (err) {
+    res.send(err)
+    next(err)
+  }
+})
+
+router.post("/exercise", async function (req, res, next) {
+  try {
+    const exerciseList = await Exercise.listExerciseForUser(req.body.user_id)
+    return res.status(201).json({ exerciseList })
   } catch (err) {
     res.send(err)
     next(err)

@@ -3,7 +3,7 @@ import "./ExerciseCard.css";
 export default function ExerciseCard({ item }) {
   return (
     <div className="chakra-stack css-xixnl8">
-      <span className="css-89mcmc">Last Wednesday at 9:32 AM</span>
+      <span className="css-89mcmc">{(new Date(item.created_at)).toLocaleString()}</span>
       <div className="css-1d1dt3r">
         <div className="css-56yjmq">
           <span

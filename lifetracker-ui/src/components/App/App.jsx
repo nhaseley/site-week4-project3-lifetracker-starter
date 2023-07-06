@@ -17,7 +17,7 @@ import ExerciseNew from "../ExercisePage/ExerciseNew";
 function App() {
   // ---- states ----
   const [userLoginInfo, setUserLoginInfo] = useState({
-    id: 1,
+    // id: 1,
     email: "",
     username: "",
     firstName: "",
@@ -25,7 +25,7 @@ function App() {
     password: "",
     confirmPassword: "",
   });
-  const [user_id, setUser_Id] = useState(userLoginInfo.id);
+  const [user_id, setUser_Id] = useState();
   const [error, setError] = useState({});
   const [passwordDisplayed, setPasswordDisplayed] = useState({
     password: false,
@@ -36,7 +36,6 @@ function App() {
   
   const [nutritions, setNutritions] = useState([]);
   const [nutritionForm, setNutritionForm] = useState({
-    // id: 3,
     name: "",
     category: "",
     quantity: 0,
@@ -80,10 +79,15 @@ function App() {
         });
   }
   function logoutUser() {
-    localStorage.removeItem("token");
-    setUserLoggedIn(false);
-    console.log(userLoggedIn);
+    localStorage.removeItem("token")
+    setUserLoggedIn(false)
+    console.log("logged in? :", userLoggedIn)
+    setNutritions([])
+    setExercises([])
+    setUser_Id()
   }
+
+  console.log("USER ID FROM APP: ", user_id)
 
   // ---- return object ----
   return (
@@ -154,10 +158,11 @@ function App() {
                   userLoggedIn={userLoggedIn}
                   nutritions={nutritions}
                   user_id={user_id}
+                  setNutritions={setNutritions}
                 />
               }
             ></Route>
-            <Route path="/nutrition/create" element={<NutritionNew nutritions={nutritions} setNutritions={setNutritions} nutritionForm={nutritionForm} setNutritionForm={setNutritionForm} user_id={user_id}/>}></Route>
+            <Route path="/nutrition/create" element={<NutritionNew nutritionForm={nutritionForm} setNutritionForm={setNutritionForm} user_id={user_id}/>}></Route>
 
             <Route
               path="/sleep"
@@ -167,9 +172,9 @@ function App() {
 
             <Route
               path="/exercise"
-              element={<ExercisePage userLoggedIn={userLoggedIn} exercises={exercises}/>}
+              element={<ExercisePage userLoggedIn={userLoggedIn} exercises={exercises} setExercises={setExercises} user_id={user_id}/>}
             ></Route>
-            <Route path="/exercise/create" element={<ExerciseNew exercises={exercises} setExercises={setExercises} exerciseForm={exerciseForm} setExerciseForm={setExerciseForm} user_id={user_id}/>}></Route>
+            <Route path="/exercise/create" element={<ExerciseNew exerciseForm={exerciseForm} setExerciseForm={setExerciseForm} user_id={user_id}/>}></Route>
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>
