@@ -103,7 +103,7 @@ class Nutrition {
            WHERE user_id = $1`,
       [user_id]
     );
-// TODO: add to a list instead of retunring first instance?
+
     const nutrition = result.rows;
     if (!nutrition || nutrition.length == 0){
         throw new NotFoundError("No nutrition logged from this user")

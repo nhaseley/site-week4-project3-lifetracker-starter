@@ -325,7 +325,7 @@ Update the `App` component to manage authentication state:
 
 #### Implement the `NutritionCard` Component
 
-- [ ] Build the **`NutritionCard`** component to:
+- [x] Build the **`NutritionCard`** component to:
   - [x] Render JSX that is wrapped by an element with the class name of `nutrition-card`
   - [x] Accept **at least** the following props:
     - [x] `nutrition` - should be a nutrition entry object containing the following attributes:
@@ -338,10 +338,10 @@ Update the `App` component to manage authentication state:
   - [x] If the `nutrition` entry has a valid `imageUrl` attribute, render an `img` element with the class name of `nutrition-image` and use that `imageUrl` as its `src`
   - [x] Render the `calories` attribute of the `nutrition` entry inside an element with the class name of `nutrition-calories`
   - [x] Render the `category` attribute of the `nutrition` entry inside an element with the class name of `nutrition-category`
-  - [ ] Render the `createdAt` attribute of the `nutrition` entry in the format `dd/mm/yyyy` - example: `07/02/2022` - inside an element with the class name of `nutrition-date`.
+  - [x] Render the `createdAt` attribute of the `nutrition` entry in the format `dd/mm/yyyy` - example: `07/02/2022` - inside an element with the class name of `nutrition-date`.
 
-  - [ ] **DO THE SAME FOR ANY OTHER RESOURCE THAT IS IN THE APPLICATION**
-    - [ ] Choose whatever resources you want!
+  - [x] **DO THE SAME FOR ANY OTHER RESOURCE THAT IS IN THE APPLICATION**
+    - [x] Exercise Page
 
 #### Implement the `ProtectedRoute` Component
 

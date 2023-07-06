@@ -1,7 +1,15 @@
 import "./NutritionCard.css";
 
 export default function NutritionCard({ item }) {
+  console.log(item)
+
+  const itemDate = item.created_at.substring(0, item.created_at.indexOf('T'));
+  // console.log("date: ", itemDate)
+
+  
   return (
+
+    
     <div className="nutrition-card">
       <span className="nutrition-date">{(new Date(item.created_at)).toLocaleString()}</span>
       <div className="css-2plr3x">

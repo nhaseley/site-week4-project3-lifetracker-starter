@@ -55,6 +55,8 @@ function App() {
     endTime: "",
   });
 
+  const [averageCalories, setAverageCalories] = useState(0)
+
   // ---- functions ----
   function handleShowPassword(event) {
     event.target.name === "password-toggle"
@@ -148,7 +150,7 @@ function App() {
             ></Route>
             <Route
               path="/activity"
-              element={<ActivityPage userLoggedIn={userLoggedIn} />}
+              element={<ActivityPage userLoggedIn={userLoggedIn} averageCalories={averageCalories} setAverageCalories={setAverageCalories} nutritions={nutritions}setNutritions={setNutritions} user_id={user_id}/>}
             ></Route>
 
             <Route
@@ -159,6 +161,8 @@ function App() {
                   nutritions={nutritions}
                   user_id={user_id}
                   setNutritions={setNutritions}
+                  averageCalories={averageCalories}
+                  setAverageCalories={setAverageCalories}
                 />
               }
             ></Route>

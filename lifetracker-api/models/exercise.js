@@ -99,7 +99,7 @@ class Exercise {
            WHERE user_id = $1`,
       [user_id]
     );
-// TODO: add to a list instead of retunring first instance?
+
     const exercise = result.rows;
     if (!exercise || exercise.length == 0){
         throw new NotFoundError("No exercise logged from this user")
