@@ -16,7 +16,7 @@ import ExerciseNew from "../ExercisePage/ExerciseNew";
 import axios from "axios";
 
 function App() {
-  // ---- states ----
+  // ----------------- States --------------------- //
   const [userLoginInfo, setUserLoginInfo] = useState({
     // id: 1,
     email: "",
@@ -26,7 +26,6 @@ function App() {
     password: "",
     confirmPassword: "",
   });
-  // const [user_id, setUser_Id] = useState();
   const [error, setError] = useState({});
   const [passwordDisplayed, setPasswordDisplayed] = useState({
     password: false,
@@ -34,6 +33,7 @@ function App() {
   });
   const [userLoggedIn, setUserLoggedIn] = useState(false);
 
+  // ---- nutrition component ----
   const [nutritions, setNutritions] = useState([]);
   const [nutritionForm, setNutritionForm] = useState({
     name: "",
@@ -42,6 +42,10 @@ function App() {
     calories: 0,
     imageUrl: "",
   });
+  const [averageCalories, setAverageCalories] = useState(0);
+  const [maxCaloriesInMeal, setMaxCaloriesInMeal] = useState(0);
+
+  // ---- exercise component ----
   const [exercises, setExercises] = useState([]);
   const [exerciseForm, setExerciseForm] = useState({
     name: "",
@@ -49,19 +53,22 @@ function App() {
     duration: 0,
     intensity: 0,
   });
+
+  const [totalExerciseDuration, setTotalExerciseDuration] = useState(0);
+  const [averageExerciseIntensity, setAverageExerciseIntensity] = useState(0)
+
+  // ---- sleep component ----
   const [sleeps, setSleeps] = useState([]);
   const [sleepForm, setSleepForm] = useState({
     startTime: "",
     endTime: "",
   });
-
-  const [averageCalories, setAverageCalories] = useState(0);
-  const [totalExerciseDuration, setTotalExerciseDuration] = useState(0);
   const [averageHoursSleep, setAverageHoursSleep] = useState(0);
+  const [totalHoursSlept, setTotalHoursSlept] = useState(0)
 
   const [userData, setUserData] = useState({});
 
-  // ---- functions ----
+  // ----------------- Functions --------------------- //
   function handleShowPassword(event) {
     event.target.name === "password-toggle"
       ? setPasswordDisplayed({
@@ -111,7 +118,7 @@ function App() {
   //console.log("USERDATA:", userData);
   /////////////////////////////////////
 
-  // ---- return object ----
+  // ----------------- Return Object --------------------- //
   return (
     <div className="app">
       <BrowserRouter>
@@ -146,7 +153,6 @@ function App() {
                   setUserLoggedIn={setUserLoggedIn}
                   userLoggedIn={userLoggedIn}
                   logoutUser={logoutUser}
-                  // setUser_Id={setUser_Id}
                   userData={userData}
                   setUserData={setUserData}
                 />
@@ -179,15 +185,21 @@ function App() {
                   averageCalories={averageCalories}
                   setAverageCalories={setAverageCalories}
                   setNutritions={setNutritions}
+                  maxCaloriesInMeal={maxCaloriesInMeal}
+                  setMaxCaloriesInMeal={setMaxCaloriesInMeal}
 
                   totalExerciseDuration={totalExerciseDuration}
                   setTotalExerciseDuration={setTotalExerciseDuration}
                   setExercises={setExercises}
+                  averageExerciseIntensity={averageExerciseIntensity}
+                  setAverageExerciseIntensity={setAverageExerciseIntensity}
 
 
                   averageHoursSleep={averageHoursSleep}
                   setAverageHoursSleep={setAverageHoursSleep}
                   setSleeps={setSleeps}
+                  totalHoursSlept={totalHoursSlept}
+                  setTotalHoursSlept={setTotalHoursSlept}
 
                 />
               }

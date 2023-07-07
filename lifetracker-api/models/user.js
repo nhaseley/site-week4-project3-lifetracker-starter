@@ -10,7 +10,7 @@ const { BCRYPT_WORK_FACTOR } = require("../config");
 const crypto = require("crypto");
 const jwt = require("jsonwebtoken");
 const secretKey = crypto.randomBytes(64).toString("hex");
-// TODO: should be imported?
+// const secretKey = process.env.SECRET_KEY || "secret-dev"
 
 class User {
   /**
@@ -191,8 +191,7 @@ class User {
       date: user.date,
     };
 
-    const token = jwt.sign(payload, secretKey, { expiresIn: "30d" });
-    // TODO: CHANGE TO LESS TIME
+    const token = jwt.sign(payload, secretKey, { expiresIn: "4h" });
     return token;
   }
 
@@ -200,7 +199,6 @@ class User {
     try {
       //TODO: use verify and figure out why we can't verify currently
       const decoded = jwt.decode(token, secretKey);
-      console.log('decoded: ', decoded)
       return decoded;
     } catch (err) {
       return null;

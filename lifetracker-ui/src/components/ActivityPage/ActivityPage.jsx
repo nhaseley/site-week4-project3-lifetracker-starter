@@ -10,30 +10,30 @@ export default function ActivityPage({
   averageCalories,
   setAverageCalories,
   setNutritions,
+  maxCaloriesInMeal,
+  setMaxCaloriesInMeal,
 
   totalExerciseDuration,
   setTotalExerciseDuration,
   setExercises,
+  averageExerciseIntensity,
+  setAverageExerciseIntensity,
 
   averageHoursSleep,
   setAverageHoursSleep,
   setSleeps,
+  totalHoursSlept,
+  setTotalHoursSlept,
 }) {
-  function calculateAverageCalories(nutritionList) {
-    const uniqueDates = [
-      ...new Set(
-        nutritionList?.map((obj) =>
-          new Date(obj.created_at).toLocaleDateString()
-        )
-      ),
-    ];
-    const numDays = uniqueDates.length;
-    const totalCalories = nutritionList?.reduce(
-      (sum, obj) => sum + obj.calories,
-      0
-    );
-    setAverageCalories(totalCalories / numDays);
-  }
+  // ----------------- Nutrition Statistics --------------------- //
+  useEffect(() => {
+    showNutritions();
+    calculateAverageCalories();
+    calculateMaxCaloriesInMeal();
+
+    showExercises();
+    showSleeps();
+  }, []);
 
   async function showNutritions() {
     const existingToken = localStorage.getItem("token");
@@ -44,24 +44,60 @@ export default function ActivityPage({
         })
         .then((userInfo) => {
           setNutritions(userInfo.data.nutritionList);
-          calculateAverageCalories(userInfo.data.nutritionList);
+          // calculateAverageCalories(userInfo.data.nutritionList);
+          // getMaxCaloriesInMeal(userInfo.data.nutritionList);
         });
     } else {
       alert("Token expired. Please log in again.");
     }
   }
+  
+  async function calculateAverageCalories() {
+    const existingToken = localStorage.getItem("token");
+    if (existingToken) {
+      let summaryStatistics = await axios.post("http://localhost:3001/auth/activity", {
+        token: existingToken,
+      });
+      setAverageCalories(summaryStatistics.data.nutrition.perDay);
+    }
+  }
+
+  async function calculateMaxCaloriesInMeal() {
+    const existingToken = localStorage.getItem("token");
+    if (existingToken) {
+      let summaryStatistics = await axios.post("http://localhost:3001/auth/activity", {
+        token: existingToken,
+      });
+      setMaxCaloriesInMeal(summaryStatistics.data.nutrition.maxCals);
+    }
+  }
+
+  // ----------------- Exercise Statistics --------------------- //
+
+  async function calculateTotalExerciseDuration() {
+    const existingToken = localStorage.getItem("token");
+    if (existingToken) {
+      let summaryStatistics = await axios.post("http://localhost:3001/auth/activity", {
+        token: existingToken,
+      });
+      console.log("summary statistics: ", summaryStatistics.data)
+      setTotalExerciseDuration(summaryStatistics.data.exercise.totalDuration);
+    }
+  }
   useEffect(() => {
-    showNutritions();
-    showExercises();
-    showSleeps();
+    calculateTotalExerciseDuration();
   }, []);
 
-  function calculateTotalExerciseDuration(exerciseList) {
-    const totalDuration = exerciseList.reduce(
-      (total, exercise) => total + exercise.duration,
-      0
+  function calculateAverageExerciseIntensity(exerciseList) {
+    if (exerciseList.length === 0) {
+      return 0; // No exercises in the array
+    }
+    const totalIntensity = exerciseList.reduce((sum, exercise) => {
+      return sum + exercise.intensity;
+    }, 0);
+    setAverageExerciseIntensity(
+      Math.round(totalIntensity / exerciseList.length)
     );
-    setTotalExerciseDuration(totalDuration);
   }
 
   async function showExercises() {
@@ -73,26 +109,41 @@ export default function ActivityPage({
         })
         .then((userInfo) => {
           setExercises(userInfo.data.exerciseList);
-          calculateTotalExerciseDuration(userInfo.data.exerciseList);
+          console.log("exerciselist: ", userInfo.data.exerciseList)
+          // calculateTotalExerciseDuration(userInfo.data.exerciseList);
+          calculateAverageExerciseIntensity(userInfo.data.exerciseList);
         });
     } else {
       alert("Token expired. Please log in again.");
     }
   }
 
-  function calculateAverageHoursofSleep(sleepList) {
-    if (sleepList.length === 0) {
-      setAverageHoursSleep(0);
+  // ----------------- Sleep Statistics --------------------- //
+
+  async function calculateAverageHoursofSleep() {
+    const existingToken = localStorage.getItem("token");
+    if (existingToken) {
+      let summaryStatistics = await axios.post("http://localhost:3001/auth/activity", {
+        token: existingToken,
+      });
+      // console.log("summary statistics: ", summaryStatistics.data)
+      setAverageHoursSleep(summaryStatistics.data.sleep.averageSleepHours);
     }
+  }
+  useEffect(() => {
+    calculateAverageHoursofSleep();
+  }, []);
+
+  function calculateTotalHoursSlept(sleepList) {
     const totalSleepHours = sleepList.reduce((total, entry) => {
       const startTime = new Date(entry.starttime);
       const endTime = new Date(entry.endtime);
       const sleepDuration = (endTime - startTime) / (1000 * 60 * 60); // Convert milliseconds to hours
       return total + sleepDuration;
     }, 0);
-    setAverageHoursSleep(Math.round(totalSleepHours / sleepList.length));
-  }
 
+    setTotalHoursSlept(Math.round(totalSleepHours));
+  }
   async function showSleeps() {
     const existingToken = localStorage.getItem("token");
     if (existingToken) {
@@ -102,12 +153,17 @@ export default function ActivityPage({
         })
         .then((userInfo) => {
           setSleeps(userInfo.data.sleepList);
+          // console.log("SleepList: ", userInfo.data.sleepList);
+
           calculateAverageHoursofSleep(userInfo.data.sleepList);
+          calculateTotalHoursSlept(userInfo.data.sleepList);
         });
     } else {
       alert("Token expired. Please log in again.");
     }
   }
+
+  // ----------------- Return Object --------------------- //
 
   return (
     <div className="activity-page">
@@ -233,7 +289,9 @@ export default function ActivityPage({
                         <dt className="chakra-stat__label css-14go5ty">
                           Max Calories In One Meal
                         </dt>
-                        <dd className="chakra-stat__number css-1axeus7">0.0</dd>
+                        <dd className="chakra-stat__number css-1axeus7">
+                          {maxCaloriesInMeal}
+                        </dd>
                       </dl>
                     </div>
                     <div className="chakra-stat css-1mbo1ls">
@@ -241,7 +299,9 @@ export default function ActivityPage({
                         <dt className="chakra-stat__label css-14go5ty">
                           Average Exercise Intensity
                         </dt>
-                        <dd className="chakra-stat__number css-1axeus7">1.0</dd>
+                        <dd className="chakra-stat__number css-1axeus7">
+                          {averageExerciseIntensity}
+                        </dd>
                       </dl>
                     </div>
                     <div className="chakra-stat css-1mbo1ls">
@@ -249,7 +309,9 @@ export default function ActivityPage({
                         <dt className="chakra-stat__label css-14go5ty">
                           Total Number of Hours Slept
                         </dt>
-                        <dd className="chakra-stat__number css-1axeus7">0.0</dd>
+                        <dd className="chakra-stat__number css-1axeus7">
+                          {totalHoursSlept}
+                        </dd>
                       </dl>
                     </div>
                   </div>

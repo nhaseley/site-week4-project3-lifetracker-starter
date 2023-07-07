@@ -60,7 +60,6 @@ export default function LoginPage({
       console.log("successful log in");
       
       const token = result.data.token;
-      console.log("token on login: ", token)
       localStorage.setItem("token", token)
       const decodedToken = jwtDecode(token);
       setUserData(decodedToken)

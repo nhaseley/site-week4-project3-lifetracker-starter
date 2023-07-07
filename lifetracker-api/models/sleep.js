@@ -1,15 +1,7 @@
 
 const db = require("../db");
 
-const bcrypt = require("bcrypt");
 const { BadRequestError, UnauthorizedError, NotFoundError } = require("../utils/errors");
-const { validateFields } = require("../utils/validate");
-
-const { BCRYPT_WORK_FACTOR } = require("../config");
-
-const crypto = require("crypto");
-const jwt = require("jsonwebtoken");
-const secretKey = crypto.randomBytes(64).toString("hex");
 
 class Sleep {
   /**

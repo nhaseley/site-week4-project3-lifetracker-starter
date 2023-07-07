@@ -32,10 +32,10 @@ By the end of this project you will be able to...
   - [x] If no user is logged in, it should display **Login** and **Register** buttons.
   - [x] Display a logo on the far left side, and contain links to the individual detailed activity pages.
 - [x] Users should have the ability to track at least **one** type of activity (i.e., nutrition, exercise, sleep, etc.). Each activity should be tracked on separate pages.
-- [ ] **Detailed Activity Page:** Display and enter activities.
-  - [ ] Display a feed of all previously tracked activities.
-  - [ ] A form to enter relevant information (i.e., if tracking nutrition, the user can enter calories, timestamp, image, category, etc.).
-  - [ ] Each activity tracked is given a unique ID for easy lookup.
+- [x] **Detailed Activity Page:** Display and enter activities.
+  - [x] Display a feed of all previously tracked activities.
+  - [x] A form to enter relevant information (i.e., if tracking nutrition, the user can enter calories, timestamp, image, category, etc.).
+  - [x] Each activity tracked is given a unique ID for easy lookup.
 - [ ] Deploy your website with Render. Check out our [Render Deployment Guide](https://courses.codepath.org/snippets/site/render_deployment_guide) for detailed instructions.
 
 ### Stretch Features
@@ -46,7 +46,7 @@ Implement any of the following features to improve the application:
 - [ ] Each model (i.e `nutrition`, `exercise`, and `sleep`) should also implement a `fetchById` method that queries the database for a record by its id and only serves it to users who own that resource.
   - You should also create a new dynamic route on the frontend that displays detail about a single record. For instance, `nutrition/detail/:id` should show a page with all the information about a single nutrition item.
 - [ ] Provide a dropdown that allows users to filter activity based on a certain attribute of any activity item. Example: filter exercise or nutrition by category, or filter sleep by the week/month it was recorded.
-- [ ] Calculate aggregate statistics based on time periods - such as daily, weekly, monthly aggregates.
+- [x] Calculate aggregate statistics based on time periods - such as daily, weekly, monthly aggregates.
 - [ ] Create a page that shows all other users that use the LifeTracker application and allow users to follow each other. You'll want to create a new table to store this data.
 - [ ] Implement `security` middleware on the API that allows only authenticated users to access resources and allows users to only access resources about themselves.
 
@@ -101,10 +101,10 @@ Update the `App` component to manage authentication state:
     - [ ] Assign the following properties from the `data` object to the new state object:
       - [ ] `user`
       - [ ] `token`
-    - [ ] Assign at least **one** of the following properties from the `data` object to the new state object:
+    - [x] Assign at least **one** of the following properties from the `data` object to the new state object:
       - [x] `nutrition`
-      - [ ] `exercise`
-      - [ ] `sleep`
+      - [x] `exercise`
+      - [x] `sleep`
     - [ ] Call the `setAppState` with a new state object to update the component's state.
     - [ ] Outside the `fetchUser` function, call `fetchUser` to trigger the initial data fetch when the component mounts.
     - [ ] The effect should be triggered whenever the value of `appState.isAuthenticated` changes.
@@ -653,14 +653,14 @@ Here are the pieces of functionality that should be built out for the backend:
   - [ ] Create model and routes files for 1-2 additional resources that your app will track (sleep, exercise, steps, floors climbed, meditation, mood, heartrate, music practice, etc.)
   - [ ] Commit all work to `git`
 - **Summary Statistics**
-  - [ ] One of the last features of the API will be a model that calculates summary statistic on the different resources that users are tracking. This includes statistics like average calories per day, or max calories per category. To do that, we'll create a new `Activity` model and an `activity` route that will be used to populate the frontend.
-  - [ ] The **Activity** model
-    - [ ] In the `models` directory, create two new files: `models/Activity.js` and `models/Activity.test.js`
-      - [ ] The `Activity` model should have **at least** the following static methods:
-        - [ ] `calculateDailyCaloriesSummaryStats`
-          - [ ] Should execute a SQL query that calculates **at least** the total calories consumed per day (aliased as `totalCaloriesPerDay`), along with the day (aliased as `date`).
-          - [ ] The query should return a row for **each day** containing the total calories consumed per day, and the average caloric content per nutrition entry.
-            - [ ] For instance, here's a set of 7 **simplified** nutrition item entries (actual data will look different):
+  - [x] One of the last features of the API will be a model that calculates summary statistic on the different resources that users are tracking. This includes statistics like average calories per day, or max calories per category. To do that, we'll create a new `Activity` model and an `activity` route that will be used to populate the frontend.
+  - [x] The **Activity** model
+    - [x] In the `models` directory, create two new files: `models/Activity.js` and `models/Activity.test.js`
+      - [x] The `Activity` model should have **at least** the following static methods:
+        - [x] `calculateDailyCaloriesSummaryStats`
+          - [x] Should execute a SQL query that calculates **at least** the total calories consumed per day (aliased as `totalCaloriesPerDay`), along with the day (aliased as `date`).
+          - [x] The query should return a row for **each day** containing the total calories consumed per day, and the average caloric content per nutrition entry.
+            - [x] For instance, here's a set of 7 **simplified** nutrition item entries (actual data will look different):
               - 1. `{ id: 1, user_id: 1, calories: 100, category: "candy", created_at: "12-22-2022" }`
               - 2. `{ id: 2, user_id: 1, calories: 200, category: "drink", created_at: "12-22-2022" }`
               - 3. `{ id: 3, user_id: 1, calories: 200, category: "fruit", created_at: "12-23-2022" }`
@@ -668,7 +668,7 @@ Here are the pieces of functionality that should be built out for the backend:
               - 5. `{ id: 5, user_id: 1, calories: 400, category: "drink", created_at: "12-23-2022" }`
               - 6. `{ id: 6, user_id: 1, calories: 700, category: "fruit", created_at: "12-24-2022" }`
               - 7. `{ id: 7, user_id: 1, calories: 100, category: "fruit", created_at: "12-24-2022" }`
-            - [ ] The summary stats returned from the query should look like this:
+            - [x] The summary stats returned from the query should look like this:
               - 1. `{ date: "12-22-2022", totalCaloriesPerDay: 300 }`
               - 2. `{ date: "12-23-2022", totalCaloriesPerDay: 1000 }`
               - 3. `{ date: "12-24-2022", totalCaloriesPerDay: 800 }`
@@ -702,15 +702,15 @@ Here are the pieces of functionality that should be built out for the backend:
     - [ ] Commit all work to `git`
   - [ ] The **/activity** routes
     - [ ] In the `routes` directory, create two new files: `routes/activity.js` and `routes/activity.test.js`
-      - [ ] A new Express router should be created that will be mounted at the `/activity` endpoint. It should handle:
-        - [ ] `GET` requests to the `/` endpoint
-          - [ ] It should send a JSON response back to the client with summary stats for each resource in the following format:
-            - [ ] `{ "nutrition": { "calories": { "perDay": [...], "perCategory": [...] }, ...anyOtherStats }, ...statsForOtherResources }`
+      - [x] A new Express router should be created that will be mounted at the `/activity` endpoint. It should handle:
+        - [x] `GET` requests to the `/` endpoint
+          - [x] It should send a JSON response back to the client with summary stats for each resource in the following format:
+            - [x] `{ "nutrition": { "calories": { "perDay": [...], "perCategory": [...] }, ...anyOtherStats }, ...statsForOtherResources }`
     - [ ] In the `routes/activity.test.js` file:
       - [ ] Test the `GET /activity` endpoint
         - [ ] Write test cases for:
-          - [ ] Provides a JSON response containing arrays of summary stats for resources, attributes, and metrics
-          - [ ] Correctly calculates `totalCaloriesPerDay` for a user's `nutrition` entries
+          - [x] Provides a JSON response containing arrays of summary stats for resources, attributes, and metrics
+          - [x] Correctly calculates `totalCaloriesPerDay` for a user's `nutrition` entries
           - [ ] Correctly calculates `avgCaloriesPerCategory` for a user's `nutrition` entries
           - [ ] Only returns summary stats based on entries that the currently authenticated user owns
           - [ ] Throws an `UnauthenticatedError` if no valid user is logged in
