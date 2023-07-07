@@ -48,8 +48,10 @@ router.post("/create-exercise", async function (req, res, next) {
 
 router.post("/nutrition", async function (req, res, next) {
   try {
-    const nutritionList = await Nutrition.listNutritionForUser(req.body.user_id)
-    // console.log("nutrition in backend: ", nutritionList)
+    let token = req.body.token
+    let decoded = User.verifyAuthToken(token)
+    const nutritionList = await Nutrition.listNutritionForUser(decoded.id)
+    console.log("nutrition in backend: ", nutritionList)
 
     return res.status(201).json({ nutritionList })
   } catch (err) {
@@ -60,7 +62,9 @@ router.post("/nutrition", async function (req, res, next) {
 
 router.post("/exercise", async function (req, res, next) {
   try {
-    const exerciseList = await Exercise.listExerciseForUser(req.body.user_id)
+    let token = req.body.token
+    let decoded = User.verifyAuthToken(token)
+    const exerciseList = await Exercise.listExerciseForUser(decoded.id)
     return res.status(201).json({ exerciseList })
   } catch (err) {
     res.send(err)
@@ -70,7 +74,9 @@ router.post("/exercise", async function (req, res, next) {
 
 router.post("/sleep", async function (req, res, next) {
   try {
-    const sleepList = await Sleep.listSleepForUser(req.body.user_id)
+    let token = req.body.token
+    let decoded = User.verifyAuthToken(token)
+    const sleepList = await Sleep.listSleepForUser(decoded.id)
     return res.status(201).json({ sleepList })
   } catch (err) {
     res.send(err)

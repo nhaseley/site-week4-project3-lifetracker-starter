@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import "./NutritionPage.css";
 import { Link } from "react-router-dom";
 import NutritionCard from "./NutritionCard";
@@ -8,9 +8,34 @@ import axios from "axios";
 export default function NutritionPage({
   userLoggedIn,
   nutritions,
+  setNutritions,
+  error,
+  setError
 }) {
 
-  console.log("nutritions: ", nutritions);
+  async function getNutritionInfoFromToken() {
+    const existingToken = localStorage.getItem("token");
+    if (existingToken) {
+      let userInfo = await axios.post("http://localhost:3001/auth/nutrition", {
+        token: existingToken,
+      });
+      if (userInfo.data.nutritionList) {
+        setNutritions(userInfo.data.nutritionList);
+      } else {
+        setError({
+          message: userInfo.data.message,
+          status: userInfo.data.status,
+        });
+      }
+    } else {
+      alert('Token expired. Please log in again.')
+    }
+  }
+
+  useEffect(() => {
+    getNutritionInfoFromToken();
+  }, []);
+
   return (
     <div className="NutritionPage nutrition-page">
       {!userLoggedIn ? (
@@ -27,7 +52,7 @@ export default function NutritionPage({
             </div>
           </div>
 
-          {nutritions.length == 0 ? (
+          {error.message ? (
             <div className="css-vpbd2d">
               <div className="css-1qfrez2">
                 <div className="css-uiodal">

@@ -33,7 +33,6 @@ function App() {
     confirmPassword: false,
   });
   const [userLoggedIn, setUserLoggedIn] = useState(false);
-  const [tokenFirstName, setTokenFirstName] = useState();
 
   const [nutritions, setNutritions] = useState([]);
   const [nutritionForm, setNutritionForm] = useState({
@@ -93,7 +92,7 @@ function App() {
 
   ///////////////////////////////
   // Token Check
-  async function handleUserInfo() {
+  async function getUserFromToken() {
     const existingToken = localStorage.getItem("token");
     if (existingToken) {
       let userInfo = await axios.post("http://localhost:3001/auth/me", {
@@ -103,12 +102,13 @@ function App() {
     }
   }
 
+  
   useEffect(() => {
-    handleUserInfo();
+    getUserFromToken();
     setUserLoggedIn(true);
   }, []);
 
-  console.log("USERDATA:", userData);
+  //console.log("USERDATA:", userData);
   /////////////////////////////////////
 
   // ---- return object ----
@@ -145,8 +145,6 @@ function App() {
                   handleHidePassword={handleHidePassword}
                   setUserLoggedIn={setUserLoggedIn}
                   userLoggedIn={userLoggedIn}
-                  tokenFirstName={tokenFirstName}
-                  setTokenFirstName={setTokenFirstName}
                   logoutUser={logoutUser}
                   // setUser_Id={setUser_Id}
                   userData={userData}
@@ -167,8 +165,6 @@ function App() {
                   handleShowPassword={handleShowPassword}
                   handleHidePassword={handleHidePassword}
                   setUserLoggedIn={setUserLoggedIn}
-                  tokenFirstName={tokenFirstName}
-                  setTokenFirstName={setTokenFirstName}
                   logoutUser={logoutUser}
                   userLoggedIn={userLoggedIn}
                 />
@@ -179,19 +175,20 @@ function App() {
               element={
                 <ActivityPage
                   userLoggedIn={userLoggedIn}
+
                   averageCalories={averageCalories}
                   setAverageCalories={setAverageCalories}
-                  nutritions={nutritions}
                   setNutritions={setNutritions}
-                  userData={userData}
-                  exercises={exercises}
-                  setExercises={setExerciseForm}
-                  setTotalExerciseDuration={setTotalExerciseDuration}
+
                   totalExerciseDuration={totalExerciseDuration}
-                  setSleeps={setSleeps}
-                  sleeps={sleeps}
+                  setTotalExerciseDuration={setTotalExerciseDuration}
+                  setExercises={setExercises}
+
+
                   averageHoursSleep={averageHoursSleep}
                   setAverageHoursSleep={setAverageHoursSleep}
+                  setSleeps={setSleeps}
+
                 />
               }
             ></Route>
@@ -202,8 +199,9 @@ function App() {
                 <NutritionPage
                   userLoggedIn={userLoggedIn}
                   nutritions={nutritions}
-                  userData={userData}
                   setNutritions={setNutritions}
+                  error={error}
+                  setError={setError}
                 />
               }
             ></Route>
@@ -221,7 +219,7 @@ function App() {
             <Route
               path="/sleep"
               element={
-                <SleepPage userLoggedIn={userLoggedIn} sleeps={sleeps} />
+                <SleepPage userLoggedIn={userLoggedIn} sleeps={sleeps} setSleeps={setSleeps} error={error} setError={setError}/>
               }
             ></Route>
             <Route
@@ -243,6 +241,9 @@ function App() {
                 <ExercisePage
                   userLoggedIn={userLoggedIn}
                   exercises={exercises}
+                  setExercises={setExercises}
+                  error={error}
+                  setError={setError}
                 />
               }
             ></Route>

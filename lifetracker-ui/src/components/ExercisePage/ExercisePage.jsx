@@ -1,12 +1,41 @@
 import * as React from "react";
-import {useEffect} from "react";
+import { useEffect } from "react";
 import "./ExercisePage.css";
 import { Link } from "react-router-dom";
 import ExerciseCard from "./ExerciseCard";
 import axios from "axios";
 
-export default function ExercisePage({ userLoggedIn, exercises}) {
-    console.log("exercises: ", exercises)
+export default function ExercisePage({
+  userLoggedIn,
+  exercises,
+  setExercises,
+  error,
+  setError
+}) {
+  async function getExerciseInfoFromToken() {
+    const existingToken = localStorage.getItem("token");
+    if (existingToken) {
+      let userInfo = await axios.post("http://localhost:3001/auth/exercise", {
+        token: existingToken,
+      });
+
+      if (userInfo.data.exerciseList) {
+        setExercises(userInfo.data.exerciseList);
+      } else {
+        setError({
+          message: userInfo.data.message,
+          status: userInfo.data.status,
+        });
+      }
+    } else {
+      alert("Token expired. Please log in again.");
+    }
+  }
+
+  useEffect(() => {
+    getExerciseInfoFromToken();
+  }, []);
+
   return (
     <div className="ExercisePage css-1bpnzr3">
       {!userLoggedIn ? (
@@ -23,7 +52,7 @@ export default function ExercisePage({ userLoggedIn, exercises}) {
             </div>
           </div>
 
-          {exercises.length == 0 ? (
+          {error.message ? (
             <div className="css-vpbd2d">
               <div className="css-1qfrez2">
                 <div className="css-uiodal">

@@ -88,16 +88,6 @@ html {
 .css-td8gbm:hover{
   background-color: #00A3C4;
 }
-.log-out-button{
-  text-decoration: none;
-  color: white;
-}
-.log-out-button:hover{
-  background-color: #00A3C4;
-  color: white
-}
-
-
 
 .css-td8gbm {
   display: inline-flex;
@@ -123,7 +113,6 @@ html {
   padding-inline-start: 1rem;
   padding-inline-end: 1rem;
   background: #0BC5EA;
-  color: black;
 }
 
 .logout-button {
@@ -149,6 +138,6 @@ html {
   font-size: 1rem;
   padding-inline-start: 1rem;
   padding-inline-end: 1rem;
-  background: #0BC5EA;
-  color: black;
+  color: white;
+  text-decoration: none;
 }

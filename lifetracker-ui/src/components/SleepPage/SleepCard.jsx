@@ -6,13 +6,16 @@ export default function SleepCard({ item }) {
     <div className="chakra-stack css-xixnl8">
       <div className="css-sxxv4f">
         <div className="css-56yjmq">
-          <span className="chakra-avatar css-en15ln">
+          <span className="chakra-avatar css-en15ln" style={{
+              background:
+                "#" + Math.floor(Math.random() * 16777215).toString(16)
+            }}>
             <div
               role="img"
               aria-label="13hr"
               className="chakra-avatar__initials css-1ebyn6"
             >
-              1
+              S
             </div>
           </span>
           <div className="css-1kw2fa0">

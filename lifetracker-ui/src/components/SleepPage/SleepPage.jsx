@@ -1,10 +1,37 @@
 import * as React from "react";
-import "./SleepPage.css";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import "./SleepPage.css";
 import SleepCard from "./SleepCard"
+import axios from "axios";
 
-export default function SleepPage({ userLoggedIn, sleeps }) {
+
+export default function SleepPage({ userLoggedIn, sleeps, setSleeps, error, setError}) {
+  async function getSleepInfoFromToken() {
+    const existingToken = localStorage.getItem("token");
+    if (existingToken) {
+      let userInfo = await axios.post("http://localhost:3001/auth/sleep", {
+        token: existingToken,
+      });
+      if (userInfo.data.sleepList) {
+        setSleeps(userInfo.data.sleepList);
+      } else {
+        setError({
+          message: userInfo.data.message,
+          status: userInfo.data.status,
+        });
+      }
+    } else {
+      alert('Token expired. Please log in again.')
+    }
+  }
+
+  useEffect(() => {
+    getSleepInfoFromToken();
+  }, []);
+  
   return (
+
     <div className="SleepPage css-1bpnzr3">
       {!userLoggedIn ? (
         <div className="please-log-in">
@@ -19,7 +46,7 @@ export default function SleepPage({ userLoggedIn, sleeps }) {
               <h2 className="chakra-heading css-b5coes">Sleep</h2>
             </div>
           </div>
-          {sleeps.length == 0 ? (
+          {error.message ? (
             <div className="css-vpbd2d">
               <div className="css-1qfrez2">
                 <div className="css-uiodal">

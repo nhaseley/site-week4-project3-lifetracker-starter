@@ -6,121 +6,108 @@ import axios from "axios";
 
 export default function ActivityPage({
   userLoggedIn,
+
   averageCalories,
   setAverageCalories,
-  nutritions,
   setNutritions,
-  userData,
-  exercises,
-  setExercises,
-  setTotalExerciseDuration,
+
   totalExerciseDuration,
-  setSleeps,
-  sleeps,
+  setTotalExerciseDuration,
+  setExercises,
+
   averageHoursSleep,
   setAverageHoursSleep,
+  setSleeps,
 }) {
-  useEffect(
-    () =>
-      async function showNutritions() {
-        let result = await axios.post("http://localhost:3001/auth/nutrition", {
-          user_id: userData.id,
+  function calculateAverageCalories(nutritionList) {
+    const uniqueDates = [
+      ...new Set(
+        nutritionList?.map((obj) =>
+          new Date(obj.created_at).toLocaleDateString()
+        )
+      ),
+    ];
+    const numDays = uniqueDates.length;
+    const totalCalories = nutritionList?.reduce(
+      (sum, obj) => sum + obj.calories,
+      0
+    );
+    setAverageCalories(totalCalories / numDays);
+  }
+
+  async function showNutritions() {
+    const existingToken = localStorage.getItem("token");
+    if (existingToken) {
+      axios
+        .post("http://localhost:3001/auth/nutrition", {
+          token: existingToken,
+        })
+        .then((userInfo) => {
+          setNutritions(userInfo.data.nutritionList);
+          calculateAverageCalories(userInfo.data.nutritionList);
         });
+    } else {
+      alert("Token expired. Please log in again.");
+    }
+  }
+  useEffect(() => {
+    showNutritions();
+    showExercises();
+    showSleeps();
+  }, []);
 
-        if (
-          (result.status === 201 || result.data.status === 200) &&
-          result.data.nutritionList
-        ) {
-          setNutritions(result.data.nutritionList);
-          console.log("nutritions in frontend: ", result.data.nutritionList)
-        }
-      },
-    []
-  );
+  function calculateTotalExerciseDuration(exerciseList) {
+    const totalDuration = exerciseList.reduce(
+      (total, exercise) => total + exercise.duration,
+      0
+    );
+    setTotalExerciseDuration(totalDuration);
+  }
 
-  useEffect(
-    () =>
-      function calculateAverageCalories() {
-        const uniqueDates = [
-          ...new Set(
-            nutritions?.map((obj) =>
-              new Date(obj.created_at).toLocaleDateString()
-            )
-          ),
-        ];
-        const numDays = uniqueDates.length;
-        const totalCalories = nutritions?.reduce(
-          (sum, obj) => sum + obj.calories,
-          0
-        );
-        setAverageCalories(totalCalories / numDays);
-      },
-    []
-  );
-  // console.log("averageCalories: ", averageCalories)
-
-  useEffect(
-    () =>
-      async function showExercises() {
-        let result = await axios.post("http://localhost:3001/auth/exercise", {
-          user_id: userData.id,
+  async function showExercises() {
+    const existingToken = localStorage.getItem("token");
+    if (existingToken) {
+      axios
+        .post("http://localhost:3001/auth/exercise", {
+          token: existingToken,
+        })
+        .then((userInfo) => {
+          setExercises(userInfo.data.exerciseList);
+          calculateTotalExerciseDuration(userInfo.data.exerciseList);
         });
-        if (
-          (result.status === 201 || result.data.status === 200) &&
-          result.data.exerciseList
-        ) {
-          setExercises(result.data.exerciseList);
-          // console.log("exercises from post: ", result.data.exerciseList)
-        }
-      },
-    []
-  );
+    } else {
+      alert("Token expired. Please log in again.");
+    }
+  }
 
-  useEffect(
-    () =>
-      function calculateTotalExerciseDuration() {
-        const totalDuration = exercises.reduce(
-          (total, exercise) => total + exercise.duration,
-          0
-        );
-        setTotalExerciseDuration(totalDuration);
-      },
-    []
-  );
-  // console.log("total exercise duration: ", totalExerciseDuration)
+  function calculateAverageHoursofSleep(sleepList) {
+    if (sleepList.length === 0) {
+      setAverageHoursSleep(0);
+    }
+    const totalSleepHours = sleepList.reduce((total, entry) => {
+      const startTime = new Date(entry.starttime);
+      const endTime = new Date(entry.endtime);
+      const sleepDuration = (endTime - startTime) / (1000 * 60 * 60); // Convert milliseconds to hours
+      return total + sleepDuration;
+    }, 0);
+    setAverageHoursSleep(Math.round(totalSleepHours / sleepList.length));
+  }
 
-  useEffect(
-    () =>
-      async function showSleeps() {
-        let result = await axios.post("http://localhost:3001/auth/sleep", {
-          user_id: userData.id,
+  async function showSleeps() {
+    const existingToken = localStorage.getItem("token");
+    if (existingToken) {
+      axios
+        .post("http://localhost:3001/auth/sleep", {
+          token: existingToken,
+        })
+        .then((userInfo) => {
+          setSleeps(userInfo.data.sleepList);
+          calculateAverageHoursofSleep(userInfo.data.sleepList);
         });
-        if (
-          (result.status === 201 || result.data.status === 200) &&
-          result.data.sleepList
-        ) {
-          setSleeps(result.data.sleepList);
-        }
-      },
-    []
-  );
-
-  useEffect(
-    () =>
-      function calculateAverageHoursofSleep() {
-        if (sleeps.length === 0) {
-          setAverageHoursSleep(0);
-        }
-        const totalSleepHours = sleeps.reduce((total, entry) => {
-          const startTime = new Date(entry.starttime);
-          const endTime = new Date(entry.endtime);
-          const sleepDuration = (endTime - startTime) / (1000 * 60 * 60); // Convert milliseconds to hours
-          return total + sleepDuration;
-        }, 0);
-        setAverageHoursSleep(totalSleepHours / sleeps.length);
-      },
-    []
-  );
+    } else {
+      alert("Token expired. Please log in again.");
+    }
+  }
 
   return (
     <div className="activity-page">
