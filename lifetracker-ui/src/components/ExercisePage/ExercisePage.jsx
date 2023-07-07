@@ -72,7 +72,7 @@ export default function ExercisePage({ userLoggedIn, exercises}) {
                         </Link>
                       </button>
                     </div>
-                    {exercises[0]?.map((item) => (
+                    {exercises?.map((item) => (
                       <ExerciseCard item={item} />
                     ))}
                   </div>

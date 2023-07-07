@@ -77,10 +77,8 @@ export default function NutritionPage({
                       </button>
                     </div>
                     <>
-                      {nutritions[0]?.map((item) => (
-                        <>
+                      {nutritions?.map((item) => (
                           <NutritionCard item={item} />
-                        </>
                       ))}
                     </>
                   </div>

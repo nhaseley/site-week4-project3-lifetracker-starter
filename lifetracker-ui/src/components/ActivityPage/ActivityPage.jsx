@@ -1,76 +1,126 @@
 import * as React from "react";
 import "./ActivityPage.css";
 import { Link } from "react-router-dom";
-import {useEffect} from "react";
+import { useEffect } from "react";
 import axios from "axios";
 
+export default function ActivityPage({
+  userLoggedIn,
+  averageCalories,
+  setAverageCalories,
+  nutritions,
+  setNutritions,
+  userData,
+  exercises,
+  setExercises,
+  setTotalExerciseDuration,
+  totalExerciseDuration,
+  setSleeps,
+  sleeps,
+  averageHoursSleep,
+  setAverageHoursSleep,
+}) {
+  useEffect(
+    () =>
+      async function showNutritions() {
+        let result = await axios.post("http://localhost:3001/auth/nutrition", {
+          user_id: userData.id,
+        });
 
-export default function ActivityPage({ userLoggedIn, averageCalories, setAverageCalories, nutritions, setNutritions, userData, exercises, setExercises, setTotalExerciseDuration, totalExerciseDuration, setSleeps, sleeps, averageHours, setAverageHours }) {
-  useEffect(() => 
-    async function showNutritions(){
-      console.log("checking user id?? :", userData)
-      let result = await axios.post("http://localhost:3001/auth/nutrition", {
-        user_id: userData.id
-      });
-      
-      if (((result.status === 201) || (result.data.status === 200)) && (result.data.nutritionList)){ 
-        setNutritions([result.data.nutritionList])
-        console.log("nutritions from post", result.data.nutritionList)
-      }
-    }, []
-  )
-  
-  useEffect(() => 
-    function calculateAverageCalories(){
-      const uniqueDates = [...new Set(nutritions[0]?.map(obj => new Date(obj.created_at).toLocaleDateString()))];
-      const numDays = uniqueDates.length;
-      const totalCalories = nutritions[0]?.reduce((sum, obj) => sum + obj.calories, 0);
-      setAverageCalories(totalCalories / numDays);
-    }, []
-  )
-  console.log("averageCalories: ", averageCalories)
+        if (
+          (result.status === 201 || result.data.status === 200) &&
+          result.data.nutritionList
+        ) {
+          setNutritions(result.data.nutritionList);
+          console.log("nutritions in frontend: ", result.data.nutritionList)
+        }
+      },
+    []
+  );
 
-  useEffect(() => 
-    async function showExercises(){
-      // console.log("checking user id?? in exercise :", userData)
-      let result = await axios.post("http://localhost:3001/auth/exercise", {  
-        user_id: userData.id
-      });
-      if (((result.status === 201) || (result.data.status === 200)) && (result.data.exerciseList)){ 
-        setExercises([result.data.exerciseList])
-        console.log("exercises from post: ", result.data.exerciseList)
-      }
-    }, []
-  )
+  useEffect(
+    () =>
+      function calculateAverageCalories() {
+        const uniqueDates = [
+          ...new Set(
+            nutritions?.map((obj) =>
+              new Date(obj.created_at).toLocaleDateString()
+            )
+          ),
+        ];
+        const numDays = uniqueDates.length;
+        const totalCalories = nutritions?.reduce(
+          (sum, obj) => sum + obj.calories,
+          0
+        );
+        setAverageCalories(totalCalories / numDays);
+      },
+    []
+  );
+  // console.log("averageCalories: ", averageCalories)
 
-  useEffect(() => 
-    function calculateTotalExerciseDuration(){
-      const totalDuration = exercises.reduce((total, exercise) => total + exercise.duration, 0);
-      setTotalExerciseDuration(totalDuration)
-    }, []
-  )
+  useEffect(
+    () =>
+      async function showExercises() {
+        let result = await axios.post("http://localhost:3001/auth/exercise", {
+          user_id: userData.id,
+        });
+        if (
+          (result.status === 201 || result.data.status === 200) &&
+          result.data.exerciseList
+        ) {
+          setExercises(result.data.exerciseList);
+          // console.log("exercises from post: ", result.data.exerciseList)
+        }
+      },
+    []
+  );
+
+  useEffect(
+    () =>
+      function calculateTotalExerciseDuration() {
+        const totalDuration = exercises.reduce(
+          (total, exercise) => total + exercise.duration,
+          0
+        );
+        setTotalExerciseDuration(totalDuration);
+      },
+    []
+  );
   // console.log("total exercise duration: ", totalExerciseDuration)
 
-  useEffect(() => 
-  async function showSleeps(){
-    // console.log("checking user id?? in sleep :", userData)
-    let result = await axios.post("http://localhost:3001/auth/sleep", {  
-      user_id: userData.id
-    });
-    if (((result.status === 201) || (result.data.status === 200)) && (result.data.sleepList)){ 
-      setSleeps([result.data.sleepList])
-      // console.log("sleeps from post: ", result.data.sleepList)
-    }
-  }, []
-)
+  useEffect(
+    () =>
+      async function showSleeps() {
+        let result = await axios.post("http://localhost:3001/auth/sleep", {
+          user_id: userData.id,
+        });
+        if (
+          (result.status === 201 || result.data.status === 200) &&
+          result.data.sleepList
+        ) {
+          setSleeps(result.data.sleepList);
+        }
+      },
+    []
+  );
 
-useEffect(() => 
-    function calculateAverageHoursofSleep(){
-      // const totalDuration = exercises.reduce((total, exercise) => total + exercise.duration, 0);
-      // setTotalExerciseDuration(totalDuration)
-    }, []
-  )
-
+  useEffect(
+    () =>
+      function calculateAverageHoursofSleep() {
+        if (sleeps.length === 0) {
+          setAverageHoursSleep(0);
+        }
+        const totalSleepHours = sleeps.reduce((total, entry) => {
+          const startTime = new Date(entry.starttime);
+          const endTime = new Date(entry.endtime);
+          const sleepDuration = (endTime - startTime) / (1000 * 60 * 60); // Convert milliseconds to hours
+          return total + sleepDuration;
+        }, 0);
+        setAverageHoursSleep(totalSleepHours / sleeps.length);
+      },
+    []
+  );
 
   return (
     <div className="activity-page">
@@ -122,7 +172,9 @@ useEffect(() =>
                 </div>
                 <div className="css-0">
                   <div className="css-1lekzkb">
-                    <p className="chakra-text css-51dhyc">60.0</p>
+                    <p className="chakra-text css-51dhyc">
+                      {totalExerciseDuration}
+                    </p>
                     <div className="chakra-stack css-tl3ftk">
                       <span className="chakra-badge css-1g1qw76">+2.5%</span>
                     </div>
@@ -145,7 +197,9 @@ useEffect(() =>
                 </div>
                 <div className="css-0">
                   <div className="css-1lekzkb">
-                    <p className="chakra-text css-51dhyc">0.0</p>
+                    <p className="chakra-text css-51dhyc">
+                      {averageHoursSleep}
+                    </p>
                     <div className="chakra-stack css-tl3ftk">
                       <span className="chakra-badge css-1bbbzfs">-2.5%</span>
                     </div>

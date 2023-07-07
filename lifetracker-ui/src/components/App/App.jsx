@@ -58,7 +58,7 @@ function App() {
 
   const [averageCalories, setAverageCalories] = useState(0);
   const [totalExerciseDuration, setTotalExerciseDuration] = useState(0);
-  const [averageHours, setAverageHours] = useState(0);
+  const [averageHoursSleep, setAverageHoursSleep] = useState(0);
 
   const [userData, setUserData] = useState({});
 
@@ -190,8 +190,8 @@ function App() {
                   totalExerciseDuration={totalExerciseDuration}
                   setSleeps={setSleeps}
                   sleeps={sleeps}
-                  averageHours={averageHours}
-                  setAverageHours={setAverageHours}
+                  averageHoursSleep={averageHoursSleep}
+                  setAverageHoursSleep={setAverageHoursSleep}
                 />
               }
             ></Route>
