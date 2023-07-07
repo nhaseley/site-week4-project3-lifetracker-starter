@@ -11,12 +11,11 @@ export default function SleepNew({
   userData,
 }) {
   async function clearSleepForm() {
-    let result = await axios.post("http://localhost:3001/auth/create-sleep", {
+    let result = await axios.post("http://localhost:3001/sleep/create-sleep", {
       user_id: userData.id,
       startTime: sleepForm.startTime,
       endTime: sleepForm.endTime,
     });
-    console.log("create sleep result: ", result.data.updatedSleep);
     setSleeps([...sleeps, result.data.updatedSleep]);
     setSleeps([...sleeps, sleepForm]);
 

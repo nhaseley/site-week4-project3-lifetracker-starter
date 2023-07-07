@@ -8,25 +8,10 @@ export default function NutritionNew({
   setNutritionForm,
   userData,
 }) {
-  function incrementQuantity() {
-    nutritionForm.quantity += 1;
-  }
-  function decrementQuantity() {
-    if (nutritionForm.quantity > 0) {
-      nutritionForm.quantity -= 1;
-    }
-  }
-  function incrementCalories() {
-    nutritionForm.calories += 10;
-  }
-  function decrementCalories() {
-    if (nutritionForm.calories > 0) {
-      nutritionForm.calories -= 10;
-    }
-  }
-  async function clearNutritionForm() {
+  
+  async function submitNutritionForm() {
     let result = await axios.post(
-      "http://localhost:3001/auth/create-nutrition",
+      "http://localhost:3001/nutrition/create-nutrition",
       {
         user_id: userData.id,
         name: nutritionForm.name,
@@ -170,7 +155,9 @@ export default function NutritionNew({
                                 <input
                                   name="quantity"
                                   inputMode="decimal"
-                                  type="text"
+                                  type="number"
+                                  min={1}
+                                  max={10000}
                                   pattern="[0-9]*(.[0-9]+)?"
                                   id="field-:rt:"
                                   aria-readonly="false"
@@ -185,45 +172,12 @@ export default function NutritionNew({
                                   autoCorrect="off"
                                   className="chakra-numberinput__field css-1551roq"
                                   value={nutritionForm.quantity}
+                                  onChange={(e) =>
+                                    setNutritionForm((u) => ({
+                                      ...u,
+                                      quantity: e.target.value,
+                                    }))}
                                 ></input>
-                                <div aria-hidden="true" className="css-1jj9yua">
-                                  <div
-                                    role="button"
-                                    tabIndex="-1"
-                                    className="css-1m5jnul"
-                                    onClick={incrementQuantity}
-                                  >
-                                    <svg
-                                      viewBox="0 0 24 24"
-                                      focusable="false"
-                                      className="chakra-icon css-onkibi"
-                                    >
-                                      <path
-                                        fill="currentColor"
-                                        d="M12.8,5.4c-0.377-0.504-1.223-0.504-1.6,0l-9,12c-0.228,0.303-0.264,0.708-0.095,1.047 C2.275,18.786,2.621,19,3,19h18c0.379,0,0.725-0.214,0.895-0.553c0.169-0.339,0.133-0.744-0.095-1.047L12.8,5.4z"
-                                      ></path>
-                                    </svg>
-                                  </div>
-                                  <div
-                                    role="button"
-                                    tabIndex="-1"
-                                    disabled=""
-                                    aria-disabled="true"
-                                    className="css-1m5jnul"
-                                    onClick={decrementQuantity}
-                                  >
-                                    <svg
-                                      viewBox="0 0 24 24"
-                                      focusable="false"
-                                      className="chakra-icon css-onkibi"
-                                    >
-                                      <path
-                                        fill="currentColor"
-                                        d="M21,5H3C2.621,5,2.275,5.214,2.105,5.553C1.937,5.892,1.973,6.297,2.2,6.6l9,12 c0.188,0.252,0.485,0.4,0.8,0.4s0.611-0.148,0.8-0.4l9-12c0.228-0.303,0.264-0.708,0.095-1.047C21.725,5.214,21.379,5,21,5z"
-                                      ></path>
-                                    </svg>
-                                  </div>
-                                </div>
                               </div>
                             </div>
                             &nbsp;
@@ -251,7 +205,9 @@ export default function NutritionNew({
                                 <input
                                   name="calories"
                                   inputMode="decimal"
-                                  type="text"
+                                  type="number"
+                                  min={1}
+                                  max={10000}
                                   pattern="[0-9]*(.[0-9]+)?"
                                   id="field-:ru:"
                                   aria-readonly="false"
@@ -264,43 +220,12 @@ export default function NutritionNew({
                                   autoCorrect="off"
                                   className="chakra-numberinput__field css-1551roq"
                                   value={nutritionForm.calories}
+                                  onChange={(e) =>
+                                    setNutritionForm((u) => ({
+                                      ...u,
+                                      calories: e.target.value,
+                                    }))}
                                 ></input>
-                                <div aria-hidden="true" className="css-1jj9yua">
-                                  <div
-                                    role="button"
-                                    tabIndex="-1"
-                                    className="css-1m5jnul"
-                                    onClick={incrementCalories}
-                                  >
-                                    <svg
-                                      viewBox="0 0 24 24"
-                                      focusable="false"
-                                      className="chakra-icon css-onkibi"
-                                    >
-                                      <path
-                                        fill="currentColor"
-                                        d="M12.8,5.4c-0.377-0.504-1.223-0.504-1.6,0l-9,12c-0.228,0.303-0.264,0.708-0.095,1.047 C2.275,18.786,2.621,19,3,19h18c0.379,0,0.725-0.214,0.895-0.553c0.169-0.339,0.133-0.744-0.095-1.047L12.8,5.4z"
-                                      ></path>
-                                    </svg>
-                                  </div>
-                                  <div
-                                    role="button"
-                                    tabIndex="-1"
-                                    className="css-1m5jnul"
-                                    onClick={decrementCalories}
-                                  >
-                                    <svg
-                                      viewBox="0 0 24 24"
-                                      focusable="false"
-                                      className="chakra-icon css-onkibi"
-                                    >
-                                      <path
-                                        fill="currentColor"
-                                        d="M21,5H3C2.621,5,2.275,5.214,2.105,5.553C1.937,5.892,1.973,6.297,2.2,6.6l9,12 c0.188,0.252,0.485,0.4,0.8,0.4s0.611-0.148,0.8-0.4l9-12c0.228-0.303,0.264-0.708,0.095-1.047C21.725,5.214,21.379,5,21,5z"
-                                      ></path>
-                                    </svg>
-                                  </div>
-                                </div>
                               </div>
                             </div>
                           </div>
@@ -340,7 +265,7 @@ export default function NutritionNew({
                           <button
                             type="submit"
                             className="submit-nutrition"
-                            onClick={clearNutritionForm}
+                            onClick={submitNutritionForm}
                           >
                             <Link
                               className="save-nutrition-link"

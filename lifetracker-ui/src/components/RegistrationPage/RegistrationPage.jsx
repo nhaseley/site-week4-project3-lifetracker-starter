@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import jwtDecode from "jwt-decode";
 
-
 export default function RegistrationPage({
   userLoginInfo,
   setUserLoginInfo,
@@ -18,11 +17,10 @@ export default function RegistrationPage({
   setTokenFirstName,
   userLoggedIn,
 }) {
-
   async function signupUser(event) {
     event.preventDefault();
     if (userLoginInfo.confirmPassword !== userLoginInfo.password) {
-      setError({message: "Passwords do not match", status: 422})
+      setError({ message: "Passwords do not match", status: 422 });
     } else {
       let result = await axios.post("http://localhost:3001/auth/register", {
         emailInput: userLoginInfo.email,
@@ -31,27 +29,38 @@ export default function RegistrationPage({
         firstNameInput: userLoginInfo.firstName,
         lastNameInput: userLoginInfo.lastName,
       });
-      console.log("registration result: ", result);
 
       if (result.data.status) {
-        console.log("registration failed!")
         setError(result.data);
       } else {
         const token = result.data.token;
-        console.log("token on registration: ", token)        
-        localStorage.setItem("token", token)
-        const decodedToken = jwtDecode(token)
-        setTokenFirstName(decodedToken.firstName)
+        localStorage.setItem("token", token);
+        const decodedToken = jwtDecode(token);
+        setTokenFirstName(decodedToken.firstName);
 
         setUserLoggedIn(true);
         setError({});
-        setUserLoginInfo({email: "", username: "", firstName: "", lastName: "", password: "", confirmPassword:""})
+        setUserLoginInfo({
+          email: "",
+          username: "",
+          firstName: "",
+          lastName: "",
+          password: "",
+          confirmPassword: "",
+        });
       }
     }
   }
 
-  function handleDemo(){
-    setUserLoginInfo({email: "nya@gmail.com", username:"nya", firstName: "nya", lastName: "haseley-ayende", password: "nya", confirmPassword: "nya" })
+  function handleDemo() {
+    setUserLoginInfo({
+      email: "nya@gmail.com",
+      username: "nya",
+      firstName: "nya",
+      lastName: "haseley-ayende",
+      password: "nya",
+      confirmPassword: "nya",
+    });
   }
 
   return (
@@ -84,7 +93,9 @@ export default function RegistrationPage({
                     placeholder="Email"
                     className="chakra-input css-1aepka5"
                     value={userLoginInfo.email}
-                    onChange={(e) => setUserLoginInfo((u) => ({...u, email: e.target.value}))}
+                    onChange={(e) =>
+                      setUserLoginInfo((u) => ({ ...u, email: e.target.value }))
+                    }
                   ></input>
                 </div>
               </div>
@@ -105,7 +116,12 @@ export default function RegistrationPage({
                     placeholder="Username"
                     className="chakra-input css-1aepka5"
                     value={userLoginInfo.username}
-                    onChange={(e) => setUserLoginInfo((u) => ({...u, username: e.target.value}))}
+                    onChange={(e) =>
+                      setUserLoginInfo((u) => ({
+                        ...u,
+                        username: e.target.value,
+                      }))
+                    }
                   ></input>
                 </div>
               </div>
@@ -121,7 +137,12 @@ export default function RegistrationPage({
                       placeholder="First Name"
                       className="chakra-input css-1aepka5"
                       value={userLoginInfo.firstName}
-                      onChange={(e) => setUserLoginInfo((u) => ({...u, firstName: e.target.value}))}
+                      onChange={(e) =>
+                        setUserLoginInfo((u) => ({
+                          ...u,
+                          firstName: e.target.value,
+                        }))
+                      }
                     ></input>
                   </div>
                 </div>
@@ -136,7 +157,12 @@ export default function RegistrationPage({
                       placeholder="Last Name"
                       className="chakra-input css-1aepka5"
                       value={userLoginInfo.lastName}
-                      onChange={(e) => setUserLoginInfo((u) => ({...u, lastName: e.target.value}))}
+                      onChange={(e) =>
+                        setUserLoginInfo((u) => ({
+                          ...u,
+                          lastName: e.target.value,
+                        }))
+                      }
                     ></input>
                   </div>
                 </div>
@@ -154,19 +180,29 @@ export default function RegistrationPage({
                   </div>
                   <input
                     name="password"
-                    type = {passwordDisplayed.password ? "text": "password"}
+                    type={passwordDisplayed.password ? "text" : "password"}
                     placeholder="Password"
                     className="chakra-input css-1fwij33"
                     value={userLoginInfo.password}
-                    onChange={(e) => setUserLoginInfo((u) => ({...u, password: e.target.value}))}
+                    onChange={(e) =>
+                      setUserLoginInfo((u) => ({
+                        ...u,
+                        password: e.target.value,
+                      }))
+                    }
                   ></input>
                   <div className="chakra-input__right-element css-1qww07b">
-                  <button 
-                    name="password-toggle"
-                    type="button" 
-                    className="chakra-button css-1xgetim" 
-                    onClick={passwordDisplayed.password ? handleHidePassword : handleShowPassword}>
-                    {passwordDisplayed.password ? "Hide" : "Show"}
+                    <button
+                      name="password-toggle"
+                      type="button"
+                      className="chakra-button css-1xgetim"
+                      onClick={
+                        passwordDisplayed.password
+                          ? handleHidePassword
+                          : handleShowPassword
+                      }
+                    >
+                      {passwordDisplayed.password ? "Hide" : "Show"}
                     </button>
                   </div>
                 </div>
@@ -184,19 +220,31 @@ export default function RegistrationPage({
                   </div>
                   <input
                     name="passwordConfirm"
-                    type = {passwordDisplayed.confirmPassword ? "text": "password"}
+                    type={
+                      passwordDisplayed.confirmPassword ? "text" : "password"
+                    }
                     placeholder="Confirm Password"
                     className="chakra-input css-1fwij33"
                     value={userLoginInfo.confirmPassword}
-                    onChange={(e) => setUserLoginInfo((u) => ({...u, confirmPassword: e.target.value}))}
+                    onChange={(e) =>
+                      setUserLoginInfo((u) => ({
+                        ...u,
+                        confirmPassword: e.target.value,
+                      }))
+                    }
                   ></input>
                   <div className="chakra-input__right-element css-1qww07b">
-                  <button 
-                    name="confirm-password-toggle"
-                    type="button" 
-                    className="chakra-button css-1xgetim" 
-                    onClick={passwordDisplayed.confirmPassword ? handleHidePassword: handleShowPassword}>
-                    {passwordDisplayed.confirmPassword ? "Hide" : "Show"}
+                    <button
+                      name="confirm-password-toggle"
+                      type="button"
+                      className="chakra-button css-1xgetim"
+                      onClick={
+                        passwordDisplayed.confirmPassword
+                          ? handleHidePassword
+                          : handleShowPassword
+                      }
+                    >
+                      {passwordDisplayed.confirmPassword ? "Hide" : "Show"}
                     </button>
                   </div>
                 </div>
@@ -227,7 +275,10 @@ export default function RegistrationPage({
           Login
         </Link>
       </div>
-      <button className="demo-button" onClick={handleDemo}> Demo Registration</button>
+      <button className="demo-button" onClick={handleDemo}>
+        {" "}
+        Demo Registration
+      </button>
     </div>
   );
 }

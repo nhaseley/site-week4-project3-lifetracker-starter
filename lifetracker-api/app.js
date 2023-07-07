@@ -1,54 +1,58 @@
 /** Express app for Vaccine Hub */
-const express = require("express")
-const cors = require("cors")
-const morgan = require("morgan")
+const express = require("express");
+const cors = require("cors");
+const morgan = require("morgan");
 
-const { parseAuthorizationHeader } = require("./middleware/security")
-const { NotFoundError } = require("./utils/errors")
-const config = require("./config")
-const authRoutes = require("./routes/auth")
+// const { parseAuthorizationHeader } = require("./middleware/security");
+const { NotFoundError } = require("./utils/errors");
+const config = require("./config");
+const authRoutes = require("./routes/auth");
+const sleepRoutes = require("./routes/sleep");
+const nutritionRoutes = require("./routes/nutrition");
+const exerciseRoutes = require("./routes/exercise");
 
-const app = express()
-
+const app = express();
 
 // enable cross-origin resource sharing for all origins for all requests
-app.use(cors())
+app.use(cors());
 // parse incoming requests with JSON payloads
-app.use(express.json())
+app.use(express.json());
 // log requests info
 
 //app.use(morgan("tiny"))
 
 // routes
-app.use("/auth", authRoutes)
+app.use("/auth", authRoutes);
+app.use("/sleep", sleepRoutes);
+app.use("/nutrition", nutritionRoutes);
+app.use("/exercise", exerciseRoutes)
 
 app.get("/", function (req, res) {
   return res.status(200).json({
     ping: "pong",
-  })
-})
+  });
+});
 
-const user = require('./models/user')
+// const user = require("./models/user");
 
 /** Handle 404 errors -- this matches everything */
 // app.use(function (req, res, next) {
-//   console.log("error here")
-//   const message = "not found"
-//   const status = 404
-//   res.send({message: message, status: status})
-//   return next(new NotFoundError())
-//   next(new NotFoundError())
-// })
+//   const message = "not found";
+//   const status = 404;
+//   res.send({ message: message, status: status });
+//   return next(new NotFoundError());
+//   next(new NotFoundError());
+// });
 
-/** Generic error handler; anything unhandled goes here. */
+// /** Generic error handler; anything unhandled goes here. */
 // app.use(function (err, req, res, next) {
-//   if (!config.IS_TESTING) console.error(err.stack)
-//   const status = 500
-//   const message = err.message
+//   if (!config.IS_TESTING) console.error(err.stack);
+//   const status = 500;
+//   const message = err.message;
 
 //   return res.status(status).json({
 //     error: { message, status },
-//   })
-// })
+//   });
+// });
 
-module.exports = app
+module.exports = app;

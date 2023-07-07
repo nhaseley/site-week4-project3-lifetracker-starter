@@ -55,7 +55,7 @@ function App() {
   });
 
   const [totalExerciseDuration, setTotalExerciseDuration] = useState(0);
-  const [averageExerciseIntensity, setAverageExerciseIntensity] = useState(0)
+  const [averageExerciseIntensity, setAverageExerciseIntensity] = useState(0);
 
   // ---- sleep component ----
   const [sleeps, setSleeps] = useState([]);
@@ -64,7 +64,7 @@ function App() {
     endTime: "",
   });
   const [averageHoursSleep, setAverageHoursSleep] = useState(0);
-  const [totalHoursSlept, setTotalHoursSlept] = useState(0)
+  const [totalHoursSlept, setTotalHoursSlept] = useState(0);
 
   const [userData, setUserData] = useState({});
 
@@ -97,8 +97,8 @@ function App() {
     setUserData({});
   }
 
-  ///////////////////////////////
-  // Token Check
+  // ----------------- Token Check --------------------- //
+
   async function getUserFromToken() {
     const existingToken = localStorage.getItem("token");
     if (existingToken) {
@@ -109,14 +109,10 @@ function App() {
     }
   }
 
-  
   useEffect(() => {
     getUserFromToken();
     setUserLoggedIn(true);
   }, []);
-
-  //console.log("USERDATA:", userData);
-  /////////////////////////////////////
 
   // ----------------- Return Object --------------------- //
   return (
@@ -126,15 +122,11 @@ function App() {
           <Route
             path=""
             element={
-              <>
-                <h1>{userData.id}</h1>
-                <h1>{userData.email}</h1>
-                <Navbar
-                  userLoggedIn={userLoggedIn}
-                  setUserLoggedIn={setUserLoggedIn}
-                  logoutUser={logoutUser}
-                />
-              </>
+              <Navbar
+                userLoggedIn={userLoggedIn}
+                setUserLoggedIn={setUserLoggedIn}
+                logoutUser={logoutUser}
+              />
             }
           >
             <Route path="/" element={<Landing />}></Route>
@@ -181,32 +173,27 @@ function App() {
               element={
                 <ActivityPage
                   userLoggedIn={userLoggedIn}
-
                   averageCalories={averageCalories}
                   setAverageCalories={setAverageCalories}
                   setNutritions={setNutritions}
                   maxCaloriesInMeal={maxCaloriesInMeal}
                   setMaxCaloriesInMeal={setMaxCaloriesInMeal}
-
                   totalExerciseDuration={totalExerciseDuration}
                   setTotalExerciseDuration={setTotalExerciseDuration}
                   setExercises={setExercises}
                   averageExerciseIntensity={averageExerciseIntensity}
                   setAverageExerciseIntensity={setAverageExerciseIntensity}
-
-
                   averageHoursSleep={averageHoursSleep}
                   setAverageHoursSleep={setAverageHoursSleep}
                   setSleeps={setSleeps}
                   totalHoursSlept={totalHoursSlept}
                   setTotalHoursSlept={setTotalHoursSlept}
-
                 />
               }
             ></Route>
 
             <Route
-              path="/nutrition/*"
+              path="/nutrition"
               element={
                 <NutritionPage
                   userLoggedIn={userLoggedIn}
@@ -231,7 +218,13 @@ function App() {
             <Route
               path="/sleep"
               element={
-                <SleepPage userLoggedIn={userLoggedIn} sleeps={sleeps} setSleeps={setSleeps} error={error} setError={setError}/>
+                <SleepPage
+                  userLoggedIn={userLoggedIn}
+                  sleeps={sleeps}
+                  setSleeps={setSleeps}
+                  error={error}
+                  setError={setError}
+                />
               }
             ></Route>
             <Route
@@ -266,6 +259,8 @@ function App() {
                   exerciseForm={exerciseForm}
                   setExerciseForm={setExerciseForm}
                   userData={userData}
+                  setError={setError}
+                  error={error}
                 />
               }
             ></Route>

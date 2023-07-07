@@ -10,7 +10,7 @@ export default function SleepPage({ userLoggedIn, sleeps, setSleeps, error, setE
   async function getSleepInfoFromToken() {
     const existingToken = localStorage.getItem("token");
     if (existingToken) {
-      let userInfo = await axios.post("http://localhost:3001/auth/sleep", {
+      let userInfo = await axios.post("http://localhost:3001/sleep", {
         token: existingToken,
       });
       if (userInfo.data.sleepList) {
@@ -22,7 +22,7 @@ export default function SleepPage({ userLoggedIn, sleeps, setSleeps, error, setE
         });
       }
     } else {
-      alert('Token expired. Please log in again.')
+      console.log('Token expired. Please log in again.')
     }
   }
 

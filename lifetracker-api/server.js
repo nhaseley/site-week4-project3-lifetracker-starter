@@ -1,10 +1,10 @@
 
-const express = require('express')
-const cors = require('cors')
-const morgan = require("morgan")
-const bcrypt = require('bcrypt')
+// const express = require('express')
+// const cors = require('cors')
+// const morgan = require("morgan")
+// const bcrypt = require('bcrypt')
 
-const pool = require('./database')
+// const pool = require('./database')
 
 const app = require('./app')
 const { PORT } = require("./config")
@@ -31,9 +31,7 @@ router.post("/login", async function (req, res, next) {
 router.post("/register", async function (req, res, next) {
   try {
     const user = await User.register(req.body)
-    console.log("INSERTED USER: ", user)
     const token = await User.generateAuthToken(user)
-    console.log("TOKEN OUTPUT: ", token)
     return res.status(201).json({ user, token})
   } catch (err) {
     res.send(err)

@@ -54,11 +54,8 @@ export default function LoginPage({
     });
 
     if (result.data.status) {
-      console.log("login failed!");
       setError(result.data);
-    } else {
-      console.log("successful log in");
-      
+    } else {      
       const token = result.data.token;
       localStorage.setItem("token", token)
       const decodedToken = jwtDecode(token);

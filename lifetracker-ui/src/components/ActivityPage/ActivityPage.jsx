@@ -25,141 +25,81 @@ export default function ActivityPage({
   totalHoursSlept,
   setTotalHoursSlept,
 }) {
-  // ----------------- Nutrition Statistics --------------------- //
+
   useEffect(() => {
     showNutritions();
-    calculateAverageCalories();
-    calculateMaxCaloriesInMeal();
-
     showExercises();
     showSleeps();
+
+    calculateSummaryStatistics();
   }, []);
 
+  async function calculateSummaryStatistics() {
+    const existingToken = localStorage.getItem("token");
+    if (existingToken) {
+      let summaryStatistics = await axios.post("http://localhost:3001/auth/activity", {
+        token: existingToken,
+      });
+      
+      setAverageCalories(summaryStatistics.data.nutrition.perDay);
+      setMaxCaloriesInMeal(summaryStatistics.data.nutrition.maxCals);
+
+      setTotalExerciseDuration(summaryStatistics.data.exercise.totalDuration);
+      setAverageExerciseIntensity(summaryStatistics.data.exercise.avgIntensity)
+
+      setAverageHoursSleep(summaryStatistics.data.sleep.avgHours);
+      setTotalHoursSlept(summaryStatistics.data.sleep.totalHours);
+    }
+  }
+ 
+  // ----------------- Nutrition --------------------- //
+ 
   async function showNutritions() {
     const existingToken = localStorage.getItem("token");
     if (existingToken) {
       axios
-        .post("http://localhost:3001/auth/nutrition", {
+        .post("http://localhost:3001/nutrition", {
           token: existingToken,
         })
         .then((userInfo) => {
           setNutritions(userInfo.data.nutritionList);
-          // calculateAverageCalories(userInfo.data.nutritionList);
-          // getMaxCaloriesInMeal(userInfo.data.nutritionList);
         });
     } else {
-      alert("Token expired. Please log in again.");
+      console.log("Token expired. Please log in again.");
     }
   }
-  
-  async function calculateAverageCalories() {
-    const existingToken = localStorage.getItem("token");
-    if (existingToken) {
-      let summaryStatistics = await axios.post("http://localhost:3001/auth/activity", {
-        token: existingToken,
-      });
-      setAverageCalories(summaryStatistics.data.nutrition.perDay);
-    }
-  }
+  // ----------------- Exercise --------------------- //
 
-  async function calculateMaxCaloriesInMeal() {
-    const existingToken = localStorage.getItem("token");
-    if (existingToken) {
-      let summaryStatistics = await axios.post("http://localhost:3001/auth/activity", {
-        token: existingToken,
-      });
-      setMaxCaloriesInMeal(summaryStatistics.data.nutrition.maxCals);
-    }
-  }
-
-  // ----------------- Exercise Statistics --------------------- //
-
-  async function calculateTotalExerciseDuration() {
-    const existingToken = localStorage.getItem("token");
-    if (existingToken) {
-      let summaryStatistics = await axios.post("http://localhost:3001/auth/activity", {
-        token: existingToken,
-      });
-      console.log("summary statistics: ", summaryStatistics.data)
-      setTotalExerciseDuration(summaryStatistics.data.exercise.totalDuration);
-    }
-  }
-  useEffect(() => {
-    calculateTotalExerciseDuration();
-  }, []);
-
-  function calculateAverageExerciseIntensity(exerciseList) {
-    if (exerciseList.length === 0) {
-      return 0; // No exercises in the array
-    }
-    const totalIntensity = exerciseList.reduce((sum, exercise) => {
-      return sum + exercise.intensity;
-    }, 0);
-    setAverageExerciseIntensity(
-      Math.round(totalIntensity / exerciseList.length)
-    );
-  }
 
   async function showExercises() {
     const existingToken = localStorage.getItem("token");
     if (existingToken) {
       axios
-        .post("http://localhost:3001/auth/exercise", {
+        .post("http://localhost:3001/exercise", {
           token: existingToken,
         })
         .then((userInfo) => {
           setExercises(userInfo.data.exerciseList);
-          console.log("exerciselist: ", userInfo.data.exerciseList)
-          // calculateTotalExerciseDuration(userInfo.data.exerciseList);
-          calculateAverageExerciseIntensity(userInfo.data.exerciseList);
         });
     } else {
-      alert("Token expired. Please log in again.");
+      console.log("Token expired. Please log in again.");
     }
   }
 
-  // ----------------- Sleep Statistics --------------------- //
+  // ----------------- Sleep --------------------- //
 
-  async function calculateAverageHoursofSleep() {
-    const existingToken = localStorage.getItem("token");
-    if (existingToken) {
-      let summaryStatistics = await axios.post("http://localhost:3001/auth/activity", {
-        token: existingToken,
-      });
-      // console.log("summary statistics: ", summaryStatistics.data)
-      setAverageHoursSleep(summaryStatistics.data.sleep.averageSleepHours);
-    }
-  }
-  useEffect(() => {
-    calculateAverageHoursofSleep();
-  }, []);
-
-  function calculateTotalHoursSlept(sleepList) {
-    const totalSleepHours = sleepList.reduce((total, entry) => {
-      const startTime = new Date(entry.starttime);
-      const endTime = new Date(entry.endtime);
-      const sleepDuration = (endTime - startTime) / (1000 * 60 * 60); // Convert milliseconds to hours
-      return total + sleepDuration;
-    }, 0);
-
-    setTotalHoursSlept(Math.round(totalSleepHours));
-  }
   async function showSleeps() {
     const existingToken = localStorage.getItem("token");
     if (existingToken) {
       axios
-        .post("http://localhost:3001/auth/sleep", {
+        .post("http://localhost:3001/sleep", {
           token: existingToken,
         })
         .then((userInfo) => {
           setSleeps(userInfo.data.sleepList);
-          // console.log("SleepList: ", userInfo.data.sleepList);
-
-          calculateAverageHoursofSleep(userInfo.data.sleepList);
-          calculateTotalHoursSlept(userInfo.data.sleepList);
         });
     } else {
-      alert("Token expired. Please log in again.");
+      console.log("Token expired. Please log in again.");
     }
   }
 

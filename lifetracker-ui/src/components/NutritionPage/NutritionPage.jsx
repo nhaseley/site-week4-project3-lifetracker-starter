@@ -16,7 +16,7 @@ export default function NutritionPage({
   async function getNutritionInfoFromToken() {
     const existingToken = localStorage.getItem("token");
     if (existingToken) {
-      let userInfo = await axios.post("http://localhost:3001/auth/nutrition", {
+      let userInfo = await axios.post("http://localhost:3001/nutrition", {
         token: existingToken,
       });
       if (userInfo.data.nutritionList) {
@@ -28,7 +28,7 @@ export default function NutritionPage({
         });
       }
     } else {
-      alert('Token expired. Please log in again.')
+      console.log('Token expired. Please log in again.')
     }
   }
 

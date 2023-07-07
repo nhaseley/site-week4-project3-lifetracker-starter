@@ -12,10 +12,11 @@ export default function ExercisePage({
   error,
   setError
 }) {
+  console.log("exercise", exercises)
   async function getExerciseInfoFromToken() {
     const existingToken = localStorage.getItem("token");
     if (existingToken) {
-      let userInfo = await axios.post("http://localhost:3001/auth/exercise", {
+      let userInfo = await axios.post("http://localhost:3001/exercise", {
         token: existingToken,
       });
 
@@ -28,7 +29,7 @@ export default function ExercisePage({
         });
       }
     } else {
-      alert("Token expired. Please log in again.");
+      console.log("Token expired. Please log in again.");
     }
   }
 
@@ -52,7 +53,7 @@ export default function ExercisePage({
             </div>
           </div>
 
-          {error.message ? (
+          {exercises.length == 0 ? (
             <div className="css-vpbd2d">
               <div className="css-1qfrez2">
                 <div className="css-uiodal">

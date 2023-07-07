@@ -12,7 +12,7 @@ const parseAuthorizationHeader = (req, res, next) => {
 }
 
 const requireAuthenticatedUser = (req, res, next) =>{
-    console.log("res locals user" , res.locals.user)
+    // console.log("res locals user" , res.locals.user)
     if (!res.locals.user){
         return next(new UnauthorizedError("Not logged in"))
     }

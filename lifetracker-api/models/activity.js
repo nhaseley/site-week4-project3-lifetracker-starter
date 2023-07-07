@@ -39,7 +39,7 @@ class Activity {
    */
 static async calculateMaxCaloriesInMeal(user_id) {
     const result = await db.query(
-      `SELECT MAX(calories) AS max_calories
+      `SELECT CAST(MAX(calories) AS INT) AS max_calories
       FROM nutrition
       
       WHERE user_id = $1`,
@@ -62,7 +62,7 @@ static async calculateMaxCaloriesInMeal(user_id) {
    * @param {String} user_id
    * @returns total exercise duration
    */
-  static async totalExerciseDuration(user_id) {
+  static async calculateTotalExerciseDuration(user_id) {
     const result = await db.query(
       `SELECT CAST(SUM(duration) AS INT) AS total_duration
       FROM exercise
@@ -73,7 +73,7 @@ static async calculateMaxCaloriesInMeal(user_id) {
     if (!totalDuration) {
       throw new NotFoundError("No exercise logged from this user");
     }
-    return { totalDuration };
+    return totalDuration;
   }
 
   /**
@@ -82,21 +82,66 @@ static async calculateMaxCaloriesInMeal(user_id) {
    * @param {String} user_id
    * @returns total hours of sleep per day
    */
-  static async averageHoursofSleep(user_id) {
+  static async calculateAverageHoursofSleep(user_id) {
     const result = await db.query(
       `SELECT 
       DATE(created_at) AS day, 
-      CAST(AVG(EXTRACT(EPOCH FROM (endTime::timestamp - startTime::timestamp)) / 3600) AS INT) AS average_sleep_hours
+      CAST(ROUND(AVG(EXTRACT(EPOCH FROM (endTime::timestamp - startTime::timestamp)) / 3600), 1) AS INT) AS average_sleep_hours
   FROM sleep
       WHERE user_id = $1
       GROUP BY day`,
       [user_id]
     );
-    const averageSleepHours = result.rows[0].average_sleep_hours;
-    if (!averageSleepHours) {
+    const averageHours = result.rows[0].average_sleep_hours;
+    if (!averageHours) {
       throw new NotFoundError("No sleep logged from this user");
     }
-    return { averageSleepHours };
+    return averageHours;
   }
+
+
+
+    /**
+   * Calculates the Average Exercise Intensity in sleep database for specific user using SQL query
+   *
+   * @param {String} user_id
+   * @returns average exercise intensity
+   */
+    static async calculateAverageExerciseIntensity(user_id) {
+        const result = await db.query(
+          `SELECT  
+          CAST(AVG(intensity) AS INT) AS average_exercise_intensity
+      FROM exercise
+          WHERE user_id = $1`,
+          [user_id]
+        );
+        const averageIntensity = result.rows[0].average_exercise_intensity;
+        if (!averageIntensity) {
+          throw new NotFoundError("No sleep logged from this user");
+        }
+        return averageIntensity;
+      }
+
+
+       /**
+   * Calculates the total number of hours of slept in sleep database for specific user using SQL query
+   *
+   * @param {String} user_id
+   * @returns total hours of sleep
+   */
+    static async calculateTotalHoursSlept(user_id) {
+        const result = await db.query(
+          `SELECT 
+          CAST(ROUND(SUM(EXTRACT(EPOCH FROM (endTime::timestamp - startTime::timestamp)) / 3600), 1) AS INT) AS total_sleep_hours
+      FROM sleep
+          WHERE user_id = $1`,
+          [user_id]
+        );
+        const totalHours = result.rows[0].total_sleep_hours;
+        if (!totalHours) {
+          throw new NotFoundError("No sleep logged from this user");
+        }
+        return totalHours;
+      }
 }
 module.exports = Activity;
