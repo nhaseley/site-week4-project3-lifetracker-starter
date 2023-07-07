@@ -15,20 +15,20 @@ export default function SleepCard({ item }) {
             </div>
           </span>
           <div className="css-1kw2fa0">
-            <h2 className="chakra-heading css-y5314g">{item.endTime.substring(0, 9)}</h2>
+            <h2 className="chakra-heading css-y5314g">{item.endtime.substring(0, 10)}</h2>
           </div>
         </div>
         <div className="white css-1lekzkb">
           <div className="chakra-stat css-1mbo1ls">
             <dl>
               <dt className="chakra-stat__label css-14go5ty">Start Time</dt>
-              <dd className="chakra-stat__number css-1axeus7">{item.startTime.substring(11, 15)}</dd>
+              <dd className="chakra-stat__number css-1axeus7">{item.starttime.substring(11, 16)}</dd>
             </dl>
           </div>
           <div className="chakra-stat css-1mbo1ls">
             <dl>
               <dt className="chakra-stat__label css-14go5ty">End Time</dt>
-              <dd className="chakra-stat__number css-1axeus7">{item.endTime.substring(11, 15)}</dd>
+              <dd className="chakra-stat__number css-1axeus7">{item.endtime.substring(11, 16)}</dd>
             </dl>
           </div>
         </div>

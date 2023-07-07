@@ -60,8 +60,10 @@ export default function SleepPage({ userLoggedIn, sleeps }) {
                     </Link>
                   </button>
 
-                  {sleeps?.map((item) => (
+                  {sleeps[0]?.map((item) => (
+                    <>
                     <SleepCard item={item} />
+                    </>
                   ))}
                 </div>
               </div>

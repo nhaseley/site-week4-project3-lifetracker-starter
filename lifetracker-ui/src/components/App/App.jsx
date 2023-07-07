@@ -34,7 +34,7 @@ function App() {
   });
   const [userLoggedIn, setUserLoggedIn] = useState(false);
   const [tokenFirstName, setTokenFirstName] = useState();
-  
+
   const [nutritions, setNutritions] = useState([]);
   const [nutritionForm, setNutritionForm] = useState({
     name: "",
@@ -56,9 +56,11 @@ function App() {
     endTime: "",
   });
 
-  const [averageCalories, setAverageCalories] = useState(0)
+  const [averageCalories, setAverageCalories] = useState(0);
+  const [totalExerciseDuration, setTotalExerciseDuration] = useState(0);
+  const [averageHours, setAverageHours] = useState(0);
 
-  const [userData, setUserData] = useState({})
+  const [userData, setUserData] = useState({});
 
   // ---- functions ----
   function handleShowPassword(event) {
@@ -84,61 +86,30 @@ function App() {
         });
   }
   function logoutUser() {
-    localStorage.removeItem("token")
-    setUserLoggedIn(false)
-    setNutritions([])
-    setExercises([])
-    setUserData({})
-
+    localStorage.removeItem("token");
+    setUserLoggedIn(false);
+    setUserData({});
   }
 
-///////////////////////////////
+  ///////////////////////////////
   // Token Check
   async function handleUserInfo() {
-    const existingToken = localStorage.getItem('token') 
-    if (existingToken){
-      let userInfo = await axios.post('http://localhost:3001/auth/me', {token: existingToken})
-      setUserData(userInfo.data)
+    const existingToken = localStorage.getItem("token");
+    if (existingToken) {
+      let userInfo = await axios.post("http://localhost:3001/auth/me", {
+        token: existingToken,
+      });
+      setUserData(userInfo.data);
     }
   }
 
-  async function showNutritions(){
-      console.log("checking user id?? :", userData)
-      console.log("about to set nutritions for: ", userData.id)
-      // bug - resetting to undefined on reload for a sec^
-      if ( userData.id){
-      let result = await axios.post("http://localhost:3001/auth/nutrition", {
-        user_id: userData.id
-      });
-
-
-      if (((result.status === 201) || (result.data.status === 200)) && (result.data.nutritionList)){ 
-        setNutritions([result.data.nutritionList])
-        console.log("nooooot", result.data.nutritionList)
-      }
-    }
-    }
-
-    function calculateAverageCalories(){
-    
-      const uniqueDates = [...new Set(nutritions[0]?.map(obj => new Date(obj.created_at).toLocaleDateString()))];
-      const numDays = uniqueDates.length;
-    
-      const totalCalories = nutritions[0]?.reduce((sum, obj) => sum + obj.calories, 0);
-      setAverageCalories(totalCalories / numDays);
-    
-    }
-
   useEffect(() => {
-    handleUserInfo()
-    setUserLoggedIn(true)
-    showNutritions()
-    // calculateAverageCalories()
-  }, [])
+    handleUserInfo();
+    setUserLoggedIn(true);
+  }, []);
 
-console.log("USERDATA:", userData)
-/////////////////////////////////////
-
+  console.log("USERDATA:", userData);
+  /////////////////////////////////////
 
   // ---- return object ----
   return (
@@ -149,13 +120,13 @@ console.log("USERDATA:", userData)
             path=""
             element={
               <>
-              <h1>{userData.id}</h1>    
-              <h1>{userData.email}</h1>
-              <Navbar
-                userLoggedIn={userLoggedIn}
-                setUserLoggedIn={setUserLoggedIn}
-                logoutUser={logoutUser}
-              />
+                <h1>{userData.id}</h1>
+                <h1>{userData.email}</h1>
+                <Navbar
+                  userLoggedIn={userLoggedIn}
+                  setUserLoggedIn={setUserLoggedIn}
+                  logoutUser={logoutUser}
+                />
               </>
             }
           >
@@ -205,7 +176,24 @@ console.log("USERDATA:", userData)
             ></Route>
             <Route
               path="/activity"
-              element={<ActivityPage userLoggedIn={userLoggedIn} averageCalories={averageCalories} setAverageCalories={setAverageCalories} nutritions={nutritions}setNutritions={setNutritions} userData={userData}/>}
+              element={
+                <ActivityPage
+                  userLoggedIn={userLoggedIn}
+                  averageCalories={averageCalories}
+                  setAverageCalories={setAverageCalories}
+                  nutritions={nutritions}
+                  setNutritions={setNutritions}
+                  userData={userData}
+                  exercises={exercises}
+                  setExercises={setExerciseForm}
+                  setTotalExerciseDuration={setTotalExerciseDuration}
+                  totalExerciseDuration={totalExerciseDuration}
+                  setSleeps={setSleeps}
+                  sleeps={sleeps}
+                  averageHours={averageHours}
+                  setAverageHours={setAverageHours}
+                />
+              }
             ></Route>
 
             <Route
@@ -214,22 +202,60 @@ console.log("USERDATA:", userData)
                 <NutritionPage
                   userLoggedIn={userLoggedIn}
                   nutritions={nutritions}
+                  userData={userData}
+                  setNutritions={setNutritions}
                 />
               }
             ></Route>
-            <Route path="/nutrition/create" element={<NutritionNew nutritionForm={nutritionForm} setNutritionForm={setNutritionForm} userData={userData}/>}></Route>
+            <Route
+              path="/nutrition/create"
+              element={
+                <NutritionNew
+                  nutritionForm={nutritionForm}
+                  setNutritionForm={setNutritionForm}
+                  userData={userData}
+                />
+              }
+            ></Route>
 
             <Route
               path="/sleep"
-              element={<SleepPage userLoggedIn={userLoggedIn} sleeps={sleeps} />}
+              element={
+                <SleepPage userLoggedIn={userLoggedIn} sleeps={sleeps} />
+              }
             ></Route>
-            <Route path="/sleep/create" element={<SleepNew sleeps={sleeps} setSleeps ={setSleeps} sleepForm={sleepForm} setSleepForm={setSleepForm} userData={userData}/>}></Route>
+            <Route
+              path="/sleep/create"
+              element={
+                <SleepNew
+                  sleeps={sleeps}
+                  setSleeps={setSleeps}
+                  sleepForm={sleepForm}
+                  setSleepForm={setSleepForm}
+                  userData={userData}
+                />
+              }
+            ></Route>
 
             <Route
               path="/exercise"
-              element={<ExercisePage userLoggedIn={userLoggedIn} exercises={exercises} setExercises={setExercises} userData={userData}/>}
+              element={
+                <ExercisePage
+                  userLoggedIn={userLoggedIn}
+                  exercises={exercises}
+                />
+              }
             ></Route>
-            <Route path="/exercise/create" element={<ExerciseNew exerciseForm={exerciseForm} setExerciseForm={setExerciseForm} userData={userData}/>}></Route>
+            <Route
+              path="/exercise/create"
+              element={
+                <ExerciseNew
+                  exerciseForm={exerciseForm}
+                  setExerciseForm={setExerciseForm}
+                  userData={userData}
+                />
+              }
+            ></Route>
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>

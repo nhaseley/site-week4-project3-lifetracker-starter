@@ -192,6 +192,7 @@ class User {
     };
 
     const token = jwt.sign(payload, secretKey, { expiresIn: "30d" });
+    // TODO: CHANGE TO LESS TIME
     return token;
   }
 

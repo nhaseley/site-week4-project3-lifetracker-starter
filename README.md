@@ -102,7 +102,7 @@ Update the `App` component to manage authentication state:
       - [ ] `user`
       - [ ] `token`
     - [ ] Assign at least **one** of the following properties from the `data` object to the new state object:
-      - [ ] `nutrition`
+      - [x] `nutrition`
       - [ ] `exercise`
       - [ ] `sleep`
     - [ ] Call the `setAppState` with a new state object to update the component's state.

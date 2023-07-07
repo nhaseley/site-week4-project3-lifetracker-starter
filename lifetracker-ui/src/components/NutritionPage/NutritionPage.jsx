@@ -79,7 +79,6 @@ export default function NutritionPage({
                     <>
                       {nutritions[0]?.map((item) => (
                         <>
-                          {/* {console.log("item: ", item)} */}
                           <NutritionCard item={item} />
                         </>
                       ))}

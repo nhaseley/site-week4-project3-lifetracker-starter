@@ -2,7 +2,7 @@
 const db = require("../db");
 
 const bcrypt = require("bcrypt");
-const { BadRequestError, UnauthorizedError } = require("../utils/errors");
+const { BadRequestError, UnauthorizedError, NotFoundError } = require("../utils/errors");
 const { validateFields } = require("../utils/validate");
 
 const { BCRYPT_WORK_FACTOR } = require("../config");
@@ -20,7 +20,6 @@ class Sleep {
    * @returns sleep
    */
   static async createSleep(sleep) {
-    console.log("sleep in backend: ", sleep)
     if (!sleep.user_id || !sleep.startTime || !sleep.endTime){
         throw new BadRequestError("Sleep field(s) not supplied")
     }
@@ -90,8 +89,7 @@ class Sleep {
            WHERE user_id = $1`,
       [user_id]
     );
-// TODO: add to a list instead of retunring first instance?
-    const sleep = result.rows[0];
+    const sleep = result.rows;
     if (!sleep){
         throw new NotFoundError("No sleep logged from this user")
     }

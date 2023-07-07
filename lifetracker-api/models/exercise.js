@@ -101,9 +101,12 @@ class Exercise {
     );
 
     const exercise = result.rows;
+    console.log("exercises in backend: ", exercise)
+
     if (!exercise || exercise.length == 0){
         throw new NotFoundError("No exercise logged from this user")
     }
+
     return exercise;
   }
 
