@@ -3,13 +3,13 @@ const db = require("../db");
 
 const bcrypt = require("bcrypt");
 const { BadRequestError, UnauthorizedError, NotFoundError } = require("../utils/errors");
-const { validateFields } = require("../utils/validate");
+// const { validateFields } = require("../utils/validate");
 
-const { BCRYPT_WORK_FACTOR } = require("../config");
+// const { BCRYPT_WORK_FACTOR } = require("../config");
 
 const crypto = require("crypto");
-const jwt = require("jsonwebtoken");
-const secretKey = crypto.randomBytes(64).toString("hex");
+// const jwt = require("jsonwebtoken");
+// const secretKey = crypto.randomBytes(64).toString("hex");
 
 class Nutrition {
   /**
@@ -106,7 +106,7 @@ class Nutrition {
 
     const nutrition = result.rows;
     if (!nutrition || nutrition.length == 0){
-        throw new NotFoundError("No nutrition logged from this user")
+        //throw new NotFoundError("No nutrition logged from this user")
     }
     return nutrition;
   }

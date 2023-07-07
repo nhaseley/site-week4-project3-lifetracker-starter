@@ -1,10 +1,12 @@
 import * as React from "react";
 import { useEffect } from "react"
 import "./LoginPage.css";
-import { Link } from "react-router-dom";
+import { Link  } from "react-router-dom";
 import axios from "axios";
 import ActivityPage from "../ActivityPage/ActivityPage";
 import jwtDecode from "jwt-decode";
+import { useNavigate } from "react-router-dom";
+
 
 export default function LoginPage({
   userLoginInfo,
@@ -19,11 +21,11 @@ export default function LoginPage({
   tokenFirstName,
   setTokenFirstName,
   logoutUser,
-  setUser_Id
+  userData,
+  setUserData
 }) {
 
- 
-
+  const navigate = useNavigate()
 
   useEffect(() => {
     const checkLoggedIn = () => {
@@ -31,7 +33,6 @@ export default function LoginPage({
     const token = localStorage.getItem("token");
     if (token){ 
       const decodedToken = jwtDecode(token);
-      setTokenFirstName(decodedToken.firstName)
       if (decodedToken.exp * 1000 > Date.now()){
         setUserLoggedIn(true)
       } else {
@@ -57,21 +58,18 @@ export default function LoginPage({
       setError(result.data);
     } else {
       console.log("successful log in");
+      
       const token = result.data.token;
       console.log("token on login: ", token)
-
       localStorage.setItem("token", token)
       const decodedToken = jwtDecode(token);
-      
-      setUser_Id(result.data.user.id) 
+      setUserData(decodedToken)
       // used for nutritions page
-
-      setTokenFirstName(decodedToken.firstName)
 
       setUserLoginInfo({email: "", password: ""})
       setError({});
       setUserLoggedIn(true)
-      // return <ActivityPage/>
+      navigate("/activity")
     }
   }
 
@@ -80,10 +78,6 @@ export default function LoginPage({
   }
 
   return (
-    userLoggedIn ? <Link to={"/activity"}> Navigate to your activity page here </Link>:
-
-
-    <div > Here we are logged in as: {tokenFirstName} 
     <div className="login-page">
 
       <div className="login-form">
@@ -173,7 +167,6 @@ export default function LoginPage({
         </Link>
       </div>
       <button className="demo-button" onClick={handleDemo}> Demo Login</button>
-    </div>
     </div>
   );
 }

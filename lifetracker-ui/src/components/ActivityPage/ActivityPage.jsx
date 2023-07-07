@@ -5,31 +5,33 @@ import {useEffect} from "react";
 import axios from "axios";
 
 
-export default function ActivityPage({ userLoggedIn, averageCalories, setAverageCalories, nutritions, setNutritions, user_id }) {
-  useEffect(() => 
-    async function showNutritions(){
-      let result = await axios.post("http://localhost:3001/auth/nutrition", {
-        user_id: user_id
-      });
-      if (((result.status === 201) || (result.data.status === 200)) && (result.data.nutritionList)){ 
-        setNutritions([result.data.nutritionList])
-      }
-    }, []
-  )
-  console.log("NUTRITIONS: ",nutritions)
+export default function ActivityPage({ userLoggedIn, averageCalories, setAverageCalories, nutritions, setNutritions, userData }) {
+  // useEffect(() => 
+  //   async function showNutritions(){
+  //     console.log("checking user id?? :", userData)
+  //     let result = await axios.post("http://localhost:3001/auth/nutrition", {
+  //       user_id: userData.id
+  //     });
+
+  //     if (((result.status === 201) || (result.data.status === 200)) && (result.data.nutritionList)){ 
+  //       setNutritions([result.data.nutritionList])
+  //       console.log("nooooot", result.data.nutritionList)
+  //     }
+  //   }, []
+  // )
   
-  useEffect(() => 
-    function calculateAverageCalories(){
+  // useEffect(() => 
+  //   function calculateAverageCalories(){
     
-      const uniqueDates = [...new Set(nutritions[0]?.map(obj => new Date(obj.created_at).toLocaleDateString()))];
-      const numDays = uniqueDates.length;
+  //     const uniqueDates = [...new Set(nutritions[0]?.map(obj => new Date(obj.created_at).toLocaleDateString()))];
+  //     const numDays = uniqueDates.length;
     
-      const totalCalories = nutritions[0]?.reduce((sum, obj) => sum + obj.calories, 0);
-      setAverageCalories(totalCalories / numDays);
+  //     const totalCalories = nutritions[0]?.reduce((sum, obj) => sum + obj.calories, 0);
+  //     setAverageCalories(totalCalories / numDays);
     
-    }, []
-  )
-  console.log("averageCalories: ", averageCalories)
+  //   }, []
+  // )
+  // console.log("averageCalories: ", averageCalories)
 
   return (
     <div className="activity-page">
@@ -128,7 +130,6 @@ export default function ActivityPage({ userLoggedIn, averageCalories, setAverage
                   <div className="css-1lekzkb">
                     <p className="chakra-text css-51dhyc">{averageCalories}</p>
                     <div className="chakra-stack css-tl3ftk">
-                      {/* <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 448 512" focusable="false" className="chakra-icon css-9dla43" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M240.971 130.524l194.343 194.343c9.373 9.373 9.373 24.569 0 33.941l-22.667 22.667c-9.357 9.357-24.522 9.375-33.901.04L224 227.495 69.255 381.516c-9.379 9.335-24.544 9.317-33.901-.04l-22.667-22.667c-9.373-9.373-9.373-24.569 0-33.941L207.03 130.525c9.372-9.373 24.568-9.373 33.941-.001z"></path></svg> */}
                       <span className="chakra-badge css-1g1qw76">+5.5%</span>
                     </div>
                   </div>

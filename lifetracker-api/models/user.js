@@ -10,6 +10,7 @@ const { BCRYPT_WORK_FACTOR } = require("../config");
 const crypto = require("crypto");
 const jwt = require("jsonwebtoken");
 const secretKey = crypto.randomBytes(64).toString("hex");
+// TODO: should be imported?
 
 class User {
   /**
@@ -190,20 +191,20 @@ class User {
       date: user.date,
     };
 
-    const token = jwt.sign(payload, secretKey, { expiresIn: "1h" });
+    const token = jwt.sign(payload, secretKey, { expiresIn: "30d" });
     return token;
   }
 
-  static async verifyAuthToken(token) {
+  static verifyAuthToken(token) {
     try {
-      const decoded = jwt.verify(token, secretKey);
+      //TODO: use verify and figure out why we can't verify currently
+      const decoded = jwt.decode(token, secretKey);
+      console.log('decoded: ', decoded)
       return decoded;
     } catch (err) {
       return null;
     }
   }
-
-
 }
 
 module.exports = User;

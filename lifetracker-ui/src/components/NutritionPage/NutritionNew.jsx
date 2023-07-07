@@ -6,7 +6,7 @@ import axios from "axios";
 export default function NutritionNew({
   nutritionForm,
   setNutritionForm,
-  user_id,
+  userData,
 }) {
   function incrementQuantity() {
     nutritionForm.quantity += 1;
@@ -28,7 +28,7 @@ export default function NutritionNew({
     let result = await axios.post(
       "http://localhost:3001/auth/create-nutrition",
       {
-        user_id: user_id,
+        user_id: userData.id,
         name: nutritionForm.name,
         category: nutritionForm.category,
         imageUrl: nutritionForm.imageUrl,

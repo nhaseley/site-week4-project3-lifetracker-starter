@@ -3,12 +3,12 @@ import "./SleepNew.css";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
-export default function SleepNew({sleeps, setSleeps, sleepForm, setSleepForm, user_id}){
+export default function SleepNew({sleeps, setSleeps, sleepForm, setSleepForm, userData}){
     async function clearSleepForm(){
         let result = await axios.post(
             "http://localhost:3001/auth/create-sleep",
             {
-              user_id: user_id,
+              user_id: userData.id,
               startTime: sleepForm.startTime,
               endTime: sleepForm.endTime,
             }

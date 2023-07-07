@@ -5,11 +5,11 @@ import { Link } from "react-router-dom";
 import ExerciseCard from "./ExerciseCard";
 import axios from "axios";
 
-export default function ExercisePage({ userLoggedIn, exercises, setExercises, user_id}) {
+export default function ExercisePage({ userLoggedIn, exercises, setExercises, userData}) {
     useEffect(() => 
     async function showExercises(){
       let result = await axios.post("http://localhost:3001/auth/exercise", {  
-        user_id: user_id
+        user_id: userData.id
       });
       if (((result.status === 201) || (result.data.status === 200)) && (result.data.exerciseList)){ 
         // successful post

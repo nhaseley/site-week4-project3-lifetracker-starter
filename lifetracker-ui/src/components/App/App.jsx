@@ -13,6 +13,7 @@ import ExercisePage from "../ExercisePage/ExercisePage";
 import NutritionNew from "../NutritionPage/NutritionNew";
 import SleepNew from "../SleepPage/SleepNew";
 import ExerciseNew from "../ExercisePage/ExerciseNew";
+import axios from "axios";
 
 function App() {
   // ---- states ----
@@ -25,7 +26,7 @@ function App() {
     password: "",
     confirmPassword: "",
   });
-  const [user_id, setUser_Id] = useState();
+  // const [user_id, setUser_Id] = useState();
   const [error, setError] = useState({});
   const [passwordDisplayed, setPasswordDisplayed] = useState({
     password: false,
@@ -57,6 +58,8 @@ function App() {
 
   const [averageCalories, setAverageCalories] = useState(0)
 
+  const [userData, setUserData] = useState({})
+
   // ---- functions ----
   function handleShowPassword(event) {
     event.target.name === "password-toggle"
@@ -83,13 +86,59 @@ function App() {
   function logoutUser() {
     localStorage.removeItem("token")
     setUserLoggedIn(false)
-    console.log("logged in? :", userLoggedIn)
     setNutritions([])
     setExercises([])
-    setUser_Id()
+    setUserData({})
+
   }
 
-  console.log("USER ID FROM APP: ", user_id)
+///////////////////////////////
+  // Token Check
+  async function handleUserInfo() {
+    const existingToken = localStorage.getItem('token') 
+    if (existingToken){
+      let userInfo = await axios.post('http://localhost:3001/auth/me', {token: existingToken})
+      setUserData(userInfo.data)
+    }
+  }
+
+  async function showNutritions(){
+      console.log("checking user id?? :", userData)
+      console.log("about to set nutritions for: ", userData.id)
+      // bug - resetting to undefined on reload for a sec^
+      if ( userData.id){
+      let result = await axios.post("http://localhost:3001/auth/nutrition", {
+        user_id: userData.id
+      });
+
+
+      if (((result.status === 201) || (result.data.status === 200)) && (result.data.nutritionList)){ 
+        setNutritions([result.data.nutritionList])
+        console.log("nooooot", result.data.nutritionList)
+      }
+    }
+    }
+
+    function calculateAverageCalories(){
+    
+      const uniqueDates = [...new Set(nutritions[0]?.map(obj => new Date(obj.created_at).toLocaleDateString()))];
+      const numDays = uniqueDates.length;
+    
+      const totalCalories = nutritions[0]?.reduce((sum, obj) => sum + obj.calories, 0);
+      setAverageCalories(totalCalories / numDays);
+    
+    }
+
+  useEffect(() => {
+    handleUserInfo()
+    setUserLoggedIn(true)
+    showNutritions()
+    // calculateAverageCalories()
+  }, [])
+
+console.log("USERDATA:", userData)
+/////////////////////////////////////
+
 
   // ---- return object ----
   return (
@@ -99,11 +148,15 @@ function App() {
           <Route
             path=""
             element={
+              <>
+              <h1>{userData.id}</h1>    
+              <h1>{userData.email}</h1>
               <Navbar
                 userLoggedIn={userLoggedIn}
                 setUserLoggedIn={setUserLoggedIn}
                 logoutUser={logoutUser}
               />
+              </>
             }
           >
             <Route path="/" element={<Landing />}></Route>
@@ -124,7 +177,9 @@ function App() {
                   tokenFirstName={tokenFirstName}
                   setTokenFirstName={setTokenFirstName}
                   logoutUser={logoutUser}
-                  setUser_Id={setUser_Id}
+                  // setUser_Id={setUser_Id}
+                  userData={userData}
+                  setUserData={setUserData}
                 />
               }
             />
@@ -150,7 +205,7 @@ function App() {
             ></Route>
             <Route
               path="/activity"
-              element={<ActivityPage userLoggedIn={userLoggedIn} averageCalories={averageCalories} setAverageCalories={setAverageCalories} nutritions={nutritions}setNutritions={setNutritions} user_id={user_id}/>}
+              element={<ActivityPage userLoggedIn={userLoggedIn} averageCalories={averageCalories} setAverageCalories={setAverageCalories} nutritions={nutritions}setNutritions={setNutritions} userData={userData}/>}
             ></Route>
 
             <Route
@@ -159,26 +214,22 @@ function App() {
                 <NutritionPage
                   userLoggedIn={userLoggedIn}
                   nutritions={nutritions}
-                  user_id={user_id}
-                  setNutritions={setNutritions}
-                  averageCalories={averageCalories}
-                  setAverageCalories={setAverageCalories}
                 />
               }
             ></Route>
-            <Route path="/nutrition/create" element={<NutritionNew nutritionForm={nutritionForm} setNutritionForm={setNutritionForm} user_id={user_id}/>}></Route>
+            <Route path="/nutrition/create" element={<NutritionNew nutritionForm={nutritionForm} setNutritionForm={setNutritionForm} userData={userData}/>}></Route>
 
             <Route
               path="/sleep"
               element={<SleepPage userLoggedIn={userLoggedIn} sleeps={sleeps} />}
             ></Route>
-            <Route path="/sleep/create" element={<SleepNew sleeps={sleeps} setSleeps ={setSleeps} sleepForm={sleepForm} setSleepForm={setSleepForm} user_id={user_id}/>}></Route>
+            <Route path="/sleep/create" element={<SleepNew sleeps={sleeps} setSleeps ={setSleeps} sleepForm={sleepForm} setSleepForm={setSleepForm} userData={userData}/>}></Route>
 
             <Route
               path="/exercise"
-              element={<ExercisePage userLoggedIn={userLoggedIn} exercises={exercises} setExercises={setExercises} user_id={user_id}/>}
+              element={<ExercisePage userLoggedIn={userLoggedIn} exercises={exercises} setExercises={setExercises} userData={userData}/>}
             ></Route>
-            <Route path="/exercise/create" element={<ExerciseNew exerciseForm={exerciseForm} setExerciseForm={setExerciseForm} user_id={user_id}/>}></Route>
+            <Route path="/exercise/create" element={<ExerciseNew exerciseForm={exerciseForm} setExerciseForm={setExerciseForm} userData={userData}/>}></Route>
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>

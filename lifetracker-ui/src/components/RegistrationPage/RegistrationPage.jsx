@@ -16,7 +16,7 @@ export default function RegistrationPage({
   setUserLoggedIn,
   tokenFirstName,
   setTokenFirstName,
-  userLoggedIn
+  userLoggedIn,
 }) {
 
   async function signupUser(event) {
@@ -37,10 +37,8 @@ export default function RegistrationPage({
         console.log("registration failed!")
         setError(result.data);
       } else {
-        console.log("successful registration");
         const token = result.data.token;
-        console.log("token on registration: ", token)
-
+        console.log("token on registration: ", token)        
         localStorage.setItem("token", token)
         const decodedToken = jwtDecode(token)
         setTokenFirstName(decodedToken.firstName)
@@ -57,8 +55,6 @@ export default function RegistrationPage({
   }
 
   return (
-    userLoggedIn ? <Link to={"/activity"}> Navigate to your activity page here </Link>:
-
     <div className="registration-page">
       <div className="registration-form">
         <span className="chakra-avatar css-3fy9wq">

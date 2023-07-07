@@ -3,7 +3,7 @@ import "./ExerciseNew.css";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
-export default function ExerciseNew({exerciseForm, setExerciseForm, user_id}){
+export default function ExerciseNew({exerciseForm, setExerciseForm, userData}){
     function incrementDuration(){
         exerciseForm.duration += 1
       }
@@ -24,7 +24,7 @@ export default function ExerciseNew({exerciseForm, setExerciseForm, user_id}){
         let result = await axios.post(
             "http://localhost:3001/auth/create-exercise",
             {
-              user_id: user_id,
+              user_id: userData.id,
               name: exerciseForm.name,
               category: exerciseForm.category,
               duration: exerciseForm.duration,
