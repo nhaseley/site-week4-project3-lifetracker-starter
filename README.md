@@ -10,14 +10,14 @@ Everywhere around us is data waiting to be collected and utilized. In recent yea
 
 By the end of this project you will be able to...
 
-- [ ] Develop a full-fledged authentication system using PostgreSQL and `bcrypt`
-- [ ] Provide users with an Express API they can interact with to store user-related activity
-- [ ] Construct multiple models that implement the core business logic associated with tracking users' lives
-- [ ] Write SQL queries that aggregate user statistics and provide summary overviews about their activity
-- [ ] Design a React frontend that interacts with the API using an API service class
-- [ ] Build multiple pages and forms that communicate with the server using HTTP requests
-- [ ] Employ `useEffect` and `useState` hooks to manage application state on the frontend
-- [ ] Store user-authenticated JWT tokens in the browser's local storage for persisted authentication
+- [x] Develop a full-fledged authentication system using PostgreSQL and `bcrypt`
+- [x] Provide users with an Express API they can interact with to store user-related activity
+- [x] Construct multiple models that implement the core business logic associated with tracking users' lives
+- [x] Write SQL queries that aggregate user statistics and provide summary overviews about their activity
+- [x] Design a React frontend that interacts with the API using an API service class
+- [x] Build multiple pages and forms that communicate with the server using HTTP requests
+- [x] Employ `useEffect` and `useState` hooks to manage application state on the frontend
+- [x] Store user-authenticated JWT tokens in the browser's local storage for persisted authentication
 
 ## Application Features
 
@@ -36,7 +36,7 @@ By the end of this project you will be able to...
   - [x] Display a feed of all previously tracked activities.
   - [x] A form to enter relevant information (i.e., if tracking nutrition, the user can enter calories, timestamp, image, category, etc.).
   - [x] Each activity tracked is given a unique ID for easy lookup.
-- [ ] Deploy your website with Render. Check out our [Render Deployment Guide](https://courses.codepath.org/snippets/site/render_deployment_guide) for detailed instructions.
+- [x] Deploy your website with Render. Check out our [Render Deployment Guide](https://courses.codepath.org/snippets/site/render_deployment_guide) for detailed instructions.
 
 ### Stretch Features
 
@@ -45,7 +45,7 @@ Implement any of the following features to improve the application:
 - [x] Users have access to an overview Activity page that shows one summary statistic about each of the three types of activity tracked (i.e., total number of minutes exercised, average calories consumed, max hours of sleep in one night, etc.). These summary statistics should be created using the `AVG`, `SUM`, `COUNT`, `MIN`, `MAX`, functions in SQL queries and served from a dedicated API endpoint. *Note: Summary statistics should not be calculated on the frontend.*
 - [ ] Each model (i.e `nutrition`, `exercise`, and `sleep`) should also implement a `fetchById` method that queries the database for a record by its id and only serves it to users who own that resource.
   - You should also create a new dynamic route on the frontend that displays detail about a single record. For instance, `nutrition/detail/:id` should show a page with all the information about a single nutrition item.
-- [ ] Provide a dropdown that allows users to filter activity based on a certain attribute of any activity item. Example: filter exercise or nutrition by category, or filter sleep by the week/month it was recorded.
+- [x] Provide a dropdown that allows users to filter activity based on a certain attribute of any activity item. Example: filter exercise or nutrition by category, or filter sleep by the week/month it was recorded.
 - [x] Calculate aggregate statistics based on time periods - such as daily, weekly, monthly aggregates.
 - [ ] Create a page that shows all other users that use the LifeTracker application and allow users to follow each other. You'll want to create a new table to store this data.
 - [ ] Implement `security` middleware on the API that allows only authenticated users to access resources and allows users to only access resources about themselves.
@@ -220,22 +220,22 @@ Update the `App` component to manage authentication state:
 
 - [ ] Build the **`ActivityFeed`** component to:
   - [x] Render JSX that is wrapped by an element with the class name of `activity-feed`
-  - [ ] Accept **at least** the following props:
-    - [ ] `totalCaloriesPerDay` - an array of items containing summary data about the total calories consumed per day
+  - [x] Accept **at least** the following props:
+    - [x] `totalCaloriesPerDay` - an array of items containing summary data about the total calories consumed per day
     - [ ] `avgCaloriesPerCategory` - an array of items containing summary data about the average calories consumed per category
-    - [ ] Any other props as needed
+    - [x] Any other props as needed
   - [ ] Inside an element with the class name of `per-category`, it should:
     - [ ] Render the text: `"Average Calories Per Category` inside an `h4` element
     - [ ] Take the first `6` or less items in the `avgCaloriesPerCategory` array and render a `SummaryStat` component for each item.
       - [ ] Pass the calories **rounded down to one decimal place** as the `stat` prop
       - [ ] Pass the string of `calories` as the `label` prop
       - [ ] Pass the `category` as the `substat` prop
-  - [ ] Inside an element with the class name of `per-day`, it should:
-    - [ ] Render the text: `"Total Calories Per Day` inside an `h4` element
-    - [ ] For each item in the `totalCaloriesPerDay` array, render a `SummaryStat` component.
-      - [ ] Pass the calories **rounded down to the nearest whole number** as the `stat` prop
-      - [ ] Pass the string of `calories` as the `label` prop
-      - [ ] Pass the `date` in the format `dd/mm/yyyy` - example: `07/02/2022` - as the `substat` prop
+  - [x] Inside an element with the class name of `per-day`, it should:
+    - [x] Render the text: `"Total Calories Per Day` inside an `h4` element
+    - [x] For each item in the `totalCaloriesPerDay` array, render a `SummaryStat` component.
+      - [x] Pass the calories **rounded down to the nearest whole number** as the `stat` prop
+      - [x] Pass the string of `calories` as the `label` prop
+      - [x] Pass the `date` in the format `dd/mm/yyyy` - example: `07/02/2022` - as the `substat` prop
 
 #### Implement the `SummaryStat` Component
 
