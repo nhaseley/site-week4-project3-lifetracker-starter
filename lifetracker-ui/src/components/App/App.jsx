@@ -1,7 +1,6 @@
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useEffect, useState } from "react";
-import NotFound from "../NotFound/NotFound";
 import Navbar from "../Navbar/Navbar";
 import Landing from "../Landing/Landing";
 import LoginPage from "../LoginPage/LoginPage";
@@ -265,7 +264,7 @@ function App() {
               }
             ></Route>
           </Route>
-{/*           <Route path="*" element={<NotFound />} /> */}
+          {/* <Route path="*" element={<NotFound />} /> */}
         </Routes>
       </BrowserRouter>
     </div>
