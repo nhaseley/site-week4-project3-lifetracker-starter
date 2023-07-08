@@ -23,10 +23,14 @@ class Activity {
       GROUP BY date`,
       [user_id]
     );
+    if (!result.rows[0]){
+      return 0
+    }
     const dailyCals = result.rows[0].average_calories;
     if (!dailyCals) {
-      throw new NotFoundError("No nutrition logged from this user");
+      return 0
     }
+
     return dailyCals;
   }
 
@@ -45,15 +49,15 @@ static async calculateMaxCaloriesInMeal(user_id) {
       WHERE user_id = $1`,
       [user_id]
     );
+    if (!result.rows[0]){
+      return 0
+    }
     const maxCalories = result.rows[0].max_calories;
     if (!maxCalories) {
-      throw new NotFoundError("No nutrition logged from this user");
+      return 0
     }
     return maxCalories;
   }
-
-
-
 
 
   /**
@@ -69,9 +73,12 @@ static async calculateMaxCaloriesInMeal(user_id) {
       WHERE user_id = $1`,
       [user_id]
     );
+    if (!result.rows[0]){
+      return 0
+    }
     const totalDuration = result.rows[0].total_duration;
     if (!totalDuration) {
-      throw new NotFoundError("No exercise logged from this user");
+      return 0
     }
     return totalDuration;
   }
@@ -92,9 +99,12 @@ static async calculateMaxCaloriesInMeal(user_id) {
       GROUP BY day`,
       [user_id]
     );
+    if (!result.rows[0]){
+      return 0
+    }
     const averageHours = result.rows[0].average_sleep_hours;
     if (!averageHours) {
-      throw new NotFoundError("No sleep logged from this user");
+      return 0
     }
     return averageHours;
   }
@@ -115,9 +125,12 @@ static async calculateMaxCaloriesInMeal(user_id) {
           WHERE user_id = $1`,
           [user_id]
         );
+        if (result.rows[0]){
+          return 0
+        }
         const averageIntensity = result.rows[0].average_exercise_intensity;
         if (!averageIntensity) {
-          throw new NotFoundError("No sleep logged from this user");
+          return 0
         }
         return averageIntensity;
       }
@@ -137,9 +150,12 @@ static async calculateMaxCaloriesInMeal(user_id) {
           WHERE user_id = $1`,
           [user_id]
         );
+        if (!result.rows[0]){
+          return 0
+        }
         const totalHours = result.rows[0].total_sleep_hours;
         if (!totalHours) {
-          throw new NotFoundError("No sleep logged from this user");
+          return 0
         }
         return totalHours;
       }
