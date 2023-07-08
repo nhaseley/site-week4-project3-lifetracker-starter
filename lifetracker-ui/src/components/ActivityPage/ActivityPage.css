@@ -166,8 +166,9 @@
     align-items: center;
     -webkit-box-pack: justify;
     justify-content: space-between;
+    flex-direction: column;
 }
-.css-51dhyc {
+.stat {
     font-size: 4em;
     line-height: 4rem;
     font-weight: 700;
@@ -229,7 +230,7 @@
     background: #FED7D7;
     color: #822727;
 } */
-.css-btgv56 {
+.per-day {
     width: 100%;
     background: #81b3fa;
     color: white;
@@ -269,7 +270,7 @@
     font-weight: 500;
     font-size: 0.875rem;
 }
-.css-1axeus7 {
+.mini-stat {
     vertical-align: baseline;
     font-weight: 600;
     font-size: 1.5rem;

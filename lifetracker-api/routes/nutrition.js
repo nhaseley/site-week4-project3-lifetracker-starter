@@ -26,4 +26,17 @@ router.post("/", async function (req, res, next) {
   }
 });
 
+router.post("/category", async function (req, res, next) {
+  try {
+    let token = req.body.token;
+    let decoded = User.verifyAuthToken(token);
+    const nutritionListForCategory = await Nutrition.listNutritionForUserByCategory(decoded.id, req.body.selectedCategory);
+    
+    return res.status(201).json({ nutritionListForCategory });
+  } catch (err) {
+    res.send(err);
+    next(err);
+  }
+});
+
 module.exports = router;

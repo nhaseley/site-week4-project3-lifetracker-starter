@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import "./NutritionPage.css";
 import { Link } from "react-router-dom";
 import NutritionCard from "./NutritionCard";
@@ -13,13 +13,46 @@ export default function NutritionPage({
   setError
 }) {
 
-  async function getNutritionInfoFromToken() {
+  const [selectedCategory, setSelectedCategory] = useState()
+  
+  function handleCategoryFilter(event){
+    setSelectedCategory(event.target.value)
+  }
+
+  async function getNutritionsFromTokenUsingCategory() {
+    const existingToken = localStorage.getItem("token");
+    console.log("selected category: ", selectedCategory)
+    if (existingToken) {
+      let userInfo = await axios.post("http://localhost:3001/nutrition/category", {
+        token: existingToken, selectedCategory: selectedCategory
+      });
+      if (userInfo.data.nutritionListForCategory) {
+        console.log("nutritionslist on frontend", userInfo.data.nutritionListForCategory)
+        setNutritions(userInfo.data.nutritionListForCategory);
+      } else {
+        setError({
+          message: userInfo.data.message,
+          status: userInfo.data.status,
+        });
+      }
+    } else {
+      console.log('Token expired. Please log in again.')
+    }
+  }
+
+  useEffect(() => {
+    getNutritionsFromTokenUsingCategory();
+  }, [selectedCategory]);
+
+
+async function getNutritionInfoFromToken() {
     const existingToken = localStorage.getItem("token");
     if (existingToken) {
       let userInfo = await axios.post("http://localhost:3001/nutrition", {
         token: existingToken,
       });
       if (userInfo.data.nutritionList) {
+        console.log("nutritionslist", userInfo.data.nutritionList)
         setNutritions(userInfo.data.nutritionList);
       } else {
         setError({
@@ -102,6 +135,12 @@ export default function NutritionPage({
                       </button>
                     </div>
                     <>
+                    <button onClick={handleCategoryFilter} value=""> All Items </button>
+                    <button onClick={handleCategoryFilter} value="beverage"> Beverages </button>
+                    <button onClick={handleCategoryFilter} value="snack"> Snacks </button>
+                    <button onClick={handleCategoryFilter} value="food"> Food </button>
+                      {nutritions.length==0?<div className="no-nutritions">No entries match for input category!</div> : null}
+                
                       {nutritions?.map((item) => (
                           <NutritionCard item={item} />
                       ))}
