@@ -40,7 +40,7 @@ export default function ActivityPage({
       let summaryStatistics = await axios.post("http://localhost:3001/auth/activity", {
         token: existingToken,
       });
-      
+      console.log(summaryStatistics)
       setAverageCalories(summaryStatistics.data.nutrition.perDay);
       setMaxCaloriesInMeal(summaryStatistics.data.nutrition.maxCals);
 
@@ -155,7 +155,7 @@ export default function ActivityPage({
                 </div>
                 <div className="css-0">
                   <div className="css-1lekzkb">
-                    <p className="chakra-text css-51dhyc">
+                    <p className="stat">
                       {totalExerciseDuration}
                     </p>
                     <div className="chakra-stack css-tl3ftk">
@@ -180,7 +180,7 @@ export default function ActivityPage({
                 </div>
                 <div className="css-0">
                   <div className="css-1lekzkb">
-                    <p className="chakra-text css-51dhyc">
+                    <p className="stat">
                       {averageHoursSleep}
                     </p>
                     <div className="chakra-stack css-tl3ftk">
@@ -189,7 +189,7 @@ export default function ActivityPage({
                   </div>
                 </div>
               </div>
-              <div className="css-btgv56">
+              <div className="per-day">
                 <div className="chakra-stack css-12mzq72">
                   <div className="chakra-stack css-8g8ihq">
                     <h2 className="chakra-heading css-18j379d">
@@ -204,7 +204,7 @@ export default function ActivityPage({
                 </div>
                 <div className="css-0">
                   <div className="css-1lekzkb">
-                    <p className="chakra-text css-51dhyc">{averageCalories}</p>
+                    <p className="stat">{averageCalories}</p>
                     <div className="chakra-stack css-tl3ftk">
                       <span className="chakra-badge css-1g1qw76">+5.5%</span>
                     </div>
@@ -229,7 +229,7 @@ export default function ActivityPage({
                         <dt className="chakra-stat__label css-14go5ty">
                           Max Calories In One Meal
                         </dt>
-                        <dd className="chakra-stat__number css-1axeus7">
+                        <dd className="mini-stat">
                           {maxCaloriesInMeal}
                         </dd>
                       </dl>
@@ -239,7 +239,7 @@ export default function ActivityPage({
                         <dt className="chakra-stat__label css-14go5ty">
                           Average Exercise Intensity
                         </dt>
-                        <dd className="chakra-stat__number css-1axeus7">
+                        <dd className="mini-stat">
                           {averageExerciseIntensity}
                         </dd>
                       </dl>
@@ -249,7 +249,7 @@ export default function ActivityPage({
                         <dt className="chakra-stat__label css-14go5ty">
                           Total Number of Hours Slept
                         </dt>
-                        <dd className="chakra-stat__number css-1axeus7">
+                        <dd className="mini-stat">
                           {totalHoursSlept}
                         </dd>
                       </dl>
