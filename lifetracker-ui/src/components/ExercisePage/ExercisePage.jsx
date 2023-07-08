@@ -16,11 +16,13 @@ export default function ExercisePage({
   async function getExerciseInfoFromToken() {
     const existingToken = localStorage.getItem("token");
     if (existingToken) {
+    
       let userInfo = await axios.post("http://localhost:3001/exercise", {
         token: existingToken,
       });
 
       if (userInfo.data.exerciseList) {
+        console.log("got: ", userInfo.data.exerciseList)
         setExercises(userInfo.data.exerciseList);
       } else {
         setError({
@@ -53,7 +55,7 @@ export default function ExercisePage({
             </div>
           </div>
 
-          {exercises.length == 0 ? (
+          {error.message ? (
             <div className="css-vpbd2d">
               <div className="css-1qfrez2">
                 <div className="css-uiodal">
