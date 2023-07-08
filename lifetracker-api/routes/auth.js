@@ -11,9 +11,6 @@ router.post('/me', (req, res) => {
 })
 
 
-
-
-
 router.post("/activity", async function (req, res, next) {
   try {
     let token = req.body.token
