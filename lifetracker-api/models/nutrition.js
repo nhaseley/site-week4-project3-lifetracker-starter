@@ -111,6 +111,35 @@ class Nutrition {
     return nutrition;
   }
 
+   /**
+   * Fetch all nutrition instances in the database that 
+   * are owned by a particular user and filtered by category
+   *
+   * @param {String} id
+   * @returns nutition
+   */
+   static async listNutritionForUserByCategory(user_id, selected_category) {
+    const result = await db.query(
+      `SELECT id,
+              user_id, 
+              name, 
+              category,
+              image_url,
+              calories,
+              quantity,
+              created_at         
+           FROM nutrition
+           WHERE user_id = $1 AND ($2 = '' OR category = $2)`,
+      [user_id, selected_category]
+    );
+    const nutrition = result.rows;
+
+    if (!nutrition || nutrition.length == 0){
+        //throw new NotFoundError("No nutrition logged from this user")
+    }
+    return nutrition;
+  }
+
 
 }
 
