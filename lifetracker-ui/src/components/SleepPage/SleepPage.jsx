@@ -22,7 +22,7 @@ export default function SleepPage({ userLoggedIn, sleeps, setSleeps, error, setE
         });
       }
     } else {
-      console.log('Token expired. Please log in again.')
+      setError({message: 'Token expired. Please log in again.', status: 403})
     }
   }
 
@@ -54,7 +54,7 @@ export default function SleepPage({ userLoggedIn, sleeps, setSleeps, error, setE
                     <div className="css-0">
                       <div className="css-j7qwjs">
                         <h2 className="chakra-heading css-hzsul0">
-                          Nothing here yet.
+                          Nothing here yet. {error.status == 403 ? error.message:null}
                         </h2>
                         <button
                           type="button"
