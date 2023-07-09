@@ -1,267 +1,289 @@
-import * as React from "react";
-import "./ActivityPage.css";
-import { Link } from "react-router-dom";
-import { useEffect } from "react";
+import "./App.css";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useEffect, useState } from "react";
 import axios from "axios";
+import Navbar from "../Navbar/Navbar";
+import Landing from "../Landing/Landing";
+import LoginPage from "../LoginPage/LoginPage";
+import RegistrationPage from "../RegistrationPage/RegistrationPage";
+import ActivityPage from "../ActivityPage/ActivityPage";
+import NutritionPage from "../NutritionPage/NutritionPage";
+import SleepPage from "../SleepPage/SleepPage";
+import ExercisePage from "../ExercisePage/ExercisePage";
+import NutritionNew from "../NutritionPage/NutritionNew";
+import SleepNew from "../SleepPage/SleepNew";
+import ExerciseNew from "../ExercisePage/ExerciseNew";
+import UsersPage from "../UsersPage/UsersPage";
+import ProductDetail from "../ProductDetail/ProductDetail";
 
-export default function ActivityPage({
-  userLoggedIn,
+function App() {
+  // ----------------- States --------------------- //
+  const [userLoginInfo, setUserLoginInfo] = useState({
+    // id: 1,
+    email: "",
+    username: "",
+    firstName: "",
+    lastName: "",
+    password: "",
+    confirmPassword: "",
+  });
+  const [error, setError] = useState({});
+  const [passwordDisplayed, setPasswordDisplayed] = useState({
+    password: false,
+    confirmPassword: false,
+  });
+  const [userLoggedIn, setUserLoggedIn] = useState(false);
 
-  averageCalories,
-  setAverageCalories,
-  setNutritions,
-  maxCaloriesInMeal,
-  setMaxCaloriesInMeal,
+  // ---- nutrition component ----
+  const [nutritions, setNutritions] = useState([]);
+  const [nutritionForm, setNutritionForm] = useState({
+    name: "",
+    category: "",
+    quantity: 0,
+    calories: 0,
+    imageUrl: "",
+  });
+  const [averageCalories, setAverageCalories] = useState(0);
+  const [weeklyCalories, setWeeklyCalories] = useState(0);
+  const [monthlyCalories, setMonthlyCalories] = useState(0)
+  const [maxCaloriesInMeal, setMaxCaloriesInMeal] = useState(0);
 
-  totalExerciseDuration,
-  setTotalExerciseDuration,
-  setExercises,
-  averageExerciseIntensity,
-  setAverageExerciseIntensity,
+  // ---- exercise component ----
+  const [exercises, setExercises] = useState([]);
+  const [exerciseForm, setExerciseForm] = useState({
+    name: "",
+    category: "",
+    duration: 0,
+    intensity: 0,
+  });
 
-  averageHoursSleep,
-  setAverageHoursSleep,
-  setSleeps,
-  totalHoursSlept,
-  setTotalHoursSlept,
-}) {
+  const [totalExerciseDuration, setTotalExerciseDuration] = useState(0);
+  const [averageExerciseIntensity, setAverageExerciseIntensity] = useState(0);
 
-  useEffect(() => {
-    showNutritions();
-    showExercises();
-    showSleeps();
+  // ---- sleep component ----
+  const [sleeps, setSleeps] = useState([]);
+  const [sleepForm, setSleepForm] = useState({
+    startTime: "",
+    endTime: "",
+  });
+  const [averageHoursSleep, setAverageHoursSleep] = useState(0);
+  const [totalHoursSlept, setTotalHoursSlept] = useState(0);
 
-    calculateSummaryStatistics();
-  }, []);
+  const [userData, setUserData] = useState({});
 
-  async function calculateSummaryStatistics() {
+  // ----------------- Functions --------------------- //
+  function handleShowPassword(event) {
+    event.target.name === "password-toggle"
+      ? setPasswordDisplayed({
+          password: true,
+          confirmPassword: passwordDisplayed.confirmPassword,
+        })
+      : setPasswordDisplayed({
+          password: passwordDisplayed.password,
+          confirmPassword: true,
+        });
+  }
+  function handleHidePassword(event) {
+    event.target.name === "password-toggle"
+      ? setPasswordDisplayed({
+          password: false,
+          confirmPassword: passwordDisplayed.confirmPassword,
+        })
+      : setPasswordDisplayed({
+          password: passwordDisplayed.password,
+          confirmPassword: false,
+        });
+  }
+  function logoutUser() {
+    localStorage.removeItem("token");
+    setUserLoggedIn(false);
+    setUserData({});
+  }
+
+  // ----------------- Token Check --------------------- //
+
+  async function getUserFromToken() {
     const existingToken = localStorage.getItem("token");
     if (existingToken) {
-      let summaryStatistics = await axios.post("http://localhost:3001/auth/activity", {
+      let userInfo = await axios.post("http://localhost:3001/auth/me", {
         token: existingToken,
       });
-      console.log(summaryStatistics)
-      setAverageCalories(summaryStatistics.data.nutrition.perDay);
-      setMaxCaloriesInMeal(summaryStatistics.data.nutrition.maxCals);
-
-      setTotalExerciseDuration(summaryStatistics.data.exercise.totalDuration);
-      setAverageExerciseIntensity(summaryStatistics.data.exercise.avgIntensity)
-
-      setAverageHoursSleep(summaryStatistics.data.sleep.avgHours);
-      setTotalHoursSlept(summaryStatistics.data.sleep.totalHours);
-    }
-  }
- 
-  // ----------------- Nutrition --------------------- //
- 
-  async function showNutritions() {
-    const existingToken = localStorage.getItem("token");
-    if (existingToken) {
-      axios
-        .post("http://localhost:3001/nutrition", {
-          token: existingToken,
-        })
-        .then((userInfo) => {
-          setNutritions(userInfo.data.nutritionList);
-        });
-    } else {
-      console.log("Token expired. Please log in again.");
-    }
-  }
-  // ----------------- Exercise --------------------- //
-
-
-  async function showExercises() {
-    const existingToken = localStorage.getItem("token");
-    if (existingToken) {
-      axios
-        .post("http://localhost:3001/exercise", {
-          token: existingToken,
-        })
-        .then((userInfo) => {
-          setExercises(userInfo.data.exerciseList);
-        });
-    } else {
-      console.log("Token expired. Please log in again.");
+      setUserData(userInfo.data);
     }
   }
 
-  // ----------------- Sleep --------------------- //
-
-  async function showSleeps() {
-    const existingToken = localStorage.getItem("token");
-    if (existingToken) {
-      axios
-        .post("http://localhost:3001/sleep", {
-          token: existingToken,
-        })
-        .then((userInfo) => {
-          setSleeps(userInfo.data.sleepList);
-        });
-    } else {
-      console.log("Token expired. Please log in again.");
-    }
-  }
+  useEffect(() => {
+    getUserFromToken();
+    setUserLoggedIn(true);
+  }, []);
 
   // ----------------- Return Object --------------------- //
-
   return (
-    <div className="activity-page">
-      {!userLoggedIn ? (
-        <div className="please-log-in">
-          <div className="please-log-in-message">
-            Please log in to see your data.
-          </div>
-        </div>
-      ) : (
-        <div className="activity-feed">
-          <div className="chakra-stack css-12mzq72">
-            <h2 className="chakra-heading css-1jb3vzl">Activity Feed</h2>
-            <div
-              className="chakra-stack css-1qwhsm9"
-              style={{ marginLeft: "auto" }}
-            >
-              <button type="button" className="chakra-button css-moltat">
-                <Link to={"/exercise"} className="add-exercise-button">
-                  Add Exercise
-                </Link>
-              </button>
-              <button type="button" className="chakra-button css-l6faz9">
-                <Link to={"/sleep"} className="add-sleep-button">
-                  Log Sleep
-                </Link>
-              </button>
-              <button type="button" className="chakra-button css-n3canj">
-                <Link to={"/nutrition"} className="add-nutrition-button">
-                  Log Nutrition
-                </Link>
-              </button>
-            </div>
-          </div>
-          <div className="grid">
-            <div className="css-18qrtb8">
-              <div className="css-xkuesw">
-                <div className="chakra-stack css-12mzq72">
-                  <div className="chakra-stack css-8g8ihq">
-                    <h2 className="chakra-heading css-18j379d">
-                      Total Exercise Minutes
-                    </h2>
-                    <h2 className="chakra-heading css-1gipxey"></h2>
-                  </div>
-                  <div
-                    className="chakra-stack css-1qwhsm9"
-                    style={{ marginLeft: "auto" }}
-                  ></div>
-                </div>
-                <div className="css-0">
-                  <div className="css-1lekzkb">
-                    <p className="stat">
-                      {totalExerciseDuration}
-                    </p>
-                    <div className="chakra-stack css-tl3ftk">
-                      <span className="chakra-badge css-1g1qw76">+2.5%</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
+    <div className="app">
+      <BrowserRouter>
+        <Routes>
+          <Route
+            path=""
+            element={
+              <Navbar
+                userLoggedIn={userLoggedIn}
+                setUserLoggedIn={setUserLoggedIn}
+                logoutUser={logoutUser}
+              />
+            }
+          >
+            <Route path="/" element={<Landing />}></Route>
 
-              <div className="css-1k6gjzc">
-                <div className="chakra-stack css-12mzq72">
-                  <div className="chakra-stack css-8g8ihq">
-                    <h2 className="chakra-heading css-18j379d">
-                      Average Hours of Sleep
-                    </h2>
-                    <h2 className="chakra-heading css-1gipxey"></h2>
-                  </div>
-                  <div
-                    className="chakra-stack css-1qwhsm9"
-                    style={{ marginLeft: "auto" }}
-                  ></div>
-                </div>
-                <div className="css-0">
-                  <div className="css-1lekzkb">
-                    <p className="stat">
-                      {averageHoursSleep}
-                    </p>
-                    <div className="chakra-stack css-tl3ftk">
-                      <span className="chakra-badge css-1bbbzfs">-2.5%</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="per-day">
-                <div className="chakra-stack css-12mzq72">
-                  <div className="chakra-stack css-8g8ihq">
-                    <h2 className="chakra-heading css-18j379d">
-                      Average Daily Calories
-                    </h2>
-                    <h2 className="chakra-heading css-1gipxey"></h2>
-                  </div>
-                  <div
-                    className="chakra-stack css-1qwhsm9"
-                    style={{ marginLeft: "auto" }}
-                  ></div>
-                </div>
-                <div className="css-0">
-                  <div className="css-1lekzkb">
-                    <p className="stat">{averageCalories}</p>
-                    <div className="chakra-stack css-tl3ftk">
-                      <span className="chakra-badge css-1g1qw76">+5.5%</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="css-qr0fjv">
-                <div className="chakra-stack css-12mzq72">
-                  <div className="chakra-stack css-8g8ihq">
-                    <h2 className="chakra-heading css-18j379d">More Stats</h2>
-                    <h2 className="chakra-heading css-1gipxey"></h2>
-                  </div>
-                  <div
-                    className="chakra-stack css-1qwhsm9"
-                    style={{ marginLeft: "auto" }}
-                  ></div>
-                </div>
-                <div className="css-0">
-                  <div role="group" className="chakra-stat__group css-fxvpvo">
-                    <div className="chakra-stat css-1mbo1ls">
-                      <dl>
-                        <dt className="chakra-stat__label css-14go5ty">
-                          Max Calories In One Meal
-                        </dt>
-                        <dd className="mini-stat">
-                          {maxCaloriesInMeal}
-                        </dd>
-                      </dl>
-                    </div>
-                    <div className="chakra-stat css-1mbo1ls">
-                      <dl>
-                        <dt className="chakra-stat__label css-14go5ty">
-                          Average Exercise Intensity
-                        </dt>
-                        <dd className="mini-stat">
-                          {averageExerciseIntensity}
-                        </dd>
-                      </dl>
-                    </div>
-                    <div className="chakra-stat css-1mbo1ls">
-                      <dl>
-                        <dt className="chakra-stat__label css-14go5ty">
-                          Total Number of Hours Slept
-                        </dt>
-                        <dd className="mini-stat">
-                          {totalHoursSlept}
-                        </dd>
-                      </dl>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="css-8inehh"></div>
-        </div>
-      )}
+            <Route
+              path="/login"
+              element={
+                <LoginPage
+                  userLoginInfo={userLoginInfo}
+                  setUserLoginInfo={setUserLoginInfo}
+                  error={error}
+                  setError={setError}
+                  passwordDisplayed={passwordDisplayed}
+                  handleShowPassword={handleShowPassword}
+                  handleHidePassword={handleHidePassword}
+                  setUserLoggedIn={setUserLoggedIn}
+                  userLoggedIn={userLoggedIn}
+                  logoutUser={logoutUser}
+                  userData={userData}
+                  setUserData={setUserData}
+                />
+              }
+            />
+
+            <Route
+              path="/register"
+              element={
+                <RegistrationPage
+                  userLoginInfo={userLoginInfo}
+                  setUserLoginInfo={setUserLoginInfo}
+                  error={error}
+                  setError={setError}
+                  passwordDisplayed={passwordDisplayed}
+                  handleShowPassword={handleShowPassword}
+                  handleHidePassword={handleHidePassword}
+                  setUserLoggedIn={setUserLoggedIn}
+                  logoutUser={logoutUser}
+                  userLoggedIn={userLoggedIn}
+                />
+              }
+            ></Route>
+            <Route
+              path="/activity"
+              element={
+                <ActivityPage
+                  userLoggedIn={userLoggedIn}
+                  averageCalories={averageCalories}
+                  setAverageCalories={setAverageCalories}
+                  weeklyCalories={weeklyCalories}
+                  setWeeklyCalories={setWeeklyCalories}
+                  monthlyCalories={monthlyCalories}
+                  setMonthlyCalories={setMonthlyCalories}
+                  setNutritions={setNutritions}
+                  maxCaloriesInMeal={maxCaloriesInMeal}
+                  setMaxCaloriesInMeal={setMaxCaloriesInMeal}
+                  totalExerciseDuration={totalExerciseDuration}
+                  setTotalExerciseDuration={setTotalExerciseDuration}
+                  setExercises={setExercises}
+                  averageExerciseIntensity={averageExerciseIntensity}
+                  setAverageExerciseIntensity={setAverageExerciseIntensity}
+                  averageHoursSleep={averageHoursSleep}
+                  setAverageHoursSleep={setAverageHoursSleep}
+                  setSleeps={setSleeps}
+                  totalHoursSlept={totalHoursSlept}
+                  setTotalHoursSlept={setTotalHoursSlept}
+                />
+              }
+            ></Route>
+
+            <Route
+              path="/nutrition"
+              element={
+                <NutritionPage
+                  userLoggedIn={userLoggedIn}
+                  nutritions={nutritions}
+                  setNutritions={setNutritions}
+                  error={error}
+                  setError={setError}
+                />
+              }
+            ></Route>
+            <Route
+              path="/nutrition/create"
+              element={
+                <NutritionNew
+                  nutritionForm={nutritionForm}
+                  setNutritionForm={setNutritionForm}
+                  userData={userData}
+                />
+              }
+            ></Route>
+
+            <Route
+              path="/sleep"
+              element={
+                <SleepPage
+                  userLoggedIn={userLoggedIn}
+                  sleeps={sleeps}
+                  setSleeps={setSleeps}
+                  error={error}
+                  setError={setError}
+                />
+              }
+            ></Route>
+            <Route
+              path="/sleep/create"
+              element={
+                <SleepNew
+                  sleeps={sleeps}
+                  setSleeps={setSleeps}
+                  sleepForm={sleepForm}
+                  setSleepForm={setSleepForm}
+                  userData={userData}
+                />
+              }
+            ></Route>
+
+            <Route
+              path="/exercise"
+              element={
+                <ExercisePage
+                  userLoggedIn={userLoggedIn}
+                  exercises={exercises}
+                  setExercises={setExercises}
+                  error={error}
+                  setError={setError}
+                />
+              }
+            ></Route>
+            <Route
+              path="/exercise/create"
+              element={
+                <ExerciseNew
+                  exerciseForm={exerciseForm}
+                  setExerciseForm={setExerciseForm}
+                  userData={userData}
+                  setError={setError}
+                  error={error}
+                />
+              }
+            ></Route>
+            <Route
+              path="/users"
+              element={
+                <UsersPage error={error} setError={setError}
+                />
+              }
+            ></Route>
+          </Route>
+          {/* <Route path="*" element={<NotFound />} /> */}
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
+
+export default App;
