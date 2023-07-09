@@ -1,5 +1,5 @@
 import "./NutritionCard.css";
-
+import Link from "react"
 export default function NutritionCard({ item }) {
 
   return (
