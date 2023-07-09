@@ -1,298 +1,289 @@
-import * as React from "react";
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useEffect, useState } from "react";
+import axios from "axios";
 import Navbar from "../Navbar/Navbar";
-import Sidebar from "../Sidebar/Sidebar";
-import Home from "../Home/Home";
+import Landing from "../Landing/Landing";
+import LoginPage from "../LoginPage/LoginPage";
+import RegistrationPage from "../RegistrationPage/RegistrationPage";
+import ActivityPage from "../ActivityPage/ActivityPage";
+import NutritionPage from "../NutritionPage/NutritionPage";
+import SleepPage from "../SleepPage/SleepPage";
+import ExercisePage from "../ExercisePage/ExercisePage";
+import NutritionNew from "../NutritionPage/NutritionNew";
+import SleepNew from "../SleepPage/SleepNew";
+import ExerciseNew from "../ExercisePage/ExerciseNew";
+import UsersPage from "../UsersPage/UsersPage";
 import ProductDetail from "../ProductDetail/ProductDetail";
-import Orders from "../Orders/Orders";
-import Transaction from "../Transaction/Transaction";
 
-export const appInfo = {
-  title: "Welcome! Find Your Merch!",
-  tagline:
-    "We have all kinds of goodies. Click on any of the items to start filling up your shopping cart. Checkout whenever you're ready.",
-  img_src: "./student-store-express-api/data/images.png",
-};
+function App() {
+  // ----------------- States --------------------- //
+  const [userLoginInfo, setUserLoginInfo] = useState({
+    // id: 1,
+    email: "",
+    username: "",
+    firstName: "",
+    lastName: "",
+    password: "",
+    confirmPassword: "",
+  });
+  const [error, setError] = useState({});
+  const [passwordDisplayed, setPasswordDisplayed] = useState({
+    password: false,
+    confirmPassword: false,
+  });
+  const [userLoggedIn, setUserLoggedIn] = useState(false);
 
-// const url = "https://codepath-store-api.herokuapp.com/store"
-const url = "http://localhost:3001"; // nonsecure
-export default function App() {
-  const [products, setProducts] = useState();
-  const [searchInput, setSearchInput] = useState(); // used for search
-  const [selectedCategory, setSelectedCategory] = useState(); // used for category filtering
-  const [filteredCategoryArray, setFilteredCategoryArray] = useState(); // used for category filtering
-  const [filteredSearchArray, setFilteredSearchArray] = useState();
-  const [isOpen, setIsOpen] = useState(false);
-  const [shoppingCart, setShoppingCart] = useState([]);
-  // Example of shopping cart => {{itemId: 4, quantity: 2}, {itemId: 2, quantity: 1}}
+  // ---- nutrition component ----
+  const [nutritions, setNutritions] = useState([]);
+  const [nutritionForm, setNutritionForm] = useState({
+    name: "",
+    category: "",
+    quantity: 0,
+    calories: 0,
+    imageUrl: "",
+  });
+  const [averageCalories, setAverageCalories] = useState(0);
+  const [weeklyCalories, setWeeklyCalories] = useState(0);
+  const [monthlyCalories, setMonthlyCalories] = useState(0)
+  const [maxCaloriesInMeal, setMaxCaloriesInMeal] = useState(0);
 
-  const [checkoutSubmitted, setCheckoutSubmitted] = useState(false);
-  const [nameTerm, setNameTerm] = useState("");
-  const [emailTerm, setEmailTerm] = useState("");
-  const [incorrectSubmission, setIncorrectSubmission] = useState(false);
-  const [acceptedTermsAndConditions, setAcceptedTermsAndConditions] =
-    useState(false);
-  const [order, setOrder] = useState([]);
-  const [subtotal, setSubtotal] = useState(0);
-  const [totalPrice, setTotalPrice] = useState(0);
-  const [receiptSubtotal, setReceiptSubtotal] = useState(0);
-  const [receiptName, setReceiptName] = useState("");
-  const [receiptEmail, setReceiptEmail] = useState("");
-  const [receiptTotalPrice, setReceiptTotalPrice] = useState(0);
-  const [totalSpendings, setTotalSpendings] = useState(0);
-  const [allTransactions, setAllTransactions] = useState([]);
-  const [totalOrderQuantity, setTotalOrderQuantity] = useState([]);
-  const [filteredTransactions, setFilteredTransactions] = useState([]);
-  const [transactionInput, setTransactionInput] = useState("")
-  const [popupOpen, setPopupOpen] = useState([]);
-  
+  // ---- exercise component ----
+  const [exercises, setExercises] = useState([]);
+  const [exerciseForm, setExerciseForm] = useState({
+    name: "",
+    category: "",
+    duration: 0,
+    intensity: 0,
+  });
+
+  const [totalExerciseDuration, setTotalExerciseDuration] = useState(0);
+  const [averageExerciseIntensity, setAverageExerciseIntensity] = useState(0);
+
+  // ---- sleep component ----
+  const [sleeps, setSleeps] = useState([]);
+  const [sleepForm, setSleepForm] = useState({
+    startTime: "",
+    endTime: "",
+  });
+  const [averageHoursSleep, setAverageHoursSleep] = useState(0);
+  const [totalHoursSlept, setTotalHoursSlept] = useState(0);
+
+  const [userData, setUserData] = useState({});
+
+  // ----------------- Functions --------------------- //
+  function handleShowPassword(event) {
+    event.target.name === "password-toggle"
+      ? setPasswordDisplayed({
+          password: true,
+          confirmPassword: passwordDisplayed.confirmPassword,
+        })
+      : setPasswordDisplayed({
+          password: passwordDisplayed.password,
+          confirmPassword: true,
+        });
+  }
+  function handleHidePassword(event) {
+    event.target.name === "password-toggle"
+      ? setPasswordDisplayed({
+          password: false,
+          confirmPassword: passwordDisplayed.confirmPassword,
+        })
+      : setPasswordDisplayed({
+          password: passwordDisplayed.password,
+          confirmPassword: false,
+        });
+  }
+  function logoutUser() {
+    localStorage.removeItem("token");
+    setUserLoggedIn(false);
+    setUserData({});
+  }
+
+  // ----------------- Token Check --------------------- //
+
+  async function getUserFromToken() {
+    const existingToken = localStorage.getItem("token");
+    if (existingToken) {
+      let userInfo = await axios.post("http://localhost:3001/auth/me", {
+        token: existingToken,
+      });
+      setUserData(userInfo.data);
+    }
+  }
+
   useEffect(() => {
-    axios.get(url).then((response) => {
-      setProducts(response.data.products);
-    });
+    getUserFromToken();
+    setUserLoggedIn(true);
   }, []);
 
-  //  Updates searchInput state with current state of input element (render each keystroke)
-  function handleSearch(event) {
-    setSearchInput(event.target.value);
-    let filteredItems = products?.filter((product) => {
-      return product.name
-        .toLowerCase()
-        .includes(event.target.value.toLowerCase());
-    });
-    setFilteredSearchArray(filteredItems);
-  }
-
-  // Updates selectedCategory state with current state of input element (render each click of category)
-  function handleCategoryFilter(event) {
-    setSelectedCategory(event.target.value);
-    let filteredItemsCategory = products?.filter((product) => {
-      return (
-        product.category.toLowerCase() === event.target.value.toLowerCase()
-      );
-    });
-    setFilteredCategoryArray(filteredItemsCategory);
-  }
-
-  // Makes search and filter by category work together, also handles initial loading case (display no products)
-  function getFilteredProducts() {
-    // initial page load
-    if (!searchInput && !selectedCategory) {
-      return products;
-    }
-    let filteredItems = products;
-    if (searchInput) {
-      filteredItems = filteredItems.filter((product) =>
-        product.name.toLowerCase().includes(searchInput.toLowerCase())
-      );
-    }
-    if (selectedCategory) {
-      filteredItems = filteredItems.filter((product) =>
-        product.category.toLowerCase().includes(selectedCategory.toLowerCase())
-      );
-    }
-    return filteredItems ? filteredItems : null;
-  }
-
-  // Sets the sidebar state to open/closed
-  function onToggle(event) {
-    setIsOpen(!isOpen);
-  }
-
-  // Add a product with input ID to the shoppingCart
-  // If product isn't already in the shopping cart, and set its quantity to 1.
-  // If the product is already in the shopping cart, increment its quantity by 1.
-  function handleAddItemToCart(productId) {
-    let isAlreadyInCart = shoppingCart.some(
-      (product) => product.itemId === productId
-    );
-    if (isAlreadyInCart) {
-      let index = shoppingCart.findIndex(
-        (product) => product.itemId === productId
-      );
-      let updatedCart = [...shoppingCart];
-      updatedCart[index] = {
-        itemId: updatedCart[index].itemId,
-        quantity: ++updatedCart[index].quantity,
-      };
-      setShoppingCart(updatedCart);
-    } else {
-      setShoppingCart([...shoppingCart, { itemId: productId, quantity: 1 }]);
-    }
-  }
-
-  // Decrease the quantity of a product with input ID in the shoppingCart by 1, but only if it is in the shopping cart.
-  // If the new quantity is 0, it should remove the item from the shoppingCart.
-  function handleRemoveItemToCart(productId) {
-    let isAlreadyInCart = shoppingCart.some(
-      (product) => product.itemId === productId
-    );
-    if (isAlreadyInCart) {
-      let index = shoppingCart.findIndex(
-        (product) => product.itemId === productId
-      );
-      let updatedCart = [...shoppingCart];
-      if (updatedCart[index].quantity - 1 == 0) {
-        updatedCart = shoppingCart.filter((item) => item.itemId !== productId);
-        setShoppingCart(updatedCart);
-      } else {
-        updatedCart[index] = {
-          itemId: updatedCart[index].itemId,
-          quantity: --updatedCart[index].quantity,
-        };
-      }
-      setShoppingCart(updatedCart);
-    }
-  } 
-
-  function handleTransactionInput(event){
-    setTransactionInput(event.target.value)
-    {let filteredItems = allTransactions?.filter((transaction) => {
-        return transaction.email.includes(event.target.value)
-    });
-    setFilteredTransactions(filteredItems)}   
-  }
-
-  // Sets the checkout form as submitted
-  // Empties shopping cart, resets the name and email forms and accepted T&C state
-  function handleCheckout(event) {
-    if (
-      nameTerm != "" &&
-      emailTerm.includes("@") && emailTerm.includes(".com") &&
-      acceptedTermsAndConditions &&
-      shoppingCart &&
-      shoppingCart.length > 0
-    ) {
-      setReceiptTotalPrice(totalPrice);
-      setReceiptEmail(emailTerm);
-      setReceiptName(nameTerm);
-      setOrder(shoppingCart);
-      setReceiptSubtotal(subtotal);
-      setCheckoutSubmitted(true);
-      setAllTransactions([
-        ...allTransactions,
-        {
-          order: shoppingCart,
-          email: emailTerm,
-          name: nameTerm,
-          total: totalPrice,
-          quantity: 0,
-        },
-      ]);
-      setTotalSpendings(
-        totalSpendings.toLocaleString("us-EN", {
-          style: "currency",
-          currency: "USD",
-        }) + totalPrice
-      );
-      setNameTerm("");
-      setEmailTerm("");
-      setAcceptedTermsAndConditions(false);
-      setShoppingCart([]);
-    } else {
-      setIncorrectSubmission(true);
-    }
-    // console.log(acceptedTermsAndConditions)
-  }
-
-  // Sets the checkout form as not submitted and resets name and email inputs from use
-  function handleShopMore(event) {
-    setCheckoutSubmitted(false);
-    setNameTerm("");
-    setEmailTerm("");
-    setAcceptedTermsAndConditions(false);
-    setIsOpen(false)
-  }
-
-  function handleAcceptTermsAndConditions(event) {
-    // console.log("checked?: ", event.target.checked)
-    setAcceptedTermsAndConditions(event.target.checked);
-  }
-
+  // ----------------- Return Object --------------------- //
   return (
     <div className="app">
       <BrowserRouter>
-        <main>
-          <Sidebar
-            key={4}
-            products={getFilteredProducts()}
-            onToggle={onToggle}
-            isOpen={isOpen}
-            shoppingCart={shoppingCart}
-            checkoutSubmitted={checkoutSubmitted}
-            handleCheckout={handleCheckout}
-            handleShopMore={handleShopMore}
-            nameTerm={nameTerm}
-            setNameTerm={setNameTerm}
-            emailTerm={emailTerm}
-            setEmailTerm={setEmailTerm}
-            acceptedTermsAndConditions={acceptedTermsAndConditions}
-            handleAcceptTermsAndConditions={handleAcceptTermsAndConditions}
-            order={order}
-            subtotal={subtotal}
-            totalPrice={totalPrice}
-            setTotalPrice={setTotalPrice}
-            setSubtotal={setSubtotal}
-            receiptSubtotal={receiptSubtotal}
-            receiptName={receiptName}
-            receiptEmail={receiptEmail}
-            receiptTotalPrice={receiptTotalPrice}
-          />
-
-          <Routes>
-            <Route path="" element={<Navbar />}>
-              <Route
-                path="/"
-                element={
-                  <Home
-                    handleCategoryFilter={handleCategoryFilter}
-                    handleSearch={handleSearch}
-                    searchInput={searchInput}
-                    products={getFilteredProducts()}
-                    handleAddItemToCart={handleAddItemToCart}
-                    handleRemoveItemToCart={handleRemoveItemToCart}
-                    shoppingCart={shoppingCart}
-                    handleCheckout={handleCheckout}
-                  />
-                }
-              ></Route>
-
-              <Route
-                path="products/:id"
-                element={
-                  <ProductDetail
-                    shoppingCart={shoppingCart}
-                    handleAddItemToCart={handleAddItemToCart}
-                    handleRemoveItemToCart={handleRemoveItemToCart}
-                  />
-                }
+        <Routes>
+          <Route
+            path=""
+            element={
+              <Navbar
+                userLoggedIn={userLoggedIn}
+                setUserLoggedIn={setUserLoggedIn}
+                logoutUser={logoutUser}
               />
-              <Route
-                path="/orders"
-                element={
-                  <Orders
-                    key={3}
-                    products={products}
-                    // order={order}
-                    allTransactions={(transactionInput!="")? filteredTransactions : allTransactions}
-                    totalOrderQuantity={totalOrderQuantity}
-                    transactionInput={transactionInput}
-                    handleTransactionInput={handleTransactionInput}
-                    setPopupOpen={setPopupOpen}
-                    popupOpen={popupOpen}
-                  ></Orders>
-                }
-              ></Route>
+            }
+          >
+            <Route path="/" element={<Landing />}></Route>
 
-              <Route path="/orders/0" element={<Transaction ></Transaction>} />
-            </Route>
-            {/* <Route path = "*" element={<NotFound/>}/> */}
-          </Routes>
-        </main>
+            <Route
+              path="/login"
+              element={
+                <LoginPage
+                  userLoginInfo={userLoginInfo}
+                  setUserLoginInfo={setUserLoginInfo}
+                  error={error}
+                  setError={setError}
+                  passwordDisplayed={passwordDisplayed}
+                  handleShowPassword={handleShowPassword}
+                  handleHidePassword={handleHidePassword}
+                  setUserLoggedIn={setUserLoggedIn}
+                  userLoggedIn={userLoggedIn}
+                  logoutUser={logoutUser}
+                  userData={userData}
+                  setUserData={setUserData}
+                />
+              }
+            />
+
+            <Route
+              path="/register"
+              element={
+                <RegistrationPage
+                  userLoginInfo={userLoginInfo}
+                  setUserLoginInfo={setUserLoginInfo}
+                  error={error}
+                  setError={setError}
+                  passwordDisplayed={passwordDisplayed}
+                  handleShowPassword={handleShowPassword}
+                  handleHidePassword={handleHidePassword}
+                  setUserLoggedIn={setUserLoggedIn}
+                  logoutUser={logoutUser}
+                  userLoggedIn={userLoggedIn}
+                />
+              }
+            ></Route>
+            <Route
+              path="/activity"
+              element={
+                <ActivityPage
+                  userLoggedIn={userLoggedIn}
+                  averageCalories={averageCalories}
+                  setAverageCalories={setAverageCalories}
+                  weeklyCalories={weeklyCalories}
+                  setWeeklyCalories={setWeeklyCalories}
+                  monthlyCalories={monthlyCalories}
+                  setMonthlyCalories={setMonthlyCalories}
+                  setNutritions={setNutritions}
+                  maxCaloriesInMeal={maxCaloriesInMeal}
+                  setMaxCaloriesInMeal={setMaxCaloriesInMeal}
+                  totalExerciseDuration={totalExerciseDuration}
+                  setTotalExerciseDuration={setTotalExerciseDuration}
+                  setExercises={setExercises}
+                  averageExerciseIntensity={averageExerciseIntensity}
+                  setAverageExerciseIntensity={setAverageExerciseIntensity}
+                  averageHoursSleep={averageHoursSleep}
+                  setAverageHoursSleep={setAverageHoursSleep}
+                  setSleeps={setSleeps}
+                  totalHoursSlept={totalHoursSlept}
+                  setTotalHoursSlept={setTotalHoursSlept}
+                />
+              }
+            ></Route>
+
+            <Route
+              path="/nutrition"
+              element={
+                <NutritionPage
+                  userLoggedIn={userLoggedIn}
+                  nutritions={nutritions}
+                  setNutritions={setNutritions}
+                  error={error}
+                  setError={setError}
+                />
+              }
+            ></Route>
+            <Route
+              path="/nutrition/create"
+              element={
+                <NutritionNew
+                  nutritionForm={nutritionForm}
+                  setNutritionForm={setNutritionForm}
+                  userData={userData}
+                />
+              }
+            ></Route>
+
+            <Route
+              path="/sleep"
+              element={
+                <SleepPage
+                  userLoggedIn={userLoggedIn}
+                  sleeps={sleeps}
+                  setSleeps={setSleeps}
+                  error={error}
+                  setError={setError}
+                />
+              }
+            ></Route>
+            <Route
+              path="/sleep/create"
+              element={
+                <SleepNew
+                  sleeps={sleeps}
+                  setSleeps={setSleeps}
+                  sleepForm={sleepForm}
+                  setSleepForm={setSleepForm}
+                  userData={userData}
+                />
+              }
+            ></Route>
+
+            <Route
+              path="/exercise"
+              element={
+                <ExercisePage
+                  userLoggedIn={userLoggedIn}
+                  exercises={exercises}
+                  setExercises={setExercises}
+                  error={error}
+                  setError={setError}
+                />
+              }
+            ></Route>
+            <Route
+              path="/exercise/create"
+              element={
+                <ExerciseNew
+                  exerciseForm={exerciseForm}
+                  setExerciseForm={setExerciseForm}
+                  userData={userData}
+                  setError={setError}
+                  error={error}
+                />
+              }
+            ></Route>
+            <Route
+              path="/users"
+              element={
+                <UsersPage error={error} setError={setError}
+                />
+              }
+            ></Route>
+          </Route>
+          {/* <Route path="*" element={<NotFound />} /> */}
+        </Routes>
       </BrowserRouter>
     </div>
   );
 }
+
+export default App;
