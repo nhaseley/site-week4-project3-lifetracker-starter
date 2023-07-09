@@ -132,6 +132,7 @@ class Nutrition {
            WHERE user_id = $1 AND ($2 = '' OR category = $2)`,
       [user_id, selected_category]
     );
+
     const nutrition = result.rows;
 
     if (!nutrition || nutrition.length == 0){

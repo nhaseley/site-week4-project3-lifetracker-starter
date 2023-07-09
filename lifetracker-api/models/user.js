@@ -167,11 +167,9 @@ class User {
     const result = await db.query(
       `SELECT id,
               email,    
-              password,
-              first_name AS "firstName",
-              last_name AS "lastName",
-              location,
-              date              
+              username,
+              first_name,
+              last_name
            FROM users
            WHERE id = $1`,
       [user_id]
@@ -204,6 +202,79 @@ class User {
       return null;
     }
   }
+
+
+/**
+   * Fetch all user in the database that are not the input id
+   *
+   * @param {String} user_id
+   * @returns user
+   */
+static async fetchAllUsers(user_id) {
+  const result = await db.query(
+    `SELECT id,
+            first_name,
+            last_name            
+         FROM users
+         WHERE id <> $1`,
+    [user_id]
+  );
+  
+  const users = result.rows;
+
+  return users;
 }
+
+
+/**
+   * Fetch all followings in the database for a given user
+   *
+   * @param {String} user_id
+   * @returns user
+   */
+static async fetchFollowings(user_id) {
+  const result = await db.query(
+    `SELECT follower_id, followed_id
+    FROM user_followers
+    WHERE follower_id = $1`,
+    [user_id]
+  );
+  
+  const followings = result.rows;
+
+  return followings;
+}
+
+
+// /**
+//    * Insert given following user into the database that are not the input id
+//    *
+//    * @param {String} user_id
+//    * @returns user
+//    */
+static async followUser(user_id, followed_id) {
+  await db.query(
+    `INSERT INTO user_followers (follower_id, followed_id, created_at)
+    SELECT $1, $2, CURRENT_TIMESTAMP
+    WHERE NOT EXISTS (
+      SELECT 1
+      FROM user_followers
+      WHERE follower_id = $1 AND followed_id = $2
+    )
+    `,
+    [user_id, followed_id]);
+  const result2 = await db.query(`  SELECT follower_id, followed_id
+    FROM user_followers
+    WHERE follower_id = $1
+  `, [user_id]
+  );
+
+  const followings = result2.rows;
+  return followings;
+}
+
+}
+
+
 
 module.exports = User;

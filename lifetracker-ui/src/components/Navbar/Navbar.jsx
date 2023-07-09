@@ -29,6 +29,9 @@ export default function Navbar({
           <Link className="chakra-link css-74uit1" to={"/sleep"}>
             Sleep
           </Link>
+          <Link className="chakra-link css-74uit1" to={"/users"}>
+            Users
+          </Link>
         </div>
         <div className="css-70qvj9">
           {!userLoggedIn ? (

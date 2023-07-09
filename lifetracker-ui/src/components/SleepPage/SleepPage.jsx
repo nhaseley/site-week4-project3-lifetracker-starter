@@ -46,7 +46,7 @@ export default function SleepPage({ userLoggedIn, sleeps, setSleeps, error, setE
               <h2 className="chakra-heading css-b5coes">Sleep</h2>
             </div>
           </div>
-          {error.message ? (
+          {error.message || sleeps.length == 0? (
             <div className="css-vpbd2d">
               <div className="css-1qfrez2">
                 <div className="css-uiodal">

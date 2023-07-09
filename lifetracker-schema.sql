@@ -36,6 +36,13 @@ CREATE TABLE exercise (
   user_id    INTEGER,
   created_at TIMESTAMP DEFAULT NOW()
 );
-
+CREATE TABLE user_followers (
+  follower_id INTEGER,
+  followed_id INTEGER,
+  created_at TIMESTAMP DEFAULT NOW(),
+  PRIMARY KEY (follower_id, followed_id),
+  FOREIGN KEY (follower_id) REFERENCES users (id),
+  FOREIGN KEY (followed_id) REFERENCES users (id)
+);
 -- INSERT INTO users VALUES (1,'nylevenya@hotmail.com', 'nylevenya', '2003nyleve', 'nya', 'haseley', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 -- TABLE users to view this in terminal

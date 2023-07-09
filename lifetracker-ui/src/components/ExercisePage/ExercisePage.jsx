@@ -12,7 +12,6 @@ export default function ExercisePage({
   error,
   setError
 }) {
-  console.log("exercise", exercises)
   async function getExerciseInfoFromToken() {
     const existingToken = localStorage.getItem("token");
     if (existingToken) {
@@ -22,7 +21,6 @@ export default function ExercisePage({
       });
 
       if (userInfo.data.exerciseList) {
-        console.log("got: ", userInfo.data.exerciseList)
         setExercises(userInfo.data.exerciseList);
       } else {
         setError({
@@ -55,7 +53,7 @@ export default function ExercisePage({
             </div>
           </div>
 
-          {error.message ? (
+          {error.message || exercises.length == 0 ? (
             <div className="css-vpbd2d">
               <div className="css-1qfrez2">
                 <div className="css-uiodal">
@@ -104,6 +102,7 @@ export default function ExercisePage({
                         </Link>
                       </button>
                     </div>
+                    
                     {exercises?.map((item) => (
                       <ExerciseCard item={item} />
                     ))}

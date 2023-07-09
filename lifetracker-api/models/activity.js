@@ -35,6 +35,56 @@ class Activity {
   }
 
 
+    /**
+   * Calculates the average calories per week in exercise database for specific user using SQL query
+   *
+   * @param {String} user_id
+   * @returns total calories per week
+   */
+    static async calculateWeeklyCaloriesSummaryStats(user_id) {
+      const result = await db.query(
+        `SELECT ROUND(AVG(calories), 1) AS average_weekly_calories
+        FROM nutrition
+        WHERE user_id = $1
+          AND created_at >= current_date - interval '7 days'`,
+        [user_id]
+      );
+      if (!result.rows[0]){
+        return 0
+      }
+      const weeklyCals = result.rows[0].average_weekly_calories;
+      if (!weeklyCals) {
+        return 0
+      }
+      return weeklyCals;
+    }
+
+     /**
+   * Calculates the average calories per month in exercise database for specific user using SQL query
+   *
+   * @param {String} user_id
+   * @returns total calories per month
+   */
+     static async calculateMonthlyCaloriesSummaryStats(user_id) {
+      const result = await db.query(
+        `SELECT ROUND(AVG(calories), 1) AS average_monthly_calories
+        FROM nutrition
+        WHERE user_id = $1
+          AND EXTRACT(YEAR FROM created_at) = EXTRACT(YEAR FROM CURRENT_DATE)
+          AND EXTRACT(MONTH FROM created_at) = EXTRACT(MONTH FROM CURRENT_DATE)`,
+        [user_id]
+      );
+      if (!result.rows[0]){
+        return 0
+      }
+      const monthlyCals = result.rows[0].average_monthly_calories;
+      if (!monthlyCals) {
+        return 0
+      }
+      return monthlyCals;
+    }
+
+
 /**
    * Calculates the average calories per day in exercise database for specific user using SQL query
    *
@@ -125,7 +175,7 @@ static async calculateMaxCaloriesInMeal(user_id) {
           WHERE user_id = $1`,
           [user_id]
         );
-        if (result.rows[0]){
+        if (!result.rows[0]){
           return 0
         }
         const averageIntensity = result.rows[0].average_exercise_intensity;

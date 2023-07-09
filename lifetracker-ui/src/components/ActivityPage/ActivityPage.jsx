@@ -9,6 +9,10 @@ export default function ActivityPage({
 
   averageCalories,
   setAverageCalories,
+  weeklyCalories,
+  setWeeklyCalories,
+  monthlyCalories,
+  setMonthlyCalories,
   setNutritions,
   maxCaloriesInMeal,
   setMaxCaloriesInMeal,
@@ -40,8 +44,9 @@ export default function ActivityPage({
       let summaryStatistics = await axios.post("http://localhost:3001/auth/activity", {
         token: existingToken,
       });
-      console.log(summaryStatistics)
       setAverageCalories(summaryStatistics.data.nutrition.perDay);
+      setWeeklyCalories(summaryStatistics.data.nutrition.perWeek);
+      setMonthlyCalories(summaryStatistics.data.nutrition.perMonth);
       setMaxCaloriesInMeal(summaryStatistics.data.nutrition.maxCals);
 
       setTotalExerciseDuration(summaryStatistics.data.exercise.totalDuration);
@@ -69,7 +74,6 @@ export default function ActivityPage({
     }
   }
   // ----------------- Exercise --------------------- //
-
 
   async function showExercises() {
     const existingToken = localStorage.getItem("token");
@@ -104,7 +108,7 @@ export default function ActivityPage({
   }
 
   // ----------------- Return Object --------------------- //
-
+  
   return (
     <div className="activity-page">
       {!userLoggedIn ? (
@@ -222,6 +226,8 @@ export default function ActivityPage({
                     style={{ marginLeft: "auto" }}
                   ></div>
                 </div>
+                <div > Weekly Calories: {weeklyCalories}</div>
+                <div > Monthly Calories: {monthlyCalories}</div>
                 <div className="css-0">
                   <div role="group" className="chakra-stat__group css-fxvpvo">
                     <div className="chakra-stat css-1mbo1ls">

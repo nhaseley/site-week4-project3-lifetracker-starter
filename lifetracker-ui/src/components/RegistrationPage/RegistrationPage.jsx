@@ -36,9 +36,6 @@ export default function RegistrationPage({
         const token = result.data.token;
         localStorage.setItem("token", token);
         const decodedToken = jwtDecode(token);
-        setTokenFirstName(decodedToken.firstName);
-
-        setUserLoggedIn(true);
         setError({});
         setUserLoginInfo({
           email: "",

@@ -47,7 +47,7 @@ Implement any of the following features to improve the application:
   - You should also create a new dynamic route on the frontend that displays detail about a single record. For instance, `nutrition/detail/:id` should show a page with all the information about a single nutrition item.
 - [x] Provide a dropdown that allows users to filter activity based on a certain attribute of any activity item. Example: filter exercise or nutrition by category, or filter sleep by the week/month it was recorded.
 - [x] Calculate aggregate statistics based on time periods - such as daily, weekly, monthly aggregates.
-- [ ] Create a page that shows all other users that use the LifeTracker application and allow users to follow each other. You'll want to create a new table to store this data.
+- [x] Create a page that shows all other users that use the LifeTracker application and allow users to follow each other. You'll want to create a new table to store this data.
 - [ ] Implement `security` middleware on the API that allows only authenticated users to access resources and allows users to only access resources about themselves.
 
 ### Building the app
@@ -82,7 +82,7 @@ Implement any of the following features to improve the application:
   - [ ] Create a utility method called `request` that uses `axios` to issue HTTP requests
   - [x] Add a `login` method that uses the `request` method to send an HTTP request to the `auth/login` endpoint
   - [x] Add a `signup` method that uses the `request` method to send an HTTP request to the `auth/register` endpoint
-  - [ ] Add a `fetchUserFromToken` method that uses the `request` method to send an HTTP request to the `auth/me` endpoint
+  - [x] Add a `fetchUserFromToken` method that uses the `request` method to send an HTTP request to the `auth/me` endpoint
   - [ ] **Add as many other methods as needed when making API requests.**
 
 #### Manage Authentication State

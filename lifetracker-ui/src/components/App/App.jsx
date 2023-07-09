@@ -1,6 +1,7 @@
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useEffect, useState } from "react";
+import axios from "axios";
 import Navbar from "../Navbar/Navbar";
 import Landing from "../Landing/Landing";
 import LoginPage from "../LoginPage/LoginPage";
@@ -12,7 +13,8 @@ import ExercisePage from "../ExercisePage/ExercisePage";
 import NutritionNew from "../NutritionPage/NutritionNew";
 import SleepNew from "../SleepPage/SleepNew";
 import ExerciseNew from "../ExercisePage/ExerciseNew";
-import axios from "axios";
+import UsersPage from "../UsersPage/UsersPage";
+import ProductDetail from "../ProductDetail/ProductDetail";
 
 function App() {
   // ----------------- States --------------------- //
@@ -42,6 +44,8 @@ function App() {
     imageUrl: "",
   });
   const [averageCalories, setAverageCalories] = useState(0);
+  const [weeklyCalories, setWeeklyCalories] = useState(0);
+  const [monthlyCalories, setMonthlyCalories] = useState(0)
   const [maxCaloriesInMeal, setMaxCaloriesInMeal] = useState(0);
 
   // ---- exercise component ----
@@ -174,6 +178,10 @@ function App() {
                   userLoggedIn={userLoggedIn}
                   averageCalories={averageCalories}
                   setAverageCalories={setAverageCalories}
+                  weeklyCalories={weeklyCalories}
+                  setWeeklyCalories={setWeeklyCalories}
+                  monthlyCalories={monthlyCalories}
+                  setMonthlyCalories={setMonthlyCalories}
                   setNutritions={setNutritions}
                   maxCaloriesInMeal={maxCaloriesInMeal}
                   setMaxCaloriesInMeal={setMaxCaloriesInMeal}
@@ -260,6 +268,13 @@ function App() {
                   userData={userData}
                   setError={setError}
                   error={error}
+                />
+              }
+            ></Route>
+            <Route
+              path="/users"
+              element={
+                <UsersPage error={error} setError={setError}
                 />
               }
             ></Route>
